@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/Aoyama/CLionProjects/refraction_openCL/casting.cpp
+casting.h
+/Users/Aoyama/CLionProjects/refraction_openCL/casting.h
+variables.h
+/Users/Aoyama/CLionProjects/refraction_openCL/variables.h
+myMath.h
+/Users/Aoyama/CLionProjects/refraction_openCL/myMath.h
+vector.h
+/Users/Aoyama/CLionProjects/refraction_openCL/vector.h
+gpuSetting.h
+/Users/Aoyama/CLionProjects/refraction_openCL/gpuSetting.h
+cmath
+-
+OpenCL/opencl.h
+-
+time.h
+-
+stdio.h
+-
+iostream
+-
+
+/Users/Aoyama/CLionProjects/refraction_openCL/casting.h
+
+/Users/Aoyama/CLionProjects/refraction_openCL/gpuSetting.h
+OpenCL/opencl.h
+-
+
+/Users/Aoyama/CLionProjects/refraction_openCL/myMath.h
+
+/Users/Aoyama/CLionProjects/refraction_openCL/variables.h
+
+/Users/Aoyama/CLionProjects/refraction_openCL/vector.h
+
