@@ -430,7 +430,8 @@ void gpuRender(float distance, float *pixel){
     EC2("clCreateContext");
 
     FILE *fp;
-    char fileName[] = "./trace.cl";
+//    char fileName[] = "./trace.cl";
+    char fileName[] = "./trace3d.cl";
     fp = fopen(fileName, "r");
     if(!fp) {
         std::cout << "no file.\n";
@@ -471,7 +472,7 @@ void gpuRender(float distance, float *pixel){
     EC(clSetKernelArg(kernel, 3, sizeof(cl_mem), &memfOpacity), "clSetKernelArg3");
     EC(clSetKernelArg(kernel, 4, sizeof(cl_mem), &memlIntensity), "clSetKernelArg4");
     EC(clSetKernelArg(kernel, 5, sizeof(cl_mem), &memPixel), "clSetKernelArg5");
-    EC(clSetKernelArg(kernel, 6, sizeof(cl_int), &dis), "clSetKernelArg6");
+    EC(clSetKernelArg(kernel, 6, sizeof(cl_int), &dis), "clSetKernelAjrg6");
     EC(clSetKernelArg(kernel, 7, sizeof(cl_int), &side), "clSetKernelArg7");
     EC(clSetKernelArg(kernel, 8, sizeof(cl_mem), &memChecker), "clSetKernelArg7");
     EC(clSetKernelArg(kernel, 9, sizeof(cl_int), &w), "clSetKernelArg7");
@@ -484,9 +485,9 @@ void gpuRender(float distance, float *pixel){
     EC(clEnqueueReadBuffer(q, memPixel, CL_TRUE, 0, sizeof(float) * w * h * 3, pixel, 0, nullptr, nullptr), "clEnqueueReadBuffer");
     EC(clEnqueueReadBuffer(q, memChecker, CL_TRUE, 0, sizeof(float) * w * h, checker, 0, nullptr, nullptr), "clEnqueueReadBuffer");
 
-//    for (int position=0; position<w; ++position){
-//        std::cout << checker[position + h * 48/ 100 * w] << " ";
-//    }
+    for (int position=0; position<w; ++position){
+        std::cout << checker[position + h * 70/ 100 * w] << " ";
+    }
 
     printf("\n");
 

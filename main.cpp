@@ -78,7 +78,7 @@ void makeDataset(void){
 //    inSphere(field,  Vec3f (roundInt(WIDTH / 3), roundInt(WIDTH * 5 / 6), roundInt(WIDTH / 6)), roundInt(WIDTH / 6), Vec3f (0.98, 0.98, 1), 0., 0.01, 1.5, Vec3f(0., 0., 0.));
 
 //    leaned
-    float q1[] = {(float)WIDTH * 4 / 5, (float)HEIGHT - 11, (float)DEPTH / 5}, q2[] = {(float)WIDTH / 5, (float)HEIGHT - 11, (float)DEPTH * 3 / 5}, q3[] = {(float)WIDTH * 4 / 5, (float)HEIGHT / 2, (float)DEPTH / 5}, q4[] = {(float)WIDTH * 4 / 5, (float)HEIGHT - 11, (float)DEPTH / 4}, q[] = {1, 0.97, 0.97};
+    float q1[] = {(float)WIDTH * 4 / 5, (float)HEIGHT - 11, (float)DEPTH / 5}, q2[] = {(float)WIDTH / 5, (float)HEIGHT - 11, (float)DEPTH * 3 / 5}, q3[] = {(float)WIDTH * 4 / 5, (float)HEIGHT / 2, (float)DEPTH / 5}, q4[] = {(float)WIDTH * 4 / 5, (float)HEIGHT - 11, (float)DEPTH / 4}, q[] = {1, 0.997, 0.997};
     inRectangle(q1, q2, q3, q4, q, 0.3, 0.01, 1.8, fColor, fMedium, fOpacity, fRefractivity);
 
     // straight
@@ -128,8 +128,8 @@ void display( void )
 
     float *image = new float[viewH * viewW * 3], *pixel = image;
 
-//    gpuRender(2 * WIDTH, pixel);
-    render(200, pixel);
+    gpuRender(2 * WIDTH, pixel);
+//    render(200, pixel);
 
 
     glDrawPixels(viewW, viewH, GL_RGB, GL_FLOAT, image);
@@ -180,10 +180,10 @@ int main(int argc, char **argv)
 //    gradGauss3SmoothWithCondition();
 
     gradGauss3Smooth();
-    gradGauss3Smooth();
-    gradGauss3Smooth();
-    gradGauss3Smooth();
-    gradGauss3Smooth();
+//    gradGauss3Smooth();
+//    gradGauss3Smooth();
+//    gradGauss3Smooth();
+//    gradGauss3Smooth();
 //    gradGauss3Smooth();
 //    gradGauss3Smooth();
 //    gradGauss3Smooth();

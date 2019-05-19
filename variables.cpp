@@ -4,9 +4,9 @@
 
 #include "variables.h"
 
-const int WIDTH = 100;
-const int HEIGHT = 100;
-const int DEPTH = 100;
+const int WIDTH = 110;
+const int HEIGHT = 110;
+const int DEPTH = 110;
 //const int WIDTH = 5;
 //const int HEIGHT = 5;
 //const int DEPTH = 5;
