@@ -6,42 +6,139 @@
 #include "variables.h"
 #include "myMath.h"
 #include <cmath>
+#include <iostream>
 
+bool checkRangeInt3(int x, int y, int z, int side){
+    if ((checkRangeInt(x, side)) && (checkRangeInt(y, side)) && (checkRangeInt(z, side))){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+float gradx(float *around) {
+    float a[4] = {0, 0, 0, 0}, x1, x2;
+    int count = 0;
+    x1 = around[0], x2 = around[1];
+    if ((x1 != 0) && (x2 != 0)){
+        a[0] = slope2(x1, x2);
+        count += 1;
+    }
+    x1 = around[2], x2 = around[3];
+    if ((x1 != 0) && (x2 != 0)){
+        a[1] = slope2(x1, x2);
+        count += 1;
+    }
+    x1 = around[4], x2 = around[5];
+    if ((x1 != 0) && (x2 != 0)){
+        a[2] = slope2(x1, x2);
+        count += 1;
+    }
+    x1 = around[6], x2 = around[7];
+    if ((x1 != 0) && (x2 != 0)){
+        a[3] = slope2(x1, x2);
+        count += 1;
+    }
+//    std::cout << a[0] << " " << a[1] << " " << around[0] << " " << around[1] << " " << slope2(around[0], around[1]) << std::endl;
+    if (count != 0) {
+        return (a[0] + a[1] + a[2] + a[3]) / count;
+    } else {
+        return 0;
+    }
+}
+
+float grady(float *around) {
+    float a[4] = {0, 0, 0, 0}, x1, x2;
+    int count = 0;
+    x1 = around[0], x2 = around[2];
+    if ((x1 != 0) && (x2 != 0)){
+        a[0] = slope2(x1, x2);
+        count += 1;
+    }
+    x1 = around[1], x2 = around[3];
+    if ((x1 != 0) && (x2 != 0)){
+        a[0] = slope2(x1, x2);
+        count += 1;
+    }
+    x1 = around[4], x2 = around[6];
+    if ((x1 != 0) && (x2 != 0)){
+        a[0] = slope2(x1, x2);
+        count += 1;
+    }
+    x1 = around[5], x2 = around[7];
+    if ((x1 != 0) && (x2 != 0)){
+        a[0] = slope2(x1, x2);
+        count += 1;
+    }
+    if (count != 0) {
+        return (a[0] + a[1] + a[2] + a[3]) / count;
+    } else {
+        return 0;
+    }
+}
+
+float gradz(float *around) {
+    float a[4] = {0, 0, 0, 0}, x1, x2;
+    int count = 0;
+    x1 = around[0], x2 = around[4];
+    if ((x1 != 0) && (x2 != 0)){
+        a[0] = slope2(x1, x2);
+        count += 1;
+    }
+    x1 = around[1], x2 = around[5];
+    if ((x1 != 0) && (x2 != 0)){
+        a[0] = slope2(x1, x2);
+        count += 1;
+    }
+    x1 = around[2], x2 = around[6];
+    if ((x1 != 0) && (x2 != 0)){
+        a[0] = slope2(x1, x2);
+        count += 1;
+    }
+    x1 = around[3], x2 = around[7];
+    if ((x1 != 0) && (x2 != 0)){
+        a[0] = slope2(x1, x2);
+        count += 1;
+    }
+    if (count != 0) {
+        return (a[0] + a[1] + a[2] + a[3]) / count;
+    } else {
+        return 0;
+    }
+}
 
 void gradRefraction(float *fRefractivity){
     for (unsigned int k=0; k<WIDTH; ++k){
         for (unsigned int j=0; j<HEIGHT; ++j){
-            for (unsigned int i=0; i<DEPTH; ++i){
-                float x1 = 0., x2 = 0., y1 = 0., y2 = 0., z1 = 0., z2 = 0.;
-                bool xx1 = false, xx2 = false, yy1 = false, yy2 = false, zz1 = false, zz2 = false;
-                float origin = fRefractivity[(i + j * WIDTH + k * WIDTH * HEIGHT)];
-                if (i != 0) {
-                    xx1 = true;
-                    x1 = fRefractivity[(i - 1 + j * WIDTH + k * WIDTH * HEIGHT)];
+            for (unsigned int i=0; i<DEPTH; ++i) {
+                float around[] = {0, 0, 0, 0, 0, 0, 0, 0};
+                if (checkRangeInt3(i - 1, j - 1, k - 1, WIDTH)) {
+                    around[0] = fRefractivity[((i - 1) + (j - 1) * WIDTH + (k - 1) * WIDTH * HEIGHT)];
                 }
-                if (i != WIDTH - 1) {
-                    xx2 = true;
-                    x2 = fRefractivity[(i + 1 + j * WIDTH + k * WIDTH * HEIGHT)];
-                } if (j != 0){
-                    yy1 = true;
-                    y1 = fRefractivity[(i + (j - 1) * WIDTH + k * WIDTH * HEIGHT)];
-                } if (j != HEIGHT - 1) {
-                    yy2 = true;
-                    y2 = fRefractivity[(i + (j + 1) * WIDTH + k * WIDTH * HEIGHT)];
-                } if (k != 0){
-                    zz1 = true;
-                    z1 = fRefractivity[(i + j * WIDTH + (k - 1) * WIDTH * HEIGHT)];
-                } if (k != DEPTH - 1) {
-                    zz2 = true;
-                    z2 = fRefractivity[(i + j * WIDTH + (k + 1) * WIDTH * HEIGHT)];
+                if (checkRangeInt3(i, j - 1, k - 1, WIDTH)) {
+                    around[1] = fRefractivity[((i) + (j - 1) * WIDTH + (k - 1) * WIDTH * HEIGHT)];
                 }
-//                grad[(i + j * WIDTH + k * WIDTH * HEIGHT) * 3] = (xx1)? slope2(x1, origin) : 0;
-//                grad[(i + j * WIDTH + k * WIDTH * HEIGHT) * 3 + 1] = (yy1)? slope2(y1, origin) : 0;
-//                grad[(i + j * WIDTH + k * WIDTH * HEIGHT) * 3 + 2] = (zz1)? slope2(z1, origin) : 0;
-//
-                grad[(i + j * WIDTH + k * WIDTH * HEIGHT) * 3] = (xx1 * xx2)? slope3(x1, origin, x2) : ((xx1)? slope2(x1, origin) : slope2(origin, x2));
-                grad[(i + j * WIDTH + k * WIDTH * HEIGHT) * 3 + 1] = (yy1 * yy2)? slope3(y1, origin, y2) : ((yy1)? slope2(y1, origin) : slope2(origin, y2));
-                grad[(i + j * WIDTH + k * WIDTH * HEIGHT) * 3 + 2] = (zz1 * zz2)? slope3(z1, origin, z2) : ((zz1)? slope2(z1, origin) : slope2(origin, z2));
+                if (checkRangeInt3(i - 1, j, k - 1, WIDTH)) {
+                    around[2] = fRefractivity[((i - 1) + (j) * WIDTH + (k - 1) * WIDTH * HEIGHT)];
+                }
+                if (checkRangeInt3(i, j, k - 1, WIDTH)) {
+                    around[3] = fRefractivity[((i) + (j) * WIDTH + (k - 1) * WIDTH * HEIGHT)];
+                }
+                if (checkRangeInt3(i - 1, j - 1, k, WIDTH)) {
+                    around[4] = fRefractivity[((i - 1) + (j - 1) * WIDTH + (k) * WIDTH * HEIGHT)];
+                }
+                if (checkRangeInt3(i, j - 1, k, WIDTH)) {
+                    around[5] = fRefractivity[((i) + (j - 1) * WIDTH + (k) * WIDTH * HEIGHT)];
+                }
+                if (checkRangeInt3(i - 1, j, k, WIDTH)) {
+                    around[6] = fRefractivity[((i - 1) + (j) * WIDTH + (k) * WIDTH * HEIGHT)];
+                }
+                if (checkRangeInt3(i, j, k, WIDTH)) {
+                    around[7] = fRefractivity[((i) + (j) * WIDTH + (k) * WIDTH * HEIGHT)];
+                }
+                grad[(i + j * WIDTH + k * WIDTH * HEIGHT) * 3] = gradx(around);
+                grad[(i + j * WIDTH + k * WIDTH * HEIGHT) * 3 + 1] = grady(around);
+                grad[(i + j * WIDTH + k * WIDTH * HEIGHT) * 3 + 2] = gradz(around);
             }
         }
     }

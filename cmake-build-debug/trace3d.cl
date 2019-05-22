@@ -72,21 +72,26 @@ __kernel void trace(__global float *grad, __global float *fColor, __global float
     int y = gety(position, viewW);
     float xx = (float)x * (float)side / (float)viewW;
     float yy = (float)y * (float)side / (float)viewH;
-    float z = 0;
+    float z = 0, square;
     int p;
     float color[] = {0., 0., 0.}, medium[] = {1.0, 1.0, 1.0}, opacity = 0, angle[3], path[3];
     bool flagEnd = false;
-    int state = 0;
+    int state = 0, count = 0;
     int calcStep = 10;
 
     angle[0] = (xx - (float)side/2) / (float)distance;
     angle[1] = (yy - (float)side/2) / (float)distance;
     angle[2] = 1;
 
+    angle[0] = 0;
+    angle[1] = 0;
+
+    float iniAngleX = angle[0], lastAngleX;
+
     float args[3];
     float newColor[3], newMedium[3], newOpacity, newIntensity, newGrad[3];    
 
-    while (!flagEnd) {
+    while ((!flagEnd) && (count < 10000)) {
     	if ((xx < 0) || (yy < 0) || (z < 0)|| (xx > side - 1) || (yy > side - 1) || (z > side - 1)){
             state = 2;
     		flagEnd = true;
@@ -207,21 +212,27 @@ __kernel void trace(__global float *grad, __global float *fColor, __global float
     	// 	break;
     	// }
 
-    	angle[0] = angle[0] + newGrad[0] * 100 / side / calcStep;
-    	angle[1] = angle[1] + newGrad[1] * 100 / side /calcStep;
-    	angle[2] = angle[2] + newGrad[2] * 100 / side / calcStep;
-        float square = angle[0] * angle[0] + angle[1] * angle[1] + angle[2] * angle[2];
+    	angle[0] = angle[0] + newGrad[0] * 100 / (float)side / (float)calcStep;
+    	angle[1] = angle[1] + newGrad[1] * 100 / side / (float)calcStep;
+    	angle[2] = angle[2] + newGrad[2] * 100 / side / (float)calcStep;
+        square = angle[0] * angle[0] + angle[1] * angle[1] + angle[2] * angle[2];
         path[0] = angle[0] / sqrt(square);
         path[1] = angle[1] / sqrt(square);
         path[2] = angle[2] / sqrt(square);
-    	xx = xx + path[0] / calcStep;
-    	yy = yy + path[1] / calcStep;
-    	z = z + 0.3;//calcStep;
+    	xx = xx + path[0] / (float)calcStep;
+    	yy = yy + path[1] / (float)calcStep;
+    	z = z + path[2] / (float)calcStep;
+        count = count + 1;
+        lastAngleX = angle[0];
     }
-    checker[position] = z;
-    pixel[position * 3] = color[0];
-    pixel[position * 3 + 1] = color[1];
-    pixel[position * 3 + 2] = color[2];
+    checker[position] = angle[0];
+    pixel[position * 3] = (lastAngleX - iniAngleX) * 10;
+    pixel[position * 3 + 1] = 0;//color[1];
+    pixel[position * 3 + 2] = (iniAngleX - lastAngleX) * 10;
+
+    // pixel[position * 3] = color[0];
+    // pixel[position * 3 + 1] = color[1];
+    // pixel[position * 3 + 2] = color[2];
 
     // pixel[position * 3] = args[0];
     // pixel[position * 3 + 1] = args[1];

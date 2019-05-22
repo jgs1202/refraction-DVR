@@ -4,13 +4,13 @@
 
 #include "variables.h"
 
-const int WIDTH = 110;
-const int HEIGHT = 110;
-const int DEPTH = 110;
+const int WIDTH = 150;
+const int HEIGHT = 150;
+const int DEPTH = 150;
 //const int WIDTH = 5;
 //const int HEIGHT = 5;
 //const int DEPTH = 5;
-const int STEP = 1;
+const int STEP = 100 / WIDTH;
 const int MAX_SOURCE_SIZE = 0x100000;
 const int FIELDSZ = (WIDTH * HEIGHT * DEPTH);
 const int PLAINSZ = (WIDTH * HEIGHT);
@@ -30,6 +30,5 @@ int viewH = 100;
 
 int PLATFORM_MAX = 4;
 int DEVICE_MAX  = 4;
-
 
 //std::vector <float> surfaces;

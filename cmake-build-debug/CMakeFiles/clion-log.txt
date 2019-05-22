@@ -1,4 +1,14 @@
 /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/Aoyama/CLionProjects/refraction_openCL
--- Configuring done
--- Generating done
--- Build files have been written to: /Users/Aoyama/CLionProjects/refraction_openCL/cmake-build-debug
+Could not find OpenCV_CORE_INCLUDE_DIR
+Could not find OpenCV_HIGHGUI_INCLUDE_DIR
+Include dir: OFF
+CMake Error at cmake-modules/FindOpenCV.cmake:220 (MESSAGE):
+  OpenCV required but some headers or libs not found.  Please specify it's
+  location with OpenCV_ROOT_DIR env.  variable.
+Call Stack (most recent call first):
+  CMakeLists.txt:12 (find_package)
+
+
+-- Configuring incomplete, errors occurred!
+See also "/Users/Aoyama/CLionProjects/refraction_openCL/cmake-build-debug/CMakeFiles/CMakeOutput.log".
+See also "/Users/Aoyama/CLionProjects/refraction_openCL/cmake-build-debug/CMakeFiles/CMakeError.log".

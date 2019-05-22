@@ -18,10 +18,10 @@ float roundInt (float x){
 }
 
 float slope2 (float p1, float p2){
-    return (p2 - p1) / (100 / WIDTH);
+    return (p2 - p1) / (100 / (float)WIDTH);
 }
 float slope3 (float p1, float p2, float p3){
-    return ((p2 - p1) / 2 + (p3 - p2) / 2) / (100 / WIDTH);
+    return ((p2 - p1) / 2 + (p3 - p2) / 2) / (100 / (float)WIDTH);
 }
 
 bool checkInteger(float *vec){

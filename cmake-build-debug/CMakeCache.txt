@@ -218,6 +218,8 @@ GLUT_cocoa_LIBRARY:FILEPATH=/Applications/Xcode.app/Contents/Developer/Platforms
 //GLUT library for OSX
 GLUT_glut_LIBRARY:FILEPATH=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/GLUT.framework
 
+OPENCV_FOUND:BOOL=FALSE
+
 //Include for OpenGL on OS X
 OPENGL_INCLUDE_DIR:PATH=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenGL.framework
 
@@ -232,6 +234,61 @@ OpenCL_INCLUDE_DIR:PATH=/Applications/Xcode.app/Contents/Developer/Platforms/Mac
 
 //Path to a library.
 OpenCL_LIBRARY:FILEPATH=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenCL.framework
+
+OpenCV_CONFIG_PATH:FILEPATH=/Users/Aoyama/CLionProjects/refraction_openCL/cmake-modules
+
+//Path to a file.
+OpenCV_CORE_INCLUDE_DIR:PATH=OpenCV_CORE_INCLUDE_DIR-NOTFOUND
+
+//Path to a library.
+OpenCV_CORE_LIBRARY:FILEPATH=/usr/local/lib/libopencv_core.dylib
+
+//Path to a file.
+OpenCV_CVAUX_INCLUDE_DIR:PATH=OpenCV_CVAUX_INCLUDE_DIR-NOTFOUND
+
+//Path to a library.
+OpenCV_CVAUX_LIBRARY:FILEPATH=OpenCV_CVAUX_LIBRARY-NOTFOUND
+
+//Path to a file.
+OpenCV_CVCAM_INCLUDE_DIR:PATH=OpenCV_CVCAM_INCLUDE_DIR-NOTFOUND
+
+//Path to a library.
+OpenCV_CVCAM_LIBRARY:FILEPATH=OpenCV_CVCAM_LIBRARY-NOTFOUND
+
+//Path to a library.
+OpenCV_CVHAARTRAINING_LIBRARY:FILEPATH=OpenCV_CVHAARTRAINING_LIBRARY-NOTFOUND
+
+//Path to a file.
+OpenCV_CV_INCLUDE_DIR:PATH=OpenCV_CV_INCLUDE_DIR-NOTFOUND
+
+//Path to a library.
+OpenCV_CV_LIBRARY:FILEPATH=OpenCV_CV_LIBRARY-NOTFOUND
+
+//Path to a file.
+OpenCV_CXCORE_INCLUDE_DIR:PATH=OpenCV_CXCORE_INCLUDE_DIR-NOTFOUND
+
+//Path to a library.
+OpenCV_CXCORE_LIBRARY:FILEPATH=OpenCV_CXCORE_LIBRARY-NOTFOUND
+
+//Path to a library.
+OpenCV_CXTS_LIBRARY:FILEPATH=OpenCV_CXTS_LIBRARY-NOTFOUND
+
+//The directory containing a CMake configuration file for OpenCV.
+OpenCV_DIR:PATH=OpenCV_DIR-NOTFOUND
+
+OpenCV_FOUND:BOOL=FALSE
+
+//Path to a file.
+OpenCV_HIGHGUI_INCLUDE_DIR:PATH=OpenCV_HIGHGUI_INCLUDE_DIR-NOTFOUND
+
+//Path to a library.
+OpenCV_HIGHGUI_LIBRARY:FILEPATH=/usr/local/lib/libopencv_highgui.dylib
+
+//Path to a file.
+OpenCV_ROOT_DIR:PATH=OpenCV_ROOT_DIR-NOTFOUND
+
+//Path to a library.
+OpenCV_TRS_LIBRARY:FILEPATH=OpenCV_TRS_LIBRARY-NOTFOUND
 
 //Path to a program.
 ProcessorCount_cmd_sysctl:FILEPATH=/usr/sbin/sysctl
@@ -420,6 +477,34 @@ OPENGL_glu_LIBRARY-ADVANCED:INTERNAL=1
 OpenCL_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OpenCL_LIBRARY
 OpenCL_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenCV_CVAUX_INCLUDE_DIR
+OpenCV_CVAUX_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenCV_CVAUX_LIBRARY
+OpenCV_CVAUX_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenCV_CVCAM_INCLUDE_DIR
+OpenCV_CVCAM_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenCV_CVCAM_LIBRARY
+OpenCV_CVCAM_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenCV_CVHAARTRAINING_LIBRARY
+OpenCV_CVHAARTRAINING_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenCV_CV_INCLUDE_DIR
+OpenCV_CV_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenCV_CV_LIBRARY
+OpenCV_CV_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenCV_CXCORE_INCLUDE_DIR
+OpenCV_CXCORE_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenCV_CXCORE_LIBRARY
+OpenCV_CXCORE_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenCV_CXTS_LIBRARY
+OpenCV_CXTS_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenCV_HIGHGUI_INCLUDE_DIR
+OpenCV_HIGHGUI_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenCV_HIGHGUI_LIBRARY
+OpenCV_HIGHGUI_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenCV_ROOT_DIR
+OpenCV_ROOT_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenCV_TRS_LIBRARY
+OpenCV_TRS_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: ProcessorCount_cmd_sysctl
 ProcessorCount_cmd_sysctl-ADVANCED:INTERNAL=1
 

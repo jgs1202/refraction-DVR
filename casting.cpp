@@ -306,6 +306,7 @@ void trilinearTrace(float xx, float yy, float z, float *color, float *medium, fl
 void trace3d(float *angle, float x, float y, float *pixel) {
     float xx = x, yy = y, z = 0;
     float color[] = {0., 0., 0.}, medium[] = {1.0, 1.0, 1.0}, opacity = 0, path[3];
+    float calcStep = 5;
     while (z < DEPTH){
         float newColor[3], newMedium[3], newReflectivity, newGradient[3], newIntensity, newOpacity;
         bool flagEnd = false;
@@ -324,16 +325,17 @@ void trace3d(float *angle, float x, float y, float *pixel) {
 //        if (z == DEPTH - 1){
 //            std::cout << color << newColor << medium << newMedium << opacity << newOpacity << flagEnd << std::endl;
 //        }
-//        if ((x == AOIx) && (y == AOIy)){
-//            std::cout << "result" << " " << xx << " " << yy << " " << z  << " " << newGradient[2] << flagEnd << std::endl;// << opacity << " " << newOpacity << " " << newColor[0] << newColor[1] << newColor[2] << " " << color[0] << color[1] << color[2] << std::endl;
+        int AOIx = 70, AOIy = 80;
+        if ((x == AOIx) && (y == AOIy)){
+            std::cout << "result" << " " << xx << " " << yy << " " << z  << " " << angle[0] << " " << newGradient[0] << flagEnd << std::endl;// << opacity << " " << newOpacity << " " << newColor[0] << newColor[1] << newColor[2] << " " << color[0] << color[1] << color[2] << std::endl;
 //            std::cout << xx << " " << yy << " ";// << angle[0] << " " << angle[1] << " " << angle[2] << "  " << newGradient[0] << " " << newGradient[1] << " "  << newGradient[2] << " " << std::endl;
-//        }
-//
-//        if ((std::abs(x - AOIx) < 3) && (std::abs(y - AOIy) < 3)){
-//            color[0] = 0.4;
-//            color[1] = 0.4;
-//            color[2] = 1;
-//        }
+        }
+
+        if ((std::abs(x - AOIx) < 3) && (std::abs(y - AOIy) < 3)){
+            color[0] = 0.4;
+            color[1] = 0.4;
+            color[2] = 1;
+        }
         if (flagEnd){
 //            if ((x == AOIx) && (y == AOIy)) {
 //                std::cout << "break1 " << z << " " << opacity << " " << newOpacity << std::endl;
@@ -348,12 +350,17 @@ void trace3d(float *angle, float x, float y, float *pixel) {
         }
 //      update angle +=  newGradient;
         multiFloat(newGradient, 100 / WIDTH, newGradient);
+        multiFloat(newGradient, 1 / calcStep, newGradient);
         addVec(angle, newGradient, angle);
         vecNormalize(angle, path);
+        if ((x == AOIx) && (y == AOIy)){
+            std::cout << path[0] << std::endl;
+        }
+
 //        angle = angle * (1 / angle.z);
-        xx += path[0];
-        yy += path[1];
-        z += path[2];
+        xx += path[0] / calcStep;
+        yy += path[1] / calcStep;
+        z += path[2] / calcStep;
     }
     setVec3Float(pixel, color);
 }

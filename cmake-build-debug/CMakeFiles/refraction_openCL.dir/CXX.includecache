@@ -49,6 +49,8 @@ openGL/gl.h
 -
 openGL/glu.h
 -
+opencv2/opencv.hpp
+-
 vector.h
 /Users/Aoyama/CLionProjects/refraction_openCL/vector.h
 myMath.h
