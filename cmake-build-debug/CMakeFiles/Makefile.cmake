@@ -29,6 +29,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.13/Modules/FindOpenGL.cmake"
   "/Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.13/Modules/FindPackageHandleStandardArgs.cmake"
   "/Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.13/Modules/FindPackageMessage.cmake"
+  "/Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.13/Modules/Findboost.cmake"
   "/Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.13/Modules/Platform/Apple-AppleClang-C.cmake"
   "/Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.13/Modules/Platform/Apple-AppleClang-CXX.cmake"
   "/Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.13/Modules/Platform/Apple-Clang-C.cmake"
@@ -43,6 +44,10 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.13.2/CMakeCCompiler.cmake"
   "CMakeFiles/3.13.2/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.13.2/CMakeSystem.cmake"
+  "/usr/local/share/OpenCV/OpenCVConfig-version.cmake"
+  "/usr/local/share/OpenCV/OpenCVConfig.cmake"
+  "/usr/local/share/OpenCV/OpenCVModules-release.cmake"
+  "/usr/local/share/OpenCV/OpenCVModules.cmake"
   )
 
 # The corresponding makefile is:

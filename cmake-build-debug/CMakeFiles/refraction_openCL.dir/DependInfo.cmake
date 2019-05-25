@@ -21,6 +21,8 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/System/Library/Frameworks"
   "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenCL.framework"
   "../"
+  "/usr/local/include"
+  "/usr/local/include/opencv"
   )
 
 # Targets to which this target links.

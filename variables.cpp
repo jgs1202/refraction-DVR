@@ -4,9 +4,9 @@
 
 #include "variables.h"
 
-const int WIDTH = 150;
-const int HEIGHT = 150;
-const int DEPTH = 150;
+const int WIDTH = 100;
+const int HEIGHT = 100;
+const int DEPTH = 100;
 //const int WIDTH = 5;
 //const int HEIGHT = 5;
 //const int DEPTH = 5;
@@ -30,5 +30,9 @@ int viewH = 100;
 
 int PLATFORM_MAX = 4;
 int DEVICE_MAX  = 4;
+
+int plainY = 70;
+float* castPositions = new float[WIDTH * HEIGHT * 10 * 2];
+int castIndex;
 
 //std::vector <float> surfaces;

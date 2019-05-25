@@ -21,6 +21,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // [/ignore]
 #include <cstdlib>
+#include <stdio.h>
 #include <cstdio>
 #include <cmath>
 #include <fstream>
@@ -37,7 +38,7 @@
 #include <GLUT/glut.h>
 #include <openGL/gl.h>
 #include <openGL/glu.h>
-#include <opencv2/opencv.hpp>
+//#include <boost/tuple/tuple.hpp>
 
 #include "vector.h"
 #include "myMath.h"
@@ -55,7 +56,6 @@
 #define M_PI 3.141592653589793
 #define INFINITY 1e8
 #endif
-
 
 //std::vector <float> surfaces;
 
@@ -128,8 +128,8 @@ void display( void )
 
     float *image = new float[viewH * viewW * 3], *pixel = image;
 
-    gpuRender(2 * WIDTH, pixel);
-//    render(2 * WIDTH, pixel);
+//    gpuRender(2 * WIDTH, pixel);
+    render(2 * WIDTH, pixel);
 
 
     glDrawPixels(viewW, viewH, GL_RGB, GL_FLOAT, image);
@@ -187,11 +187,11 @@ int main(int argc, char **argv)
 
 
     printf("smoothing gradient...\n");
-    gradSmooth(3);
-    gradSmooth(3);
-    gradSmooth(3);
-    gradSmooth(3);
-    gradSmooth(3);
+//    gradSmooth(3);
+//    gradSmooth(3);
+//    gradSmooth(3);
+//    gradSmooth(3);
+//    gradSmooth(3);
 //    gradGauss3SmoothWithCondition();
 //    gradGauss3SmoothWithCondition();
 //    gradGauss3SmoothWithCondition();
@@ -204,11 +204,11 @@ int main(int argc, char **argv)
 //    gradGauss3SmoothWithCondition();
 //    gradGauss3SmoothWithCondition();
 
-//    gradGauss3Smooth();
-//    gradGauss3Smooth();
-//    gradGauss3Smooth();
-//    gradGauss3Smooth();
-//    gradGauss3Smooth();
+    gradGauss3Smooth();
+    gradGauss3Smooth();
+    gradGauss3Smooth();
+    gradGauss3Smooth();
+    gradGauss3Smooth();
 //    gradGauss3Smooth();
 //    gradGauss3Smooth();
 //    gradGauss3Smooth();
@@ -224,16 +224,6 @@ int main(int argc, char **argv)
 //        }
 //        printf("\n");
 //    }
-
-//  make image of the object field
-    int plainY = 80;
-    float gradPlain[WIDTH * DEPTH];
-    for (int z=0; z<DEPTH; ++z){
-        for (int x=0; x<WIDTH; ++x){
-            gradPlain[x + z * WIDTH] = grad[(x + plainY * WIDTH + z * WIDTH * HEIGHT) * 3];
-        }
-    }
-
 
 //  field, light, direction, color, intensity, direction.z must be bigger than the others.
 //    calcLightSource(field, fromLightSource, grad, Vec3f (1, 1, 1), Vec3f (1,1,1));

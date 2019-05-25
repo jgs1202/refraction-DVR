@@ -81,7 +81,7 @@ void inPlain (float *p1, float *p2, float *p3, float *p4, float *color, float re
             integer[0] = roundInt(current[0]);
             integer[1] = roundInt(current[1]);
             integer[2] = roundInt(current[2]);
-            if ((integer[0] < 0) || (integer[0] >= WIDTH) || (integer[1] < 0) || (integer[1] >= HEIGHT) || (integer[2] < 0) || (integer[2] >= DEPTH)){
+            if ((integer[0] < 0) || (integer[0] >= WIDTH - 1) || (integer[1] < 0) || (integer[1] >= HEIGHT - 1) || (integer[2] < 0) || (integer[2] >= DEPTH - 1)){
                 continue;
             } else {
 //                std::cout << " " << dis2 << " " << integer[0] << " " << integer[1] << " " << integer[2] << std::endl;
@@ -99,6 +99,7 @@ void inPlain (float *p1, float *p2, float *p3, float *p4, float *color, float re
 }
 
 void inRectangle(float *p1, float *p2, float *p3, float *p4, float *color, float reflectivity, float opacity, float refractivity, float *fColor, float *fMedium, float *fOpacity, float *fRefractivity){
+    // the lengths of sides
     unsigned int dis1 = std::floor(vectorDistance(p1, p2)) + 1;
     unsigned int dis2 = std::floor(vectorDistance(p1, p3)) + 1;
     unsigned int dis3 = std::floor(vectorDistance(p1, p4)) + 1;
@@ -136,16 +137,16 @@ void inRectangle(float *p1, float *p2, float *p3, float *p4, float *color, float
         }
     }
     // set surfaces
-    float q1[3], q2[3], q3[3], q4[3];
-    subVec(p2, p1, sub1);
-    subVec(p3, p1, sub2);
-    subVec(p4, p1, sub3);
-    addVec(sub1, sub2, vec1);
-    addVec(sub1, sub3, vec2);
-    addVec(p3, vec2, q1);
-    addVec(p4, sub2, q2);
-    addVec(p1, vec2, q3);
-    addVec(p2, sub2, q4);
+//    float q1[3], q2[3], q3[3], q4[3];
+//    subVec(p2, p1, sub1);
+//    subVec(p3, p1, sub2);
+//    subVec(p4, p1, sub3);
+//    addVec(sub1, sub2, vec1);
+//    addVec(sub1, sub3, vec2);
+//    addVec(p3, vec2, q1);
+//    addVec(p4, sub2, q2);
+//    addVec(p1, vec2, q3);
+//    addVec(p2, sub2, q4);
 
 //    setSurface(p1, p4, p3);
 //    setSurface(q2, p3, p4);

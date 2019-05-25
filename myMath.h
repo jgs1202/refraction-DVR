@@ -14,5 +14,6 @@ unsigned int getScalarCoo(float *coordinate);
 void checkMinus(float *vec);
 bool checkRangeInt(int x, int side);
 float checkRange(float x, int side);
+float gaussFunc(float x);
 
 #endif //REFRACTION_OPENCL_MYMATH_H

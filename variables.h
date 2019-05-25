@@ -34,6 +34,10 @@ extern int viewH;
 extern int PLATFORM_MAX;
 extern int DEVICE_MAX;
 
+extern int plainY;
+extern float* castPositions;
+extern int castIndex;
+
 //extern std::vector <float> surfaces;
 
 #endif //REFRACTION_OPENCL_VARIABLES_H

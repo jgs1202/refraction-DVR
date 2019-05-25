@@ -55,6 +55,8 @@ IF(NOT OpenCV_FIND_COMPONENTS)
 ENDIF(NOT OpenCV_FIND_COMPONENTS)
 
 
+SET(OpenCV_ROOT_DIR "/usr/local/Cellar/opencv/4.1.0_2/include/")
+
 # typical root dirs of installations, exactly one of them is used
 SET(OpenCV_POSSIBLE_ROOT_DIRS
         "${OpenCV_ROOT_DIR}"

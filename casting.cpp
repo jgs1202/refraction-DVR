@@ -13,6 +13,43 @@
 #include <time.h>
 #include <stdio.h>
 #include <iostream>
+#include <opencv2/opencv.hpp>
+
+void visualize(void) {
+    //  make image of the object field
+    std::vector<float> gradPlain(PLAINSZ);
+    for (int z=0; z<DEPTH; ++z) {
+        for (int x = 0; x < WIDTH; ++x) {
+            gradPlain[x + z * WIDTH] = grad[(x + plainY * WIDTH + z * WIDTH * HEIGHT) * 3];
+        }
+    }
+    float max = *std::max_element(gradPlain.begin(), gradPlain.end());
+    cv::Mat image(cv::Size(WIDTH * 5, HEIGHT * 5), CV_8UC3);
+    for (int z=0; z<DEPTH; ++z){
+        for (int x=0; x<WIDTH; ++x){
+            for (int i=0; i<5; ++i){
+                for (int j=0; j<5; ++j) {
+//                    float value = grad[(x + plainY * WIDTH + z * WIDTH * HEIGHT) * 3];
+                    float value = fRefractivity[(x + plainY * WIDTH + z * WIDTH * HEIGHT)];
+//                    float normal = value / max;
+                    float normal = value / 1.8;
+                    image.at<cv::Vec3b>((x + z * 5 * WIDTH) * 5 + i + j * 5 * WIDTH)[0] = (value > 0)?normal * 255 : 0;
+                    image.at<cv::Vec3b>((x + z * 5 * WIDTH) * 5 + i + j * 5 * WIDTH)[1] = 0;//100 * gaussFunc((std::abs(normal) * 255));
+                    image.at<cv::Vec3b>((x + z * 5 * WIDTH) * 5 + i + j * 5 * WIDTH)[2] = 0;//(value > 0)? 0 :  - 1 * normal * 255;
+                }
+            }
+        }
+    }
+//    for (int i=0; i<castIndex; ++i){
+//        int x = (int)roundInt(castPositions[i * 2] * 5);
+//        int z = (int)roundInt(castPositions[i * 2 + 1] * 5);
+//        image.at<cv::Vec3b>(x + z * 5 * WIDTH)[0] = 255;
+//        image.at<cv::Vec3b>(x + z * 5 * WIDTH)[1] = 255;
+//        image.at<cv::Vec3b>(x + z * 5 * WIDTH)[2] = 255;
+//    }
+    imwrite("img.png", image);
+    printf("image written\n");
+}
 
 void bilinearTrace(float xx, float yy, unsigned int z, float *color, float *medium, float &reflectivity, float &opacity, float *gradient, float &intensity, bool &flagEnd, int x, int y){
     bool flagInt = false;
@@ -306,7 +343,7 @@ void trilinearTrace(float xx, float yy, float z, float *color, float *medium, fl
 void trace3d(float *angle, float x, float y, float *pixel) {
     float xx = x, yy = y, z = 0;
     float color[] = {0., 0., 0.}, medium[] = {1.0, 1.0, 1.0}, opacity = 0, path[3];
-    float calcStep = 5;
+    float calcStep = 3;
     while (z < DEPTH){
         float newColor[3], newMedium[3], newReflectivity, newGradient[3], newIntensity, newOpacity;
         bool flagEnd = false;
@@ -357,6 +394,12 @@ void trace3d(float *angle, float x, float y, float *pixel) {
             std::cout << path[0] << std::endl;
         }
 
+        if (y == plainY) {
+            castPositions[castIndex * 2] = xx;
+            castPositions[castIndex * 2 + 1] = z;
+            castIndex += 1;
+        }
+
 //        angle = angle * (1 / angle.z);
         xx += path[0] / calcStep;
         yy += path[1] / calcStep;
@@ -373,13 +416,14 @@ void render(float distance, float *pixel) {
         for (int x = 0; x < viewW; ++x) {
             xx = (float)x * WIDTH / viewW;
             yy = (float)y * HEIGHT / viewH;
-            angle[0] = (xx - WIDTH/2) / distance;
-            angle[1] = (yy - HEIGHT/2) / distance;
+            angle[0] = 0;//(xx - WIDTH/2) / distance;
+            angle[1] = 0;//(yy - HEIGHT/2) / distance;
             angle[2] = 1;
             trace3d(angle, xx, yy, dot);
             setVec3Float(&pixel[(x + y * viewW) * 3], dot);
         }
     }
+    visualize();
 }
 
 void gpuRender(float distance, float *pixel){

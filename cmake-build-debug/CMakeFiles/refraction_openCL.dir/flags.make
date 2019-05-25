@@ -6,5 +6,5 @@ CXX_FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/Ma
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/System/Library/Frameworks -F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks -I/Users/Aoyama/CLionProjects/refraction_openCL 
+CXX_INCLUDES = -I/System/Library/Frameworks -F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks -I/Users/Aoyama/CLionProjects/refraction_openCL -isystem /usr/local/include -isystem /usr/local/include/opencv 
 

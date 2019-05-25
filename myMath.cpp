@@ -67,3 +67,8 @@ float checkRange(float x, int side){
     }
     return c;
 }
+
+float gaussFunc(float x) {
+    float c = 50;
+    return exp(-x * x / 2 / c / c);
+}
