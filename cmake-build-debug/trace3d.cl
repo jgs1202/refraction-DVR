@@ -83,9 +83,6 @@ __kernel void trace(__global float *grad, __global float *fColor, __global float
     angle[1] = (yy - (float)side/2) / (float)distance;
     angle[2] = 1;
 
-    angle[0] = 0;
-    angle[1] = 0;
-
     float iniAngleX = angle[0], lastAngleX;
 
     float args[3];
@@ -226,13 +223,13 @@ __kernel void trace(__global float *grad, __global float *fColor, __global float
         lastAngleX = angle[0];
     }
     checker[position] = angle[0];
-    pixel[position * 3] = (lastAngleX - iniAngleX) * 10;
-    pixel[position * 3 + 1] = 0;//color[1];
-    pixel[position * 3 + 2] = (iniAngleX - lastAngleX) * 10;
+    // pixel[position * 3] = (lastAngleX - iniAngleX) * 10;
+    // pixel[position * 3 + 1] = 0;//color[1];
+    // pixel[position * 3 + 2] = (iniAngleX - lastAngleX) * 10;
 
-    // pixel[position * 3] = color[0];
-    // pixel[position * 3 + 1] = color[1];
-    // pixel[position * 3 + 2] = color[2];
+    pixel[position * 3] = color[0];
+    pixel[position * 3 + 1] = color[1];
+    pixel[position * 3 + 2] = color[2];
 
     // pixel[position * 3] = args[0];
     // pixel[position * 3 + 1] = args[1];

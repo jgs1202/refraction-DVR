@@ -4,9 +4,9 @@
 
 #include "variables.h"
 
-const int WIDTH = 100;
-const int HEIGHT = 100;
-const int DEPTH = 100;
+const int WIDTH = 200;
+const int HEIGHT = WIDTH;
+const int DEPTH = WIDTH;
 //const int WIDTH = 5;
 //const int HEIGHT = 5;
 //const int DEPTH = 5;
@@ -25,13 +25,13 @@ float* lColor = new float[FIELDSZ * 3];
 float* lDirection = new float[FIELDSZ * 3];
 float* lIntensity = new float[FIELDSZ];
 
-int viewW = 100;
-int viewH = 100;
+int viewW = WIDTH;
+int viewH = WIDTH;
 
 int PLATFORM_MAX = 4;
 int DEVICE_MAX  = 4;
 
-int plainY = 70;
+int plainY = HEIGHT * 4 / 5;
 float* castPositions = new float[WIDTH * HEIGHT * 10 * 2];
 int castIndex;
 

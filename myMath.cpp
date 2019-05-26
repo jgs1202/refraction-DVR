@@ -72,3 +72,7 @@ float gaussFunc(float x) {
     float c = 50;
     return exp(-x * x / 2 / c / c);
 }
+
+float exponential(float x) {
+    return exp(x);
+}

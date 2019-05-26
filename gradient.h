@@ -13,5 +13,6 @@ void gradRefraction(float *fRefractivity);
 void gradSmooth (unsigned int kernelSz);
 void gradGauss3Smooth (void);
 void gradGauss3SmoothWithCondition (void);
+void gpuSmoothing(void);
 
 #endif //REFRACTION_OPENCL_GRADIENT_H

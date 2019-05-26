@@ -15,5 +15,6 @@ void checkMinus(float *vec);
 bool checkRangeInt(int x, int side);
 float checkRange(float x, int side);
 float gaussFunc(float x);
+float exponential(float x);
 
 #endif //REFRACTION_OPENCL_MYMATH_H

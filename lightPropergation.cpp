@@ -63,6 +63,7 @@ void lightSmoothing(float *plainData){
 }
 
 void gpuCalcLightSource (float *direction, float *color) {
+    std::cout << "propergating light..." << std::endl;
     float* pGrad = NULL;
     float* pfColor = NULL;
     float* pfMedium;
@@ -103,13 +104,13 @@ void gpuCalcLightSource (float *direction, float *color) {
     }
 
     // 見つかったプラットフォームの情報を印字
-    for (int i = 0; i < platformCount; i++) {
-        char vendor[100] = {0};
-        char version[100] = {0};
-        EC(clGetPlatformInfo(platforms[i], CL_PLATFORM_VENDOR, sizeof(vendor), vendor, nullptr), "clGetPlatformInfo");
-        EC(clGetPlatformInfo(platforms[i], CL_PLATFORM_VERSION, sizeof(version), version, nullptr), "clGetPlatformInfo");
-//        std::cout << "Platform id: " << platforms[i] << ", Vendor: " << vendor << ", Version: " << version << "\n";
-    }
+//    for (int i = 0; i < platformCount; i++) {
+//        char vendor[100] = {0};
+//        char version[100] = {0};
+//        EC(clGetPlatformInfo(platforms[i], CL_PLATFORM_VENDOR, sizeof(vendor), vendor, nullptr), "clGetPlatformInfo");
+//        EC(clGetPlatformInfo(platforms[i], CL_PLATFORM_VERSION, sizeof(version), version, nullptr), "clGetPlatformInfo");
+////        std::cout << "Platform id: " << platforms[i] << ", Vendor: " << vendor << ", Version: " << version << "\n";
+//    }
 
     // デバイス一覧を取得
     cl_device_id devices[DEVICE_MAX];
@@ -121,13 +122,13 @@ void gpuCalcLightSource (float *direction, float *color) {
     }
 
     // 見つかったデバイスの情報を印字
-    std::cout << deviceCount << " device(s) found.\n";
-    for (int i = 0; i < deviceCount; i++) {
-        char name[100] = {0};
-        size_t len;
-        EC(clGetDeviceInfo(devices[i], CL_DEVICE_NAME, sizeof(name), name, &len), "clGetDeviceInfo");
-        std::cout << "Device id: " << i << ", Name: " << name << "\n";
-    }
+//    std::cout << deviceCount << " device(s) found.\n";
+//    for (int i = 0; i < deviceCount; i++) {
+//        char name[100] = {0};
+//        size_t len;
+//        EC(clGetDeviceInfo(devices[i], CL_DEVICE_NAME, sizeof(name), name, &len), "clGetDeviceInfo");
+//        std::cout << "Device id: " << i << ", Name: " << name << "\n";
+//    }
 
     // コンテキストの作成
     cl_context ctx = clCreateContext(nullptr, 1, devices, nullptr, nullptr, &err);
@@ -260,7 +261,7 @@ void gpuCalcLightSource (float *direction, float *color) {
     }
 
     end = clock();
-    printf("light propergation end, %lf seconds\n",(double)(end-start)/CLOCKS_PER_SEC);
+    printf("%lf seconds\n",(double)(end-start)/CLOCKS_PER_SEC);
 
     // コマンドキューの解放
     EC(clReleaseCommandQueue(q), "clReleaseCommandQueue");

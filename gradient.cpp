@@ -5,6 +5,8 @@
 #include "gradient.h"
 #include "variables.h"
 #include "myMath.h"
+#include "gpuSetting.h"
+#include <OpenCL/opencl.h>
 #include <cmath>
 #include <iostream>
 
@@ -301,4 +303,108 @@ void gradGauss3SmoothWithCondition (void){
         }
     }
     delete newGrad;
+}
+
+void gpuSmoothing(void){
+    cl_int side = WIDTH;
+
+    clock_t start,end;
+    start = clock();
+
+    // プラットフォーム一覧を取得
+    cl_platform_id platforms[PLATFORM_MAX];
+    cl_uint platformCount;
+
+    EC(clGetPlatformIDs(PLATFORM_MAX, platforms, &platformCount), "clGetPlatformIDs");
+    if (platformCount == 0) {
+        std::cerr << "No platform.\n";
+        exit(1);
+    }
+
+    // 見つかったプラットフォームの情報を印字
+//    for (int i = 0; i < platformCount; i++) {
+//        char vendor[100] = {0};
+//        char version[100] = {0};
+//        EC(clGetPlatformInfo(platforms[i], CL_PLATFORM_VENDOR, sizeof(vendor), vendor, nullptr), "clGetPlatformInfo");
+//        EC(clGetPlatformInfo(platforms[i], CL_PLATFORM_VERSION, sizeof(version), version, nullptr), "clGetPlatformInfo");
+//        std::cout << "Platform id: " << platforms[i] << ", Vendor: " << vendor << ", Version: " << version << "\n";
+//    }
+
+    // デバイス一覧を取得
+    cl_device_id devices[DEVICE_MAX];
+    cl_uint deviceCount;
+    EC(clGetDeviceIDs(platforms[0], CL_DEVICE_TYPE_GPU, DEVICE_MAX, devices, &deviceCount), "clGetDeviceIDs");
+    if (deviceCount == 0) {
+        std::cerr << "No device.\n";
+        exit(1);
+    }
+
+    // 見つかったデバイスの情報を印字
+//    std::cout << deviceCount << " device(s) found.\n";
+//    for (int i = 0; i < deviceCount; i++) {
+//        char name[100] = {0};
+//        size_t len;
+//        EC(clGetDeviceInfo(devices[i], CL_DEVICE_NAME, sizeof(name), name, &len), "clGetDeviceInfo");
+//        std::cout << "Device id: " << i << ", Name: " << name << "\n";
+//    }
+
+    // コンテキストの作成
+    cl_context ctx = clCreateContext(nullptr, 1, devices, nullptr, nullptr, &err);
+    EC2("clCreateContext");
+
+    FILE *fp;
+    char fileName[] = "./smoothing.cl";
+    fp = fopen(fileName, "r");
+    if(!fp) {
+        std::cout << "no file.\n";
+        exit(1);
+    }
+
+    char *source_str;
+    size_t source_size;
+    source_str = (char*)malloc(0x10000);
+    source_size = fread(source_str, 1, 0x10000, fp);
+    fclose(fp);
+
+    // プログラムのビルド
+    cl_program program = NULL;
+    program = clCreateProgramWithSource(ctx, 1, (const char **)&source_str, (const size_t *)&source_size, &err);
+    clBuildProgram(program, 1, devices, NULL, NULL, NULL);
+
+    // カーネルの作成
+    cl_kernel kernel = clCreateKernel(program, "smooth", &err);
+    EC2("clCreateKernel");
+
+    // コマンドキューの作成
+    cl_command_queue q = clCreateCommandQueue(ctx, devices[0], 0, &err);
+    EC2("clCreateCommandQueue");
+
+    cl_mem memGrad = clCreateBuffer(ctx, CL_MEM_READ_WRITE | CL_MEM_COPY_HOST_PTR, sizeof(float)*FIELDSZ*3, grad, &err);
+    EC2("clCreateBuffer");
+
+    EC(clSetKernelArg(kernel, 0, sizeof(cl_mem), &memGrad), "clSetKernelArg0");
+    EC(clSetKernelArg(kernel, 1, sizeof(cl_int), &side), "clSetKernelArg7");
+
+    size_t global_item_size = FIELDSZ;
+    EC(clEnqueueNDRangeKernel(q, kernel, 1, nullptr, &global_item_size, nullptr, 0, nullptr, nullptr), "clEnqueueNDRangeKernel");
+
+    // 結果を読み込み
+    EC(clEnqueueReadBuffer(q, memGrad, CL_TRUE, 0, sizeof(float) * FIELDSZ * 3, grad, 0, nullptr, nullptr), "clEnqueueReadBuffer");
+
+    end = clock();
+//    printf("%lf秒かかりました\n",(double)(end-start)/CLOCKS_PER_SEC);
+
+    // コマンドキューの解放
+    EC(clReleaseCommandQueue(q), "clReleaseCommandQueue");
+    // デバイスメモリを解放
+    EC(clReleaseMemObject(memGrad), "clReleaseMemObject");
+    // カーネルの解放
+    EC(clReleaseKernel(kernel), "clReleaseKernel");
+    // プログラムの解放
+    EC(clReleaseProgram(program), "clReleaseProgram");
+    // コンテキストの解放
+    EC(clReleaseContext(ctx), "clReleaseContext");
+
+    free(source_str);
+//    printf("smoothing end");
 }

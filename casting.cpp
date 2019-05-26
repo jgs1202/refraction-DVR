@@ -23,32 +23,40 @@ void visualize(void) {
             gradPlain[x + z * WIDTH] = grad[(x + plainY * WIDTH + z * WIDTH * HEIGHT) * 3];
         }
     }
-    float max = *std::max_element(gradPlain.begin(), gradPlain.end());
-    cv::Mat image(cv::Size(WIDTH * 5, HEIGHT * 5), CV_8UC3);
+    float max = *std::max_element(gradPlain.begin(), gradPlain.end()), value, normal;
+    cv::Mat gradAndPaths(cv::Size(WIDTH * 5, HEIGHT * 5), CV_8UC3);
+    cv::Mat refracIndex(cv::Size(WIDTH, HEIGHT), CV_8UC1);
     for (int z=0; z<DEPTH; ++z){
         for (int x=0; x<WIDTH; ++x){
             for (int i=0; i<5; ++i){
                 for (int j=0; j<5; ++j) {
-//                    float value = grad[(x + plainY * WIDTH + z * WIDTH * HEIGHT) * 3];
-                    float value = fRefractivity[(x + plainY * WIDTH + z * WIDTH * HEIGHT)];
-//                    float normal = value / max;
-                    float normal = value / 1.8;
-                    image.at<cv::Vec3b>((x + z * 5 * WIDTH) * 5 + i + j * 5 * WIDTH)[0] = (value > 0)?normal * 255 : 0;
-                    image.at<cv::Vec3b>((x + z * 5 * WIDTH) * 5 + i + j * 5 * WIDTH)[1] = 0;//100 * gaussFunc((std::abs(normal) * 255));
-                    image.at<cv::Vec3b>((x + z * 5 * WIDTH) * 5 + i + j * 5 * WIDTH)[2] = 0;//(value > 0)? 0 :  - 1 * normal * 255;
+                    value = grad[(x + plainY * WIDTH + z * WIDTH * HEIGHT) * 3];
+                    normal = value / max;
+                    gradAndPaths.at<cv::Vec3b>((x + z * 5 * WIDTH) * 5 + i + j * 5 * WIDTH)[0] = (value > 0)?normal * 255 : 0;
+                    gradAndPaths.at<cv::Vec3b>((x + z * 5 * WIDTH) * 5 + i + j * 5 * WIDTH)[1] = 100 * gaussFunc((std::abs(normal) * 255));
+                    gradAndPaths.at<cv::Vec3b>((x + z * 5 * WIDTH) * 5 + i + j * 5 * WIDTH)[2] = (value > 0)? 0 :  - 1 * normal * 255;
                 }
             }
         }
     }
-//    for (int i=0; i<castIndex; ++i){
-//        int x = (int)roundInt(castPositions[i * 2] * 5);
-//        int z = (int)roundInt(castPositions[i * 2 + 1] * 5);
-//        image.at<cv::Vec3b>(x + z * 5 * WIDTH)[0] = 255;
-//        image.at<cv::Vec3b>(x + z * 5 * WIDTH)[1] = 255;
-//        image.at<cv::Vec3b>(x + z * 5 * WIDTH)[2] = 255;
-//    }
-    imwrite("img.png", image);
-    printf("image written\n");
+    for (int i=0; i<castIndex; ++i){
+        int x = (int)roundInt(castPositions[i * 2] * 5);
+        int z = (int)roundInt(castPositions[i * 2 + 1] * 5);
+        gradAndPaths.at<cv::Vec3b>(x + z * 5 * WIDTH)[0] = 255;
+        gradAndPaths.at<cv::Vec3b>(x + z * 5 * WIDTH)[1] = 255;
+        gradAndPaths.at<cv::Vec3b>(x + z * 5 * WIDTH)[2] = 255;
+    }
+    float maxRefraction = 1.8;
+    for (int z=0; z<DEPTH; ++z){
+        for (int x=0; x<WIDTH; ++x){
+            value = fRefractivity[(x + plainY * WIDTH + z * WIDTH * HEIGHT)];
+            normal = value / maxRefraction;
+            refracIndex.at<unsigned char>(x + z * WIDTH) = exponential(normal) / exponential(1) * 255;
+        }
+    }
+    imwrite("grad.png", gradAndPaths);
+    imwrite("refractive_index.png", refracIndex);
+    printf("img written\n");
 }
 
 void bilinearTrace(float xx, float yy, unsigned int z, float *color, float *medium, float &reflectivity, float &opacity, float *gradient, float &intensity, bool &flagEnd, int x, int y){
@@ -364,7 +372,7 @@ void trace3d(float *angle, float x, float y, float *pixel) {
 //        }
         int AOIx = 70, AOIy = 80;
         if ((x == AOIx) && (y == AOIy)){
-            std::cout << "result" << " " << xx << " " << yy << " " << z  << " " << angle[0] << " " << newGradient[0] << flagEnd << std::endl;// << opacity << " " << newOpacity << " " << newColor[0] << newColor[1] << newColor[2] << " " << color[0] << color[1] << color[2] << std::endl;
+//            std::cout << "result" << " " << xx << " " << yy << " " << z  << " " << angle[0] << " " << newGradient[0] << flagEnd << std::endl;// << opacity << " " << newOpacity << " " << newColor[0] << newColor[1] << newColor[2] << " " << color[0] << color[1] << color[2] << std::endl;
 //            std::cout << xx << " " << yy << " ";// << angle[0] << " " << angle[1] << " " << angle[2] << "  " << newGradient[0] << " " << newGradient[1] << " "  << newGradient[2] << " " << std::endl;
         }
 
@@ -386,12 +394,12 @@ void trace3d(float *angle, float x, float y, float *pixel) {
             break;
         }
 //      update angle +=  newGradient;
-        multiFloat(newGradient, 100 / WIDTH, newGradient);
+        multiFloat(newGradient, 100 / (float)WIDTH, newGradient);
         multiFloat(newGradient, 1 / calcStep, newGradient);
         addVec(angle, newGradient, angle);
         vecNormalize(angle, path);
         if ((x == AOIx) && (y == AOIy)){
-            std::cout << path[0] << std::endl;
+//            std::cout << path[0] << newGradient[0] / (float)WIDTH << std::endl;
         }
 
         if (y == plainY) {
@@ -427,6 +435,7 @@ void render(float distance, float *pixel) {
 }
 
 void gpuRender(float distance, float *pixel){
+    std::cout << "rendering..." << std::endl;
     cl_int side = WIDTH;
     cl_int dis = (int)distance;
     cl_int w = viewW;
@@ -436,7 +445,6 @@ void gpuRender(float distance, float *pixel){
     checker = (float *)malloc(sizeof(float) * w * h);
 
     clock_t start,end;
-    printf("start\n");
     start = clock();
 
     // プラットフォーム一覧を取得
@@ -450,13 +458,13 @@ void gpuRender(float distance, float *pixel){
     }
 
     // 見つかったプラットフォームの情報を印字
-    for (int i = 0; i < platformCount; i++) {
-        char vendor[100] = {0};
-        char version[100] = {0};
-        EC(clGetPlatformInfo(platforms[i], CL_PLATFORM_VENDOR, sizeof(vendor), vendor, nullptr), "clGetPlatformInfo");
-        EC(clGetPlatformInfo(platforms[i], CL_PLATFORM_VERSION, sizeof(version), version, nullptr), "clGetPlatformInfo");
-        std::cout << "Platform id: " << platforms[i] << ", Vendor: " << vendor << ", Version: " << version << "\n";
-    }
+//    for (int i = 0; i < platformCount; i++) {
+//        char vendor[100] = {0};
+//        char version[100] = {0};
+//        EC(clGetPlatformInfo(platforms[i], CL_PLATFORM_VENDOR, sizeof(vendor), vendor, nullptr), "clGetPlatformInfo");
+//        EC(clGetPlatformInfo(platforms[i], CL_PLATFORM_VERSION, sizeof(version), version, nullptr), "clGetPlatformInfo");
+//        std::cout << "Platform id: " << platforms[i] << ", Vendor: " << vendor << ", Version: " << version << "\n";
+//    }
 
     // デバイス一覧を取得
     cl_device_id devices[DEVICE_MAX];
@@ -468,13 +476,13 @@ void gpuRender(float distance, float *pixel){
     }
 
     // 見つかったデバイスの情報を印字
-    std::cout << deviceCount << " device(s) found.\n";
-    for (int i = 0; i < deviceCount; i++) {
-        char name[100] = {0};
-        size_t len;
-        EC(clGetDeviceInfo(devices[i], CL_DEVICE_NAME, sizeof(name), name, &len), "clGetDeviceInfo");
-        std::cout << "Device id: " << i << ", Name: " << name << "\n";
-    }
+//    std::cout << deviceCount << " device(s) found.\n";
+//    for (int i = 0; i < deviceCount; i++) {
+//        char name[100] = {0};
+//        size_t len;
+//        EC(clGetDeviceInfo(devices[i], CL_DEVICE_NAME, sizeof(name), name, &len), "clGetDeviceInfo");
+//        std::cout << "Device id: " << i << ", Name: " << name << "\n";
+//    }
 
     // コンテキストの作成
     cl_context ctx = clCreateContext(nullptr, 1, devices, nullptr, nullptr, &err);
@@ -536,15 +544,13 @@ void gpuRender(float distance, float *pixel){
     EC(clEnqueueReadBuffer(q, memPixel, CL_TRUE, 0, sizeof(float) * w * h * 3, pixel, 0, nullptr, nullptr), "clEnqueueReadBuffer");
     EC(clEnqueueReadBuffer(q, memChecker, CL_TRUE, 0, sizeof(float) * w * h, checker, 0, nullptr, nullptr), "clEnqueueReadBuffer");
 
-    for (int position=0; position<w; ++position){
-        std::cout << checker[position + h * 70/ 100 * w] << " ";
-    }
+//    for (int position=0; position<w; ++position){
+//        std::cout << checker[position + h * 70/ 100 * w] << " ";
+//    }
+//    printf("\n");
 
-    printf("\n");
-
-    printf("\n");
     end = clock();
-    printf("%lf秒かかりました\n",(double)(end-start)/CLOCKS_PER_SEC);
+    printf("%lf seconds\n",(double)(end-start)/CLOCKS_PER_SEC);
 
     // コマンドキューの解放
     EC(clReleaseCommandQueue(q), "clReleaseCommandQueue");
@@ -563,5 +569,5 @@ void gpuRender(float distance, float *pixel){
     EC(clReleaseContext(ctx), "clReleaseContext");
 
     free(source_str);
-    printf("trace end");
+    free(checker);
 }

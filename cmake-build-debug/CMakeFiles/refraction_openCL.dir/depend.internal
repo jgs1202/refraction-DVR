@@ -141,6 +141,7 @@ CMakeFiles/refraction_openCL.dir/casting.cpp.o
 CMakeFiles/refraction_openCL.dir/gpuSetting.cpp.o
  /Users/Aoyama/CLionProjects/refraction_openCL/gpuSetting.cpp
 CMakeFiles/refraction_openCL.dir/gradient.cpp.o
+ /Users/Aoyama/CLionProjects/refraction_openCL/gpuSetting.h
  /Users/Aoyama/CLionProjects/refraction_openCL/gradient.cpp
  /Users/Aoyama/CLionProjects/refraction_openCL/gradient.h
  /Users/Aoyama/CLionProjects/refraction_openCL/myMath.h

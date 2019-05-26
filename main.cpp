@@ -123,20 +123,16 @@ void display( void )
 //  座標調整
     glRasterPos2i(-1 , 1);
     glClear(GL_COLOR_BUFFER_BIT);
-    std::cout << "display" << std::endl;
     std::cout << "viewing size: " << viewW << " " << viewH << std::endl;
 
     float *image = new float[viewH * viewW * 3], *pixel = image;
-
-//    gpuRender(2 * WIDTH, pixel);
-    render(2 * WIDTH, pixel);
-
+    gpuRender(2 * WIDTH, pixel);
+//    render(2 * WIDTH, pixel);
 
     glDrawPixels(viewW, viewH, GL_RGB, GL_FLOAT, image);
-
     glFlush();
-    std::cout << "display end" << std::endl;
     delete[] image;
+    printf("\n");
 }
 
 void myReshape(int w, int h)
@@ -163,67 +159,16 @@ int main(int argc, char **argv)
     printf("calculating gradients...\n");
     gradRefraction(fRefractivity);
 
-//    for (int z=0; z<WIDTH; ++z){
-//        for (int y=0; y<WIDTH; ++y){
-//            for (int x=0; x<WIDTH; ++x){
-//                std::cout << fRefractivity[x + y * WIDTH + z * WIDTH * HEIGHT] << " ";
-//            }
-//            printf("\n");
-//        }
-//        printf("\n\n");
-//    }
-//    printf("\n\n");
-//
-//    for (int z=0; z<WIDTH / 30; ++z){
-//        for (int y=0; y<WIDTH / 30; ++y){
-//            for (int x=0; x<WIDTH / 30; ++x){
-//                std::cout << grad[(x + y * WIDTH + z * WIDTH * HEIGHT) * 3] << " ";
-//            }
-//            printf("\n");
-//        }
-//        printf("\n");
-//    }
-//    printf("\n");
-
-
     printf("smoothing gradient...\n");
 //    gradSmooth(3);
-//    gradSmooth(3);
-//    gradSmooth(3);
-//    gradSmooth(3);
-//    gradSmooth(3);
 //    gradGauss3SmoothWithCondition();
-//    gradGauss3SmoothWithCondition();
-//    gradGauss3SmoothWithCondition();
-//    gradGauss3SmoothWithCondition();
-//    gradGauss3SmoothWithCondition();
-//    gradGauss3SmoothWithCondition();
-//    gradGauss3SmoothWithCondition();
-//    gradGauss3SmoothWithCondition();
-//    gradGauss3SmoothWithCondition();
-//    gradGauss3SmoothWithCondition();
-//    gradGauss3SmoothWithCondition();
-
-    gradGauss3Smooth();
-    gradGauss3Smooth();
-    gradGauss3Smooth();
-    gradGauss3Smooth();
-    gradGauss3Smooth();
-//    gradGauss3Smooth();
-//    gradGauss3Smooth();
-//    gradGauss3Smooth();
-//    gradGauss3Smooth();
-//    gradGauss3Smooth();
-//    gradGauss3Smooth();
-//    gradGauss3Smooth();
 //    gradGauss3Smooth();
 
-//    for (int z=0; z<DEPTH; ++z){
-//        for (int x=0; x<WIDTH*4/5; ++x){
-//            std::cout << (float)((int)(grad[(x + 60 * WIDTH + z * WIDTH * WIDTH) * 3] * 100)) << " ";
-//        }
-//        printf("\n");
-//    }
+    gpuSmoothing();
+    gpuSmoothing();
+    gpuSmoothing();
+    gpuSmoothing();
+    gpuSmoothing();
 
 //  field, light, direction, color, intensity, direction.z must be bigger than the others.
 //    calcLightSource(field, fromLightSource, grad, Vec3f (1, 1, 1), Vec3f (1,1,1));

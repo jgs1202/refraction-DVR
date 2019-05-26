@@ -140,6 +140,7 @@ CMakeFiles/refraction_openCL.dir/casting.cpp.o: /usr/local/include/opencv2/video
 
 CMakeFiles/refraction_openCL.dir/gpuSetting.cpp.o: ../gpuSetting.cpp
 
+CMakeFiles/refraction_openCL.dir/gradient.cpp.o: ../gpuSetting.h
 CMakeFiles/refraction_openCL.dir/gradient.cpp.o: ../gradient.cpp
 CMakeFiles/refraction_openCL.dir/gradient.cpp.o: ../gradient.h
 CMakeFiles/refraction_openCL.dir/gradient.cpp.o: ../myMath.h
