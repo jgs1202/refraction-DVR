@@ -17,215 +17,70 @@
 
 void visualize(void) {
     //  make image of the object field
-    std::vector<float> gradPlain(PLAINSZ);
+    std::vector<float> gradPlainY(PLAINSZ);
+    std::vector<float> gradPlainX(PLAINSZ);
     for (int z=0; z<DEPTH; ++z) {
         for (int x = 0; x < WIDTH; ++x) {
-            gradPlain[x + z * WIDTH] = grad[(x + plainY * WIDTH + z * WIDTH * HEIGHT) * 3];
+            gradPlainY[x + z * WIDTH] = grad[(x + plainY * WIDTH + z * WIDTH * HEIGHT) * 3];
+            gradPlainX[x + z * WIDTH] = grad[(plainX + x * WIDTH + z * WIDTH * HEIGHT) * 3 + 1];
         }
     }
-    float max = *std::max_element(gradPlain.begin(), gradPlain.end()), value, normal;
-    cv::Mat gradAndPaths(cv::Size(WIDTH * 5, HEIGHT * 5), CV_8UC3);
-    cv::Mat refracIndex(cv::Size(WIDTH, HEIGHT), CV_8UC1);
+    float maxY = *std::max_element(gradPlainY.begin(), gradPlainY.end()), valueY, normalY;
+    float maxX = *std::max_element(gradPlainX.begin(), gradPlainX.end()), valueX, normalX;
+    cv::Mat gradAndPathsY(cv::Size(WIDTH * 5, HEIGHT * 5), CV_8UC3);
+    cv::Mat gradAndPathsX(cv::Size(WIDTH * 5, HEIGHT * 5), CV_8UC3);
+    cv::Mat refracIndexY(cv::Size(WIDTH, HEIGHT), CV_8UC1);
+    cv::Mat refracIndexX(cv::Size(WIDTH, HEIGHT), CV_8UC1);
     for (int z=0; z<DEPTH; ++z){
         for (int x=0; x<WIDTH; ++x){
             for (int i=0; i<5; ++i){
                 for (int j=0; j<5; ++j) {
-                    value = grad[(x + plainY * WIDTH + z * WIDTH * HEIGHT) * 3];
-                    normal = value / max;
-                    gradAndPaths.at<cv::Vec3b>((x + z * 5 * WIDTH) * 5 + i + j * 5 * WIDTH)[0] = (value > 0)?normal * 255 : 0;
-                    gradAndPaths.at<cv::Vec3b>((x + z * 5 * WIDTH) * 5 + i + j * 5 * WIDTH)[1] = 100 * gaussFunc((std::abs(normal) * 255));
-                    gradAndPaths.at<cv::Vec3b>((x + z * 5 * WIDTH) * 5 + i + j * 5 * WIDTH)[2] = (value > 0)? 0 :  - 1 * normal * 255;
+                    valueY = grad[(x + plainY * WIDTH + z * WIDTH * HEIGHT) * 3];
+                    normalY = valueY / maxY;
+                    gradAndPathsY.at<cv::Vec3b>((x + z * 5 * WIDTH) * 5 + i + j * 5 * WIDTH)[0] = (valueY > 0)?normalY * 255 : 0;
+                    gradAndPathsY.at<cv::Vec3b>((x + z * 5 * WIDTH) * 5 + i + j * 5 * WIDTH)[1] = 100 * gaussFunc((std::abs(normalY) * 255));
+                    gradAndPathsY.at<cv::Vec3b>((x + z * 5 * WIDTH) * 5 + i + j * 5 * WIDTH)[2] = (valueY > 0)? 0 :  - 1 * normalY * 255;
+
+                    valueX = grad[(plainX + x * WIDTH + z * WIDTH * HEIGHT) * 3 + 1];
+                    normalX = valueX / maxX;
+                    gradAndPathsX.at<cv::Vec3b>((z + x * 5 * WIDTH) * 5 + j + i * 5 * WIDTH)[0] = (valueX > 0)?normalX * 255 : 0;
+                    gradAndPathsX.at<cv::Vec3b>((z + x * 5 * WIDTH) * 5 + j + i * 5 * WIDTH)[1] = 100 * gaussFunc((std::abs(normalX) * 255));
+                    gradAndPathsX.at<cv::Vec3b>((z + x * 5 * WIDTH) * 5 + j + i * 5 * WIDTH)[2] = (valueX > 0)? 0 :  - 1 * normalX * 255;
                 }
             }
         }
     }
-    for (int i=0; i<castIndex; ++i){
-        int x = (int)roundInt(castPositions[i * 2] * 5);
-        int z = (int)roundInt(castPositions[i * 2 + 1] * 5);
-        gradAndPaths.at<cv::Vec3b>(x + z * 5 * WIDTH)[0] = 255;
-        gradAndPaths.at<cv::Vec3b>(x + z * 5 * WIDTH)[1] = 255;
-        gradAndPaths.at<cv::Vec3b>(x + z * 5 * WIDTH)[2] = 255;
+    int x, z;
+    for (int i=0; i<castIndexY; ++i){
+        x = (int)roundInt(castPositionY[i * 2] * 5);
+        z = (int)roundInt(castPositionY[i * 2 + 1] * 5);
+        gradAndPathsY.at<cv::Vec3b>(x + z * 5 * WIDTH)[0] = 255;
+        gradAndPathsY.at<cv::Vec3b>(x + z * 5 * WIDTH)[1] = 255;
+        gradAndPathsY.at<cv::Vec3b>(x + z * 5 * WIDTH)[2] = 255;
+
+        x = (int)roundInt(castPositionX[i * 2] * 5);
+        z = (int)roundInt(castPositionX[i * 2 + 1] * 5);
+        gradAndPathsX.at<cv::Vec3b>(z + x * 5 * WIDTH)[0] = 255;
+        gradAndPathsX.at<cv::Vec3b>(z + x * 5 * WIDTH)[1] = 255;
+        gradAndPathsX.at<cv::Vec3b>(z + x * 5 * WIDTH)[2] = 255;
     }
     float maxRefraction = 1.8;
     for (int z=0; z<DEPTH; ++z){
         for (int x=0; x<WIDTH; ++x){
-            value = fRefractivity[(x + plainY * WIDTH + z * WIDTH * HEIGHT)];
-            normal = value / maxRefraction;
-            refracIndex.at<unsigned char>(x + z * WIDTH) = exponential(normal) / exponential(1) * 255;
+            valueY = fRefractivity[(x + plainY * WIDTH + z * WIDTH * HEIGHT)];
+            normalY = valueY / maxRefraction;
+            refracIndexY.at<unsigned char>(x + z * WIDTH) = exponential(normalY) / exponential(1) * 255;
+
+            valueX = fRefractivity[(plainX + x * WIDTH + z * WIDTH * HEIGHT)];
+            normalX = valueX / maxRefraction;
+            refracIndexX.at<unsigned char>(z + x * WIDTH) = exponential(normalX) / exponential(1) * 255;
         }
     }
-    imwrite("grad.png", gradAndPaths);
-    imwrite("refractive_index.png", refracIndex);
+    imwrite("gradY.png", gradAndPathsY);
+    imwrite("gradX.png", gradAndPathsX);
+    imwrite("refractive_indexY.png", refracIndexY);
+    imwrite("refractive_indexX.png", refracIndexX);
     printf("img written\n");
-}
-
-void bilinearTrace(float xx, float yy, unsigned int z, float *color, float *medium, float &reflectivity, float &opacity, float *gradient, float &intensity, bool &flagEnd, int x, int y){
-    bool flagInt = false;
-    unsigned int p;
-    if ((std::ceil(xx) == std::floor(xx))){
-        if ((std::ceil(yy) == std::floor(yy))) {
-            flagInt = true;
-        }
-    }
-    if ((xx < 0) || (yy < 0) || (xx >= WIDTH - 1) || ((yy >= HEIGHT - 1))){
-        xx = checkRange(xx, WIDTH);
-        yy = checkRange(yy, WIDTH);
-        flagEnd = true;
-        p = ((int)std::floor(xx) + (int)std::floor(yy) * WIDTH + z * WIDTH * HEIGHT);
-        multiVec(&lColor[3 * p], &fColor[3 * p], color);
-        setVec3Float(medium, &fColor[3 * p]);
-//        reflectivity = fRefrecttivity[p];
-        opacity = fOpacity[p];
-        if (opacity == 0){
-            opacity = 1;
-            medium[0] = 1;
-            medium[1] = 1;
-            medium[2] = 1;
-        }
-        setVec3Float(gradient, &grad[3 * p]);
-        intensity = lIntensity[p];
-
-//        if ((x == AOIx) && (y == AOIy)){
-//            std::cout << "bilinear0 " << xx << " " << yy << " " << lColor[3 * p] << lColor[3 * p+1] << lColor[3 * p+2] << std::endl;
-//        }
-    } else if (flagInt) {
-        p = ((int)xx + (int)yy * WIDTH + z * WIDTH * HEIGHT);
-        multiVec(&lColor[3 * p], &fColor[3 * p], color);
-        setVec3Float(medium, &fColor[3 * p]);
-//        reflectivity = fRefrectivity[p];
-        opacity = fOpacity[p];
-        setVec3Float(gradient, &grad[3 * p]);
-        intensity = lIntensity[p];
-//        if ((x == AOIx) && (y == AOIy)){
-//            std::cout << "bilinear1 " << lColor[p] << std::endl;
-//        }
-    } else {
-//        std::cout << "case 3" << z << std::endl;
-        float x1[] = {std::floor(xx), std::floor(yy), (float)z};
-        float x2[] = {std::floor(xx), std::floor(yy) + 1, (float)z};
-        float y1[] = {std::floor(xx) + 1, std::floor(yy), (float)z};
-        float y2[] = {std::floor(xx) + 1, std::floor(yy) + 1, (float)z};
-
-        float ratiox = std::abs(xx - std::floor(xx)) / STEP;
-        float ratioy = std::abs(yy - std::floor(yy)) / STEP;
-
-//        if ((x == AOIx) && (y == AOIy)){
-//            std::cout << lColor[getCoordinate(x1)] << lColor[getCoordinate(x2)] << color << std::endl;
-//            std::cout << field[getCoordinate(x1)].color << field[getCoordinate(x2)].color << field[getCoordinate(y1)].color << field[getCoordinate(y2)].color << std::endl;
-//            std::cout << x1[0] << " " << x1[1] << " " << y2[0] << " " << y2[1] << " "  << std::endl;
-//            std::cout << fOpacity[getScalarCoo(x1)] << std::endl;
-//        }
-        float particle[3], vec1[3], vec2[3], vec3[3], vec4[3];
-
-        multiFloat(&fColor[getCoordinate(x1)], (1 - ratiox), vec1);
-        multiFloat(&fColor[getCoordinate(y1)], ratiox, vec2);
-        multiFloat(&fColor[getCoordinate(x2)], (1 - ratiox), vec3);
-        multiFloat(&fColor[getCoordinate(y2)], ratiox, vec4);
-        addVec(vec1, vec2, vec1);
-        addVec(vec3, vec4, vec2);
-        multiFloat(vec1, 1 - ratioy, vec1);
-        multiFloat(vec2, ratioy, vec2);
-        addVec(vec1, vec2, particle);
-
-        multiFloat(&lColor[getCoordinate(x1)], (1 - ratiox), vec1);
-        multiFloat(&lColor[getCoordinate(y1)], ratiox, vec2);
-        multiFloat(&lColor[getCoordinate(x2)], (1 - ratiox), vec3);
-        multiFloat(&lColor[getCoordinate(y2)], ratiox, vec4);
-        addVec(vec1, vec2, vec1);
-        addVec(vec3, vec4, vec2);
-        multiFloat(vec1, 1 - ratioy, vec1);
-        multiFloat(vec2, ratioy, vec2);
-        addVec(vec1, vec2, color);
-        color[0] = 1;
-        color[1] = 1;
-        color[2] = 1;
-        multiVec(color, particle, color);
-
-//        if ((x == AOIx) && (y == AOIy)){
-//            std::cout << "bilinear2 " << particle[0] << " " << particle[1] << " " << particle[2] << " " << ratiox << std::endl;
-//            std::cout << color[0] << " " << color[1] << " " << color[2] << " " << ratiox << std::endl;
-//        }
-
-        multiFloat(&fMedium[getCoordinate(x1)], (1 - ratiox), vec1);
-        multiFloat(&fMedium[getCoordinate(y1)], ratiox, vec2);
-        multiFloat(&fMedium[getCoordinate(x2)], (1 - ratiox), vec3);
-        multiFloat(&fMedium[getCoordinate(y2)], ratiox, vec4);
-        addVec(vec1, vec2, vec1);
-        addVec(vec3, vec4, vec2);
-        multiFloat(vec1, 1 - ratioy, vec1);
-        multiFloat(vec2, ratioy, vec2);
-        addVec(vec1, vec2, medium);
-
-//        reflectivity = (fReflectivity[getCoordinate(x1)] * (1 - ratiox) + fReflectivity[getCoordinate(y1)] * ratiox) * (1 - ratioy) + (fReflectivity[getCoordinate(x2)] * (1 - ratiox) + fReflectivity[getCoordinate(y2)] * ratiox) * ratioy;
-//        opacity = (fOpacity[getScalarCoo(x1)] * (1 - ratiox) + fOpacity[getScalarCoo(y1)] * ratiox) * (1 - ratioy) + (fOpacity[getScalarCoo(x2)] * (1 - ratiox) + fOpacity[getScalarCoo(y2)] * ratiox) * ratioy;
-        opacity = fOpacity[getScalarCoo(x1)];
-
-        multiFloat(&grad[getCoordinate(x1)], (1 - ratiox), vec1);
-        multiFloat(&grad[getCoordinate(y1)], ratiox, vec2);
-        multiFloat(&grad[getCoordinate(x2)], (1 - ratiox), vec3);
-        multiFloat(&grad[getCoordinate(y2)], ratiox, vec4);
-        addVec(vec1, vec2, vec1);
-        addVec(vec3, vec4, vec2);
-        multiFloat(vec1, 1 - ratioy, vec1);
-        multiFloat(vec2, ratioy, vec2);
-        addVec(vec1, vec2, gradient);
-
-        intensity = (lIntensity[getScalarCoo(x1)] * (1 - ratiox) + lIntensity[getScalarCoo(y1)] * ratiox) * (1 - ratioy) + (lIntensity[getScalarCoo(x2)] * (1 - ratiox) + lIntensity[getScalarCoo(y2)] * ratiox) * ratioy;
-    }
-}
-
-void trace(float *angle, float x, float y, float *pixel) {
-    float xx = x, yy = y;
-    unsigned int z = 0;
-    float color[] = {0., 0., 0.}, medium[] = {1.0, 1.0, 1.0}, opacity = 0;
-    while (z < DEPTH){
-        float newColor[3], newMedium[3], newReflectivity, newGradient[3], newIntensity, newOpacity;
-        bool flagEnd = false;
-
-        bilinearTrace(xx, yy, z, newColor, newMedium, newReflectivity, newOpacity, newGradient, newIntensity, flagEnd, x, y);
-        float vec1[3], vec2[3];
-        // update color += medium * (1 - opacity) * newOpacity * newColor;
-        multiFloat(medium, (1 - opacity) * newOpacity, vec1);
-        multiVec(vec1, newColor, vec1);
-        addVec(color, vec1, color);
-
-//      update medium *= newMedium;
-        multiVec(medium, newMedium, medium);
-        opacity += (1 - opacity) * newOpacity;
-
-//        if (z == DEPTH - 1){
-//            std::cout << color << newColor << medium << newMedium << opacity << newOpacity << flagEnd << std::endl;
-//        }
-//        if ((x == AOIx) && (y == AOIy)){
-//            std::cout << "result" << z  << " "; // << opacity << " " << newOpacity << " " << newColor[0] << newColor[1] << newColor[2] << " " << color[0] << color[1] << color[2] << std::endl;
-//            std::cout << xx << " " << yy << " " << angle[0] << " " << angle[1] << " " << angle[2] << "  " << newGradient[0] << " " << newGradient[1] << " "  << newGradient[2] << " " << std::endl;
-//        }
-
-//        if ((std::abs(x - AOIx) < 3) && (std::abs(y - AOIy) < 3)){
-//            color[0] = 0.4;
-//            color[1] = 0.4;
-//            color[2] = 1;
-//        }
-        if (flagEnd){
-//            if ((x == AOIx) && (y == AOIy)) {
-//                std::cout << "break1 " << z << " " << opacity << " " << newOpacity << std::endl;
-//            }
-            break;
-        }
-        if (std::abs(opacity - 1.0) < 0.05){
-//            if ((x == AOIx) && (y == AOIy)){
-//                std::cout << "break2 " << z << ", " << opacity  << ", " << newOpacity << std::endl;
-//            }
-            break;
-        }
-//      update angle +=  newGradient;
-        addVec(angle, newGradient, angle);
-//        angle = angle * (1 / angle.z);
-        xx += angle[0] * (1 / angle[2]);
-        yy += angle[1] * (1 / angle[2]);
-        z++;
-    }
-    setVec3Float(pixel, color);
 }
 
 void biInter(float* tf, float* bf, float* tb, float* bb, float ratioy, float ratioz, float* value){
@@ -300,22 +155,22 @@ void trilinearTrace(float xx, float yy, float z, float *color, float *medium, fl
         medium[1] = fColor[getCoordinate(ltf) + 1];
         medium[2] = fColor[getCoordinate(ltf) + 2];
 
-        tf[0] = lColor[getCoordinate(ltf)] * (1 - ratiox) + lColor[getCoordinate(rtf)] * ratiox;
-        tf[1] = lColor[getCoordinate(ltf) + 1] * (1 - ratiox) + lColor[getCoordinate(rtf) + 1] * ratiox;
-        tf[2] = lColor[getCoordinate(ltf) + 2] * (1 - ratiox) + lColor[getCoordinate(rtf) + 2] * ratiox;
-        bf[0] = lColor[getCoordinate(lbf)] * (1 - ratiox) + lColor[getCoordinate(rbf)] * ratiox;
-        bf[1] = lColor[getCoordinate(lbf) + 1] * (1 - ratiox) + lColor[getCoordinate(rbf) + 1] * ratiox;
-        bf[2] = lColor[getCoordinate(lbf) + 2] * (1 - ratiox) + lColor[getCoordinate(rbf) + 2] * ratiox;
-        tb[0] = lColor[getCoordinate(ltb)] * (1 - ratiox) + lColor[getCoordinate(rtb)] * ratiox;
-        tb[1] = lColor[getCoordinate(ltb) + 1] * (1 - ratiox) + lColor[getCoordinate(rtb) + 1] * ratiox;
-        tb[2] = lColor[getCoordinate(ltb) + 2] * (1 - ratiox) + lColor[getCoordinate(rtb) + 2] * ratiox;
-        bb[0] = lColor[getCoordinate(lbb)] * (1 - ratiox) + lColor[getCoordinate(rbb)] * ratiox;
-        bb[1] = lColor[getCoordinate(lbb) + 1] * (1 - ratiox) + lColor[getCoordinate(rbb) + 1] * ratiox;
-        bb[2] = lColor[getCoordinate(lbb) + 2] * (1 - ratiox) + lColor[getCoordinate(rbb) + 2] * ratiox;
-        biInter(tf, bf, tb, bb, ratioy, ratioz, color);
-        color[0] = 1;
-        color[1] = 1;
-        color[2] = 1;
+//        tf[0] = lColor[getCoordinate(ltf)] * (1 - ratiox) + lColor[getCoordinate(rtf)] * ratiox;
+//        tf[1] = lColor[getCoordinate(ltf) + 1] * (1 - ratiox) + lColor[getCoordinate(rtf) + 1] * ratiox;
+//        tf[2] = lColor[getCoordinate(ltf) + 2] * (1 - ratiox) + lColor[getCoordinate(rtf) + 2] * ratiox;
+//        bf[0] = lColor[getCoordinate(lbf)] * (1 - ratiox) + lColor[getCoordinate(rbf)] * ratiox;
+//        bf[1] = lColor[getCoordinate(lbf) + 1] * (1 - ratiox) + lColor[getCoordinate(rbf) + 1] * ratiox;
+//        bf[2] = lColor[getCoordinate(lbf) + 2] * (1 - ratiox) + lColor[getCoordinate(rbf) + 2] * ratiox;
+//        tb[0] = lColor[getCoordinate(ltb)] * (1 - ratiox) + lColor[getCoordinate(rtb)] * ratiox;
+//        tb[1] = lColor[getCoordinate(ltb) + 1] * (1 - ratiox) + lColor[getCoordinate(rtb) + 1] * ratiox;
+//        tb[2] = lColor[getCoordinate(ltb) + 2] * (1 - ratiox) + lColor[getCoordinate(rtb) + 2] * ratiox;
+//        bb[0] = lColor[getCoordinate(lbb)] * (1 - ratiox) + lColor[getCoordinate(rbb)] * ratiox;
+//        bb[1] = lColor[getCoordinate(lbb) + 1] * (1 - ratiox) + lColor[getCoordinate(rbb) + 1] * ratiox;
+//        bb[2] = lColor[getCoordinate(lbb) + 2] * (1 - ratiox) + lColor[getCoordinate(rbb) + 2] * ratiox;
+//        biInter(tf, bf, tb, bb, ratioy, ratioz, color);
+        color[0] = lColor[getCoordinate(ltf)];
+        color[1] = lColor[getCoordinate(ltf) + 1];
+        color[2] = lColor[getCoordinate(ltf) + 2];
         color[0] = color[0] * medium[0];
         color[1] = color[1] * medium[1];
         color[2] = color[2] * medium[2];
@@ -351,7 +206,7 @@ void trilinearTrace(float xx, float yy, float z, float *color, float *medium, fl
 void trace3d(float *angle, float x, float y, float *pixel) {
     float xx = x, yy = y, z = 0;
     float color[] = {0., 0., 0.}, medium[] = {1.0, 1.0, 1.0}, opacity = 0, path[3];
-    float calcStep = 3;
+    float calcStep = 1;
     while (z < DEPTH){
         float newColor[3], newMedium[3], newReflectivity, newGradient[3], newIntensity, newOpacity;
         bool flagEnd = false;
@@ -367,13 +222,11 @@ void trace3d(float *angle, float x, float y, float *pixel) {
         multiVec(medium, newMedium, medium);
         opacity += (1 - opacity) * newOpacity;
 
-//        if (z == DEPTH - 1){
-//            std::cout << color << newColor << medium << newMedium << opacity << newOpacity << flagEnd << std::endl;
-//        }
         int AOIx = 70, AOIy = 80;
         if ((x == AOIx) && (y == AOIy)){
-//            std::cout << "result" << " " << xx << " " << yy << " " << z  << " " << angle[0] << " " << newGradient[0] << flagEnd << std::endl;// << opacity << " " << newOpacity << " " << newColor[0] << newColor[1] << newColor[2] << " " << color[0] << color[1] << color[2] << std::endl;
-//            std::cout << xx << " " << yy << " ";// << angle[0] << " " << angle[1] << " " << angle[2] << "  " << newGradient[0] << " " << newGradient[1] << " "  << newGradient[2] << " " << std::endl;
+            std::cout << "result" << " " << xx << " " << yy << " " << z  << " " << newColor[1] << " " << newOpacity << " " << flagEnd << std::endl;// << opacity << " " << newOpacity << " " << newColor[0] << newColor[1] << newColor[2] << " " << color[0] << color[1] << color[2] << std::endl;
+            std::cout << (int)(newColor[0] * 100) << " " << (int)(newColor[1] * 100) << " " << (int)(newColor[2] * 100) << " " << (int)(color[0] * 100) << " " << (int)(color[0] * 100) << " " << (int)(color[0] * 100) << std::endl;
+            //            std::cout << xx << " " << yy << " ";// << angle[0] << " " << angle[1] << " " << angle[2] << "  " << newGradient[0] << " " << newGradient[1] << " "  << newGradient[2] << " " << std::endl;
         }
 
         if ((std::abs(x - AOIx) < 3) && (std::abs(y - AOIy) < 3)){
@@ -382,15 +235,15 @@ void trace3d(float *angle, float x, float y, float *pixel) {
             color[2] = 1;
         }
         if (flagEnd){
-//            if ((x == AOIx) && (y == AOIy)) {
-//                std::cout << "break1 " << z << " " << opacity << " " << newOpacity << std::endl;
-//            }
+            if ((x == AOIx) && (y == AOIy)) {
+                std::cout << "break1 " << z << " " << opacity << " " << newOpacity << std::endl;
+            }
             break;
         }
-        if (std::abs(opacity - 1.0) < 0.05){
-//            if ((x == AOIx) && (y == AOIy)){
-//                std::cout << "break2 " << z << ", " << opacity  << ", " << newOpacity << std::endl;
-//            }
+        if (std::abs(opacity - 1.0) < 0.001){
+            if ((x == AOIx) && (y == AOIy)){
+                std::cout << "break2 " << z << ", " << opacity  << ", " << newOpacity << std::endl;
+            }
             break;
         }
 //      update angle +=  newGradient;
@@ -403,9 +256,15 @@ void trace3d(float *angle, float x, float y, float *pixel) {
         }
 
         if (y == plainY) {
-            castPositions[castIndex * 2] = xx;
-            castPositions[castIndex * 2 + 1] = z;
-            castIndex += 1;
+            castPositionY[castIndexY * 2] = xx;
+            castPositionY[castIndexY * 2 + 1] = z;
+            castIndexY += 1;
+        }
+
+        if (x == plainX) {
+            castPositionX[castIndexX * 2] = yy;
+            castPositionX[castIndexX * 2 + 1] = z;
+            castIndexX += 1;
         }
 
 //        angle = angle * (1 / angle.z);
@@ -424,8 +283,8 @@ void render(float distance, float *pixel) {
         for (int x = 0; x < viewW; ++x) {
             xx = (float)x * WIDTH / viewW;
             yy = (float)y * HEIGHT / viewH;
-            angle[0] = 0;//(xx - WIDTH/2) / distance;
-            angle[1] = 0;//(yy - HEIGHT/2) / distance;
+            angle[0] = (xx - WIDTH/2) / distance;
+            angle[1] = (yy - HEIGHT/2) / distance;
             angle[2] = 1;
             trace3d(angle, xx, yy, dot);
             setVec3Float(&pixel[(x + y * viewW) * 3], dot);
@@ -544,10 +403,10 @@ void gpuRender(float distance, float *pixel){
     EC(clEnqueueReadBuffer(q, memPixel, CL_TRUE, 0, sizeof(float) * w * h * 3, pixel, 0, nullptr, nullptr), "clEnqueueReadBuffer");
     EC(clEnqueueReadBuffer(q, memChecker, CL_TRUE, 0, sizeof(float) * w * h, checker, 0, nullptr, nullptr), "clEnqueueReadBuffer");
 
-//    for (int position=0; position<w; ++position){
-//        std::cout << checker[position + h * 70/ 100 * w] << " ";
-//    }
-//    printf("\n");
+    for (int position=0; position<w; ++position){
+        std::cout << checker[position + (int)(h * 95/ 100 * w)] << " ";
+    }
+    printf("\n");
 
     end = clock();
     printf("%lf seconds\n",(double)(end-start)/CLOCKS_PER_SEC);

@@ -35,8 +35,12 @@ extern int PLATFORM_MAX;
 extern int DEVICE_MAX;
 
 extern int plainY;
-extern float* castPositions;
-extern int castIndex;
+extern float* castPositionY;
+extern int castIndexY;
+
+extern int plainX;
+extern float* castPositionX;
+extern int castIndexX;
 
 //extern std::vector <float> surfaces;
 

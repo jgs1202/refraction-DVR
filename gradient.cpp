@@ -41,7 +41,6 @@ float gradx(float *around) {
         a[3] = slope2(x1, x2);
         count += 1;
     }
-//    std::cout << a[0] << " " << a[1] << " " << around[0] << " " << around[1] << " " << slope2(around[0], around[1]) << std::endl;
     if (count != 0) {
         return (a[0] + a[1] + a[2] + a[3]) / count;
     } else {
@@ -59,17 +58,17 @@ float grady(float *around) {
     }
     x1 = around[1], x2 = around[3];
     if ((x1 != 0) && (x2 != 0)){
-        a[0] = slope2(x1, x2);
+        a[1] = slope2(x1, x2);
         count += 1;
     }
     x1 = around[4], x2 = around[6];
     if ((x1 != 0) && (x2 != 0)){
-        a[0] = slope2(x1, x2);
+        a[2] = slope2(x1, x2);
         count += 1;
     }
     x1 = around[5], x2 = around[7];
     if ((x1 != 0) && (x2 != 0)){
-        a[0] = slope2(x1, x2);
+        a[3] = slope2(x1, x2);
         count += 1;
     }
     if (count != 0) {
@@ -89,17 +88,17 @@ float gradz(float *around) {
     }
     x1 = around[1], x2 = around[5];
     if ((x1 != 0) && (x2 != 0)){
-        a[0] = slope2(x1, x2);
+        a[1] = slope2(x1, x2);
         count += 1;
     }
     x1 = around[2], x2 = around[6];
     if ((x1 != 0) && (x2 != 0)){
-        a[0] = slope2(x1, x2);
+        a[2] = slope2(x1, x2);
         count += 1;
     }
     x1 = around[3], x2 = around[7];
     if ((x1 != 0) && (x2 != 0)){
-        a[0] = slope2(x1, x2);
+        a[3] = slope2(x1, x2);
         count += 1;
     }
     if (count != 0) {

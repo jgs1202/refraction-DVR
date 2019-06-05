@@ -14,14 +14,7 @@ void inSphere(float *center, float radius, float *surfaceColor, float reflectivi
     for (unsigned int i=0; i < WIDTH; ++i){
         for (unsigned int j=0; j<HEIGHT; ++j){
             for (unsigned int k=0; k<DEPTH; ++k){
-                if (std::abs(i - center[0]) > radius){
-                    continue;
-                } else {
-                } if (std::abs(j - center[1]) > radius){
-                    continue;
-                } if (std::abs(k - center[2]) > radius){
-                    continue;
-                } if (((i - center[0]) * (i - center[0]) + (j - center[1]) * (j - center[1]) + (k - center[2]) * (k - center[2])) > radius * radius){
+                if (((i - center[0]) * (i - center[0]) + (j - center[1]) * (j - center[1]) + (k - center[2]) * (k - center[2])) > radius * radius){
                     continue;
                 }
                 fColor[(i + j * WIDTH + k * WIDTH * HEIGHT) * 3] = surfaceColor[0];

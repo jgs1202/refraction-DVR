@@ -64,8 +64,8 @@ void lightSmoothing(float *plainData){
 
 void gpuCalcLightSource (float *direction, float *color) {
     std::cout << "propergating light..." << std::endl;
-    float* pGrad = NULL;
-    float* pfColor = NULL;
+    float* pGrad;
+    float* pfColor;
     float* pfMedium;
     float* pfOpacity;
     float* plColor;

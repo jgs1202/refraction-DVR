@@ -77,7 +77,7 @@ __kernel void trace(__global float *grad, __global float *fColor, __global float
     float color[] = {0., 0., 0.}, medium[] = {1.0, 1.0, 1.0}, opacity = 0, angle[3], path[3];
     bool flagEnd = false;
     int state = 0, count = 0;
-    int calcStep = 10;
+    float calcStep = 10;
 
     angle[0] = (xx - (float)side/2) / (float)distance;
     angle[1] = (yy - (float)side/2) / (float)distance;
@@ -88,7 +88,7 @@ __kernel void trace(__global float *grad, __global float *fColor, __global float
     float args[3];
     float newColor[3], newMedium[3], newOpacity, newIntensity, newGrad[3];    
 
-    while ((!flagEnd) && (count < 10000)) {
+    while ((!flagEnd) && (count < 10000) && (opacity < 0.999)) {
     	if ((xx < 0) || (yy < 0) || (z < 0)|| (xx > side - 1) || (yy > side - 1) || (z > side - 1)){
             state = 2;
     		flagEnd = true;
@@ -110,9 +110,9 @@ __kernel void trace(__global float *grad, __global float *fColor, __global float
             newColor[0] = lColor[3 * p] * newMedium[0];
             newColor[1] = lColor[3 * p + 1] * newMedium[1];
             newColor[2] = fColor[3 * p + 2] * newMedium[2];
-            newColor[0] = 1 * newMedium[0];
-            newColor[1] = 1 * newMedium[1];
-            newColor[2] = 1 * newMedium[2];
+            // newColor[0] = 1 * newMedium[0];
+            // newColor[1] = 1 * newMedium[1];
+            // newColor[2] = 1 * newMedium[2];
             newIntensity = lIntensity[p];
     	} else {
             state = 1;
@@ -138,8 +138,8 @@ __kernel void trace(__global float *grad, __global float *fColor, __global float
 			// tf[0] = lColor[getCoordinate(ltf, side) * 3] * (1 - ratiox) + lColor[getCoordinate(rtf, side) * 3] * ratiox;
    //          tf[1] = lColor[getCoordinate(ltf, side) * 3 + 1] * (1 - ratiox) + lColor[getCoordinate(rtf, side) * 3 + 1] * ratiox;
    //          tf[2] = lColor[getCoordinate(ltf, side) * 3 + 2] * (1 - ratiox) + lColor[getCoordinate(rtf, side) * 3 + 2] * ratiox;
-   //          bf[0] = lColor[getCoordinate(lbf, side) * 3] * (1 - ratiox) + lColor[getCoordinate(rbf, side)] * ratiox;
-   //          bf[1] = lColor[getCoordinate(lbf, side) * 3 + 1] * (1 - ratiox) + lColor[getCoordinate(rbf, side) * 3 + 1] * ratiox;
+   //          bf[0] = lColor[getCoordinate(lbf, side) * 3] * (1 - ratiox) + lColor[getCoordinate(rbf, side) * 3] * ratiox;
+   //          bf[1] = 1;//lColor[getCoordinate(lbf, side) * 3 + 1] * (1 - ratiox) + lColor[getCoordinate(rbf, side) * 3 + 1] * ratiox;
    //          bf[2] = lColor[getCoordinate(lbf, side) * 3 + 2] * (1 - ratiox) + lColor[getCoordinate(rbf, side) * 3 + 2] * ratiox;
    //          tb[0] = lColor[getCoordinate(ltb, side) * 3] * (1 - ratiox) + lColor[getCoordinate(rtb, side) * 3] * ratiox;
    //          tb[1] = lColor[getCoordinate(ltb, side) * 3 + 1] * (1 - ratiox) + lColor[getCoordinate(rtb, side) * 3 + 1] * ratiox;
@@ -156,9 +156,12 @@ __kernel void trace(__global float *grad, __global float *fColor, __global float
    //          newColor[0] = t[0] * (1 - ratioy) + b[0] * ratioy;
    //          newColor[1] = t[1] * (1 - ratioy) + b[1] * ratioy;
    //          newColor[2] = t[2] * (1 - ratioy) + b[2] * ratioy;
-            newColor[0] = 1;
-            newColor[1] = 1;
-            newColor[2] = 1;
+            newColor[0] = lColor[getCoordinate(ltf, side) * 3];
+            newColor[1] = lColor[getCoordinate(ltf, side) * 3 + 1];
+            newColor[2] = lColor[getCoordinate(ltf, side) * 3 + 2];
+            // newColor[0] = 1;
+            // newColor[1] = 1;
+            // newColor[2] = 1;
             newColor[0] = newColor[0] * newMedium[0];
             newColor[1] = newColor[1] * newMedium[1];
             newColor[2] = newColor[2] * newMedium[2];
@@ -167,6 +170,7 @@ __kernel void trace(__global float *grad, __global float *fColor, __global float
             tf[1] = grad[getCoordinate(ltf, side) * 3 + 1] * (1 - ratiox) + grad[getCoordinate(rtf, side) * 3 + 1] * ratiox;
             tf[2] = grad[getCoordinate(ltf, side) * 3 + 2] * (1 - ratiox) + grad[getCoordinate(rtf, side) * 3 + 2] * ratiox;
             bf[0] = grad[getCoordinate(lbf, side) * 3] * (1 - ratiox) + grad[getCoordinate(rbf, side) * 3] * ratiox;
+            bf[1] = grad[getCoordinate(lbf, side) * 3 + 1] * (1 - ratiox) + grad[getCoordinate(rbf, side) * 3 + 1] * ratiox;
             bf[2] = grad[getCoordinate(lbf, side) * 3 + 2] * (1 - ratiox) + grad[getCoordinate(rbf, side) * 3 + 2] * ratiox;
             tb[0] = grad[getCoordinate(ltb, side) * 3] * (1 - ratiox) + grad[getCoordinate(rtb, side) * 3] * ratiox;
             tb[1] = grad[getCoordinate(ltb, side) * 3 + 1] * (1 - ratiox) + grad[getCoordinate(rtb, side) * 3 + 1] * ratiox;
@@ -184,7 +188,7 @@ __kernel void trace(__global float *grad, __global float *fColor, __global float
             newGrad[1] = t[1] * (1 - ratioy) + b[1] * ratioy;
             newGrad[2] = t[2] * (1 - ratioy) + b[2] * ratioy;
 
-    		newOpacity = fOpacity[getCoordinate(ltf, side)] / calcStep; //(fOpacity[getCoordinate(x1, side)] * (1 - ratiox) + fOpacity[getCoordinate(y1, side)] * ratiox) * (1 - ratioy) + (fOpacity[getCoordinate(x2, side)] * (1 - ratiox) + fOpacity[getCoordinate(y2, side)] * ratiox) * ratioy;
+    		newOpacity = fOpacity[getCoordinate(ltf, side)] * 1 / calcStep; //(fOpacity[getCoordinate(x1, side)] * (1 - ratiox) + fOpacity[getCoordinate(y1, side)] * ratiox) * (1 - ratioy) + (fOpacity[getCoordinate(x2, side)] * (1 - ratiox) + fOpacity[getCoordinate(y2, side)] * ratiox) * ratioy;
 
             tf[0] = lIntensity[getCoordinate(ltf, side)] * (1 - ratiox) + lIntensity[getCoordinate(rtf, side)] * ratiox;
             bf[0] = lIntensity[getCoordinate(lbf, side)] * (1 - ratiox) + lIntensity[getCoordinate(rbf, side)] * ratiox;
@@ -222,12 +226,12 @@ __kernel void trace(__global float *grad, __global float *fColor, __global float
         count = count + 1;
         lastAngleX = angle[0];
     }
-    checker[position] = angle[0];
+    checker[position] = color[0];
     // pixel[position * 3] = (lastAngleX - iniAngleX) * 10;
     // pixel[position * 3 + 1] = 0;//color[1];
     // pixel[position * 3 + 2] = (iniAngleX - lastAngleX) * 10;
 
-    pixel[position * 3] = color[0];
+    pixel[position * 3] = color[2];
     pixel[position * 3 + 1] = color[1];
     pixel[position * 3 + 2] = color[2];
 
