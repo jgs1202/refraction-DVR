@@ -156,6 +156,10 @@ __kernel void lightSource(__global float *pGrad, __global float *pfColor, __glob
     lightColor[0] = c1[0] * (1 - ratio2) + c2[0] * ratio2;
     lightColor[1] = c1[1] * (1 - ratio2) + c2[1] * ratio2;
     lightColor[2] = c1[2] * (1 - ratio2) + c2[2] * ratio2;
+    // lightColor[0] = plColor[3 * x1];
+    // lightColor[1] = plColor[3 * x1 + 1];
+    // lightColor[2] = plColor[3 * x1 + 2];
+
 
     i1 = plIntensity[x1] * (1 - ratio1) + plIntensity[y1] * ratio1;
     i2 = plIntensity[x2] * (1 - ratio1) + plIntensity[y2] * ratio1;
@@ -170,9 +174,9 @@ __kernel void lightSource(__global float *pGrad, __global float *pfColor, __glob
     nlColor[position * 3] = lightColor[0] * medium[0] * (1 - opacity) * intensity;
     nlColor[position * 3 + 1] = lightColor[1] * medium[1] * (1 - opacity) * intensity;
     nlColor[position * 3 + 2] = lightColor[2] * medium[2] * (1 - opacity) * intensity;
-    nlDirection[position * 3 ] = lightDirection[0] + grad[0] * 100 / side;
-    nlDirection[position * 3 + 1] = lightDirection[1] + grad[1] * 100 / side;
-    nlDirection[position * 3 + 2] = lightDirection[2] + grad[2] * 100 / side;
+    nlDirection[position * 3 ] = lightDirection[0] + grad[0] * 100 / (float)side;
+    nlDirection[position * 3 + 1] = lightDirection[1] + grad[1] * 100 / (float)side;
+    nlDirection[position * 3 + 2] = lightDirection[2] + grad[2] * 100 / (float)side;
     nlIntensity[position] = intensity; //* (1 - lp.opacity);
-    checker[position] = grad[1];
+    checker[position] = lightDirection[0];
 }

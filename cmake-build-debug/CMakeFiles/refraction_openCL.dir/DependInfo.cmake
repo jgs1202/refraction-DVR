@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/Aoyama/CLionProjects/refraction_openCL/gpuSetting.cpp" "/Users/Aoyama/CLionProjects/refraction_openCL/cmake-build-debug/CMakeFiles/refraction_openCL.dir/gpuSetting.cpp.o"
   "/Users/Aoyama/CLionProjects/refraction_openCL/gradient.cpp" "/Users/Aoyama/CLionProjects/refraction_openCL/cmake-build-debug/CMakeFiles/refraction_openCL.dir/gradient.cpp.o"
   "/Users/Aoyama/CLionProjects/refraction_openCL/lightPropergation.cpp" "/Users/Aoyama/CLionProjects/refraction_openCL/cmake-build-debug/CMakeFiles/refraction_openCL.dir/lightPropergation.cpp.o"
+  "/Users/Aoyama/CLionProjects/refraction_openCL/lightSetting.cpp" "/Users/Aoyama/CLionProjects/refraction_openCL/cmake-build-debug/CMakeFiles/refraction_openCL.dir/lightSetting.cpp.o"
   "/Users/Aoyama/CLionProjects/refraction_openCL/main.cpp" "/Users/Aoyama/CLionProjects/refraction_openCL/cmake-build-debug/CMakeFiles/refraction_openCL.dir/main.cpp.o"
   "/Users/Aoyama/CLionProjects/refraction_openCL/myMath.cpp" "/Users/Aoyama/CLionProjects/refraction_openCL/cmake-build-debug/CMakeFiles/refraction_openCL.dir/myMath.cpp.o"
   "/Users/Aoyama/CLionProjects/refraction_openCL/objectData.cpp" "/Users/Aoyama/CLionProjects/refraction_openCL/cmake-build-debug/CMakeFiles/refraction_openCL.dir/objectData.cpp.o"

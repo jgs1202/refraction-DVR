@@ -225,15 +225,15 @@ void trace3d(float *angle, float x, float y, float *pixel) {
         int AOIx = 70, AOIy = 80;
         if ((x == AOIx) && (y == AOIy)){
             std::cout << "result" << " " << xx << " " << yy << " " << z  << " " << newColor[1] << " " << newOpacity << " " << flagEnd << std::endl;// << opacity << " " << newOpacity << " " << newColor[0] << newColor[1] << newColor[2] << " " << color[0] << color[1] << color[2] << std::endl;
-            std::cout << (int)(newColor[0] * 100) << " " << (int)(newColor[1] * 100) << " " << (int)(newColor[2] * 100) << " " << (int)(color[0] * 100) << " " << (int)(color[0] * 100) << " " << (int)(color[0] * 100) << std::endl;
+            std::cout << (int)(newColor[0] * 100) << " " << (int)(newColor[1] * 100) << " " << (int)(newColor[2] * 100) << " " << (int)(color[0] * 100) << " " << (int)(color[1] * 100) << " " << (int)(color[2] * 100) << std::endl;
             //            std::cout << xx << " " << yy << " ";// << angle[0] << " " << angle[1] << " " << angle[2] << "  " << newGradient[0] << " " << newGradient[1] << " "  << newGradient[2] << " " << std::endl;
         }
 
-        if ((std::abs(x - AOIx) < 3) && (std::abs(y - AOIy) < 3)){
-            color[0] = 0.4;
-            color[1] = 0.4;
-            color[2] = 1;
-        }
+//        if ((std::abs(x - AOIx) < 3) && (std::abs(y - AOIy) < 3)){
+//            color[0] = 0.4;
+//            color[1] = 0.4;
+//            color[2] = 1;
+//        }
         if (flagEnd){
             if ((x == AOIx) && (y == AOIy)) {
                 std::cout << "break1 " << z << " " << opacity << " " << newOpacity << std::endl;
@@ -404,7 +404,7 @@ void gpuRender(float distance, float *pixel){
     EC(clEnqueueReadBuffer(q, memChecker, CL_TRUE, 0, sizeof(float) * w * h, checker, 0, nullptr, nullptr), "clEnqueueReadBuffer");
 
     for (int position=0; position<w; ++position){
-        std::cout << checker[position + (int)(h * 95/ 100 * w)] << " ";
+        std::cout << checker[position + (int)(h * 70/ 100 * w)] << " ";
     }
     printf("\n");
 

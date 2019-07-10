@@ -110,6 +110,12 @@
 		<Unit filename="/Users/Aoyama/CLionProjects/refraction_openCL/lightPropergation.h">
 			<Option target="refraction_openCL"/>
 		</Unit>
+		<Unit filename="/Users/Aoyama/CLionProjects/refraction_openCL/lightSetting.cpp">
+			<Option target="refraction_openCL"/>
+		</Unit>
+		<Unit filename="/Users/Aoyama/CLionProjects/refraction_openCL/lightSetting.h">
+			<Option target="refraction_openCL"/>
+		</Unit>
 		<Unit filename="/Users/Aoyama/CLionProjects/refraction_openCL/main.cpp">
 			<Option target="refraction_openCL"/>
 		</Unit>

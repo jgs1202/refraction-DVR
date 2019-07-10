@@ -8,6 +8,7 @@
 #include "vector.h"
 #include "stdio.h"
 #include "cmath"
+#include <iostream>
 
 // position, radius, surface color, reflectivity, transparency, refractivity, emission color
 void inSphere(float *center, float radius, float *surfaceColor, float reflectivity, float opacity, float refractivity, float *emissionColor){
@@ -60,15 +61,20 @@ void inPlain (float *p1, float *p2, float *p3, float *p4, float *color, float re
     unsigned int dis1 = std::floor(vectorDistance(p1, p2)) + 1;
     unsigned int dis2 = std::floor(vectorDistance(p1, p3)) + 1;
     float vec1[3], vec2[3], sub1[3], sub2[3];
+    int count = 0;
+//    printf("inplain\n");
+//    std::cout << p1[0] << " " << p1[1] << " " << p1[2] << " "<< p2[0] << " " << p2[1] << " " << p2[2] << " " << p3[0] << " " << p3[1] << " " << p3[2] << " " << std::endl;
     float calcStep = 1;
     subVec(p2, p1, sub1);
     subVec(p3, p1, sub2);
     vecNormalize(sub1, vec1);
     vecNormalize(sub2, vec2);
+    divFloat(vec1, calcStep, vec1);
+    divFloat(vec2, calcStep, vec2);
     float current[3];
     float integer[3];
-    for (unsigned int x=0; x < dis1; ++x){
-        for (unsigned int y=0; y < dis2; ++y){
+    for (unsigned int x=0; x < dis1 * calcStep; ++x){
+        for (unsigned int y=0; y < dis2 * calcStep; ++y){
             current[0] = p1[0] + vec1[0] * x + vec2[0] * y;
             current[1] = p1[1] + vec1[1] * x + vec2[1] * y;
             current[2] = p1[2] + vec1[2] * x + vec2[2] * y;
@@ -80,11 +86,15 @@ void inPlain (float *p1, float *p2, float *p3, float *p4, float *color, float re
             } else {
 //                std::cout << " " << dis2 << " " << integer[0] << " " << integer[1] << " " << integer[2] << std::endl;
                 setVec3Float(&fColor[getCoordinate(integer)], color);
-//                std::cout << getCoordinate(integer) <<" " << fColor[getCoordinate(integer)] << " " << opacity << std::endl;
-                setVec3Float(&fMedium[getCoordinate(integer)], color);
+//                std::cout << integer[0] << " " << integer[1] << " " << integer[2] << " " << getCoordinate(integer) << std::endl;
+//                setVec3Float(&fMedium[getCoordinate(integer)], color);
+                fMedium[getCoordinate(integer)] = color[0];
+                fMedium[getCoordinate(integer) + 1] = color[1];
+                fMedium[getCoordinate(integer) + 2] = color[2];
 //                fRelectivity[getCoordinate(integer)] = reflectivity;
                 fOpacity[getScalarCoo(integer)] = opacity;
                 fRefractivity[getScalarCoo(integer)] = refractivity;
+                count += 1;
             }
         }
     }

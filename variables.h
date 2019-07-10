@@ -42,6 +42,9 @@ extern int plainX;
 extern float* castPositionX;
 extern int castIndexX;
 
+extern float* photonIrradiance;
+extern float* photonColor;
+
 //extern std::vector <float> surfaces;
 
 #endif //REFRACTION_OPENCL_VARIABLES_H

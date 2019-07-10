@@ -231,6 +231,33 @@ lightPropergation.cpp.s:
 	$(MAKE) -f CMakeFiles/refraction_openCL.dir/build.make CMakeFiles/refraction_openCL.dir/lightPropergation.cpp.s
 .PHONY : lightPropergation.cpp.s
 
+lightSetting.o: lightSetting.cpp.o
+
+.PHONY : lightSetting.o
+
+# target to build an object file
+lightSetting.cpp.o:
+	$(MAKE) -f CMakeFiles/refraction_openCL.dir/build.make CMakeFiles/refraction_openCL.dir/lightSetting.cpp.o
+.PHONY : lightSetting.cpp.o
+
+lightSetting.i: lightSetting.cpp.i
+
+.PHONY : lightSetting.i
+
+# target to preprocess a source file
+lightSetting.cpp.i:
+	$(MAKE) -f CMakeFiles/refraction_openCL.dir/build.make CMakeFiles/refraction_openCL.dir/lightSetting.cpp.i
+.PHONY : lightSetting.cpp.i
+
+lightSetting.s: lightSetting.cpp.s
+
+.PHONY : lightSetting.s
+
+# target to generate assembly for a file
+lightSetting.cpp.s:
+	$(MAKE) -f CMakeFiles/refraction_openCL.dir/build.make CMakeFiles/refraction_openCL.dir/lightSetting.cpp.s
+.PHONY : lightSetting.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -387,6 +414,9 @@ help:
 	@echo "... lightPropergation.o"
 	@echo "... lightPropergation.i"
 	@echo "... lightPropergation.s"
+	@echo "... lightSetting.o"
+	@echo "... lightSetting.i"
+	@echo "... lightSetting.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

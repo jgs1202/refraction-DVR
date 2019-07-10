@@ -8,6 +8,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/refraction_openCL.dir/objectData.cpp.o"
   "CMakeFiles/refraction_openCL.dir/lightPropergation.cpp.o"
   "CMakeFiles/refraction_openCL.dir/casting.cpp.o"
+  "CMakeFiles/refraction_openCL.dir/lightSetting.cpp.o"
   "refraction_openCL.pdb"
   "refraction_openCL"
 )

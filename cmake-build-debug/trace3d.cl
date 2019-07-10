@@ -61,7 +61,7 @@ int getRound(float x){
     return a;
 }
 
-int getCoordinate(int *x, int side){
+unsigned long getCoordinate(int *x, int side){
 	return (x[0] + x[1] * side + x[2] * side * side);
 }
 
@@ -73,8 +73,9 @@ __kernel void trace(__global float *grad, __global float *fColor, __global float
     float xx = (float)x * (float)side / (float)viewW;
     float yy = (float)y * (float)side / (float)viewH;
     float z = 0, square;
-    int p;
-    float color[] = {0., 0., 0.}, medium[] = {1.0, 1.0, 1.0}, opacity = 0, angle[3], path[3];
+    unsigned long p;
+    float color[] = {0., 0., 0.}, medium[] = {1.0, 1.0, 1.0}, angle[3], path[3];
+    double opacity = 0, newOpacity;
     bool flagEnd = false;
     int state = 0, count = 0;
     float calcStep = 10;
@@ -86,9 +87,10 @@ __kernel void trace(__global float *grad, __global float *fColor, __global float
     float iniAngleX = angle[0], lastAngleX;
 
     float args[3];
-    float newColor[3], newMedium[3], newOpacity, newIntensity, newGrad[3];    
+    float newColor[3], newMedium[3], newIntensity, newGrad[3];   
+    int ltf[3]; 
 
-    while ((!flagEnd) && (count < 10000) && (opacity < 0.999)) {
+    while ((!flagEnd) && (count < 10000) && (opacity < 0.99)) {
     	if ((xx < 0) || (yy < 0) || (z < 0)|| (xx > side - 1) || (yy > side - 1) || (z > side - 1)){
             state = 2;
     		flagEnd = true;
@@ -97,26 +99,32 @@ __kernel void trace(__global float *grad, __global float *fColor, __global float
             z = checkRange(z, side);
             p = ((int)(xx) + (int)(yy) * side + (int)(z) * side * side);
             newMedium[0] = fColor[3 * p];
-            newMedium[1] = fColor[3 * p + 1];
-            newMedium[2] = fColor[3 * p + 2];
+            newMedium[1] = fColor[3 * p];
+            newMedium[2] = fColor[3 * p];
+            // newMedium[0] = pow(newMedium[0], 1/calcStep);
+            // newMedium[1] = pow(newMedium[1], 1/calcStep);
+            // newMedium[2] = pow(newMedium[2], 1/calcStep);
             // reflectivity = fRefrecttivity[p];
-            newOpacity = fOpacity[p];
+            newOpacity = (double)fOpacity[p];
             if (newOpacity == 0){
                 newOpacity = 1;
                 newMedium[0] = 1;
                 newMedium[1] = 1;
                 newMedium[2] = 1;
             }
-            newColor[0] = lColor[3 * p] * newMedium[0];
-            newColor[1] = lColor[3 * p + 1] * newMedium[1];
-            newColor[2] = fColor[3 * p + 2] * newMedium[2];
-            // newColor[0] = 1 * newMedium[0];
-            // newColor[1] = 1 * newMedium[1];
-            // newColor[2] = 1 * newMedium[2];
+
+            newColor[0] = 1 * newMedium[0];
+            newColor[1] = 1 * newMedium[1];
+            newColor[2] = 1 * newMedium[2];
+            // newColor[0] = lColor[3 * p] * newMedium[0];
+            // newColor[1] = lColor[3 * p + 1] * newMedium[1];
+            // newColor[2] = fColor[3 * p + 2] * newMedium[2];
             newIntensity = lIntensity[p];
     	} else {
             state = 1;
-            int ltf[] = {(int)(xx), (int)(yy), (int)(z)};
+            ltf[0] = (int)(xx);
+            ltf[1] = (int)(yy);
+            ltf[2] = (int)(z);
             int lbf[] = {(int)(xx), (int)(yy) + 1, (int)(z)};
             int rtf[] = {(int)(xx) + 1, (int)(yy), (int)(z)};
             int rbf[] = {(int)(xx) + 1, (int)(yy) + 1, (int)(z)};
@@ -134,34 +142,16 @@ __kernel void trace(__global float *grad, __global float *fColor, __global float
             newMedium[0] = fColor[getCoordinate(ltf, side) * 3];
             newMedium[1] = fColor[getCoordinate(ltf, side) * 3 + 1];
             newMedium[2] = fColor[getCoordinate(ltf, side) * 3 + 2];
+            newMedium[0] = pow(newMedium[0], 1/calcStep);
+            newMedium[1] = pow(newMedium[1], 1/calcStep);
+            newMedium[2] = pow(newMedium[2], 1/calcStep);
 
-			// tf[0] = lColor[getCoordinate(ltf, side) * 3] * (1 - ratiox) + lColor[getCoordinate(rtf, side) * 3] * ratiox;
-   //          tf[1] = lColor[getCoordinate(ltf, side) * 3 + 1] * (1 - ratiox) + lColor[getCoordinate(rtf, side) * 3 + 1] * ratiox;
-   //          tf[2] = lColor[getCoordinate(ltf, side) * 3 + 2] * (1 - ratiox) + lColor[getCoordinate(rtf, side) * 3 + 2] * ratiox;
-   //          bf[0] = lColor[getCoordinate(lbf, side) * 3] * (1 - ratiox) + lColor[getCoordinate(rbf, side) * 3] * ratiox;
-   //          bf[1] = 1;//lColor[getCoordinate(lbf, side) * 3 + 1] * (1 - ratiox) + lColor[getCoordinate(rbf, side) * 3 + 1] * ratiox;
-   //          bf[2] = lColor[getCoordinate(lbf, side) * 3 + 2] * (1 - ratiox) + lColor[getCoordinate(rbf, side) * 3 + 2] * ratiox;
-   //          tb[0] = lColor[getCoordinate(ltb, side) * 3] * (1 - ratiox) + lColor[getCoordinate(rtb, side) * 3] * ratiox;
-   //          tb[1] = lColor[getCoordinate(ltb, side) * 3 + 1] * (1 - ratiox) + lColor[getCoordinate(rtb, side) * 3 + 1] * ratiox;
-   //          tb[2] = lColor[getCoordinate(ltb, side) * 3 + 2] * (1 - ratiox) + lColor[getCoordinate(rtb, side) * 3 + 2] * ratiox;
-   //          bb[0] = lColor[getCoordinate(lbb, side) * 3] * (1 - ratiox) + lColor[getCoordinate(rbb, side) * 3] * ratiox;
-   //          bb[1] = lColor[getCoordinate(lbb, side) * 3 + 1] * (1 - ratiox) + lColor[getCoordinate(rbb, side) * 3 + 1] * ratiox;
-   //          bb[2] = lColor[getCoordinate(lbb, side) * 3 + 2] * (1 - ratiox) + lColor[getCoordinate(rbb, side) * 3 + 2] * ratiox;
-   //          t[0] = tf[0] * (1 - ratioz) + tb[0] * ratioz;
-   //          t[1] = tf[1] * (1 - ratioz) + tb[1] * ratioz;
-   //          t[2] = tf[2] * (1 - ratioz) + tb[2] * ratioz;
-   //          b[0] = bf[0] * (1 - ratioz) + bb[0] * ratioz;
-   //          b[1] = bf[1] * (1 - ratioz) + bb[1] * ratioz;
-   //          b[2] = bf[2] * (1 - ratioz) + bb[2] * ratioz;
-   //          newColor[0] = t[0] * (1 - ratioy) + b[0] * ratioy;
-   //          newColor[1] = t[1] * (1 - ratioy) + b[1] * ratioy;
-   //          newColor[2] = t[2] * (1 - ratioy) + b[2] * ratioy;
-            newColor[0] = lColor[getCoordinate(ltf, side) * 3];
-            newColor[1] = lColor[getCoordinate(ltf, side) * 3 + 1];
-            newColor[2] = lColor[getCoordinate(ltf, side) * 3 + 2];
             // newColor[0] = 1;
             // newColor[1] = 1;
             // newColor[2] = 1;
+            newColor[0] = lColor[getCoordinate(ltf, side) * 3];
+            newColor[1] = lColor[getCoordinate(ltf, side) * 3 + 1];
+            newColor[2] = lColor[getCoordinate(ltf, side) * 3 + 2];
             newColor[0] = newColor[0] * newMedium[0];
             newColor[1] = newColor[1] * newMedium[1];
             newColor[2] = newColor[2] * newMedium[2];
@@ -188,7 +178,8 @@ __kernel void trace(__global float *grad, __global float *fColor, __global float
             newGrad[1] = t[1] * (1 - ratioy) + b[1] * ratioy;
             newGrad[2] = t[2] * (1 - ratioy) + b[2] * ratioy;
 
-    		newOpacity = fOpacity[getCoordinate(ltf, side)] * 1 / calcStep; //(fOpacity[getCoordinate(x1, side)] * (1 - ratiox) + fOpacity[getCoordinate(y1, side)] * ratiox) * (1 - ratioy) + (fOpacity[getCoordinate(x2, side)] * (1 - ratiox) + fOpacity[getCoordinate(y2, side)] * ratiox) * ratioy;
+    		newOpacity = (double)fOpacity[getCoordinate(ltf, side)]; //(fOpacity[getCoordinate(x1, side)] * (1 - ratiox) + fOpacity[getCoordinate(y1, side)] * ratiox) * (1 - ratioy) + (fOpacity[getCoordinate(x2, side)] * (1 - ratiox) + fOpacity[getCoordinate(y2, side)] * ratiox) * ratioy;
+            newOpacity = newOpacity / (double)calcStep;
 
             tf[0] = lIntensity[getCoordinate(ltf, side)] * (1 - ratiox) + lIntensity[getCoordinate(rtf, side)] * ratiox;
             bf[0] = lIntensity[getCoordinate(lbf, side)] * (1 - ratiox) + lIntensity[getCoordinate(rbf, side)] * ratiox;
@@ -199,9 +190,9 @@ __kernel void trace(__global float *grad, __global float *fColor, __global float
             newIntensity = t[0] * (1 - ratioy) + b[0] * ratioy;
         }
 
-    	color[0] = color[0] + medium[0] * (1 - opacity) * newOpacity * newColor[0];
-    	color[1] = color[1] + medium[1] * (1 - opacity) * newOpacity * newColor[1];
-    	color[2] = color[2] + medium[2] * (1 - opacity) * newOpacity * newColor[2];
+    	color[0] = color[0] + medium[0] * (1 - (float)opacity) * newOpacity * newColor[0];
+    	color[1] = color[1] + medium[1] * (1 - (float)opacity) * newOpacity * newColor[1];
+    	color[2] = color[2] + medium[2] * (1 - (float)opacity) * newOpacity * newColor[2];
 
     	medium[0] = medium[0] * newMedium[0];
     	medium[1] = medium[1] * newMedium[1];
@@ -226,12 +217,13 @@ __kernel void trace(__global float *grad, __global float *fColor, __global float
         count = count + 1;
         lastAngleX = angle[0];
     }
-    checker[position] = color[0];
+    float a = 0.001;
+    checker[position] = newOpacity;//fColor[3 * ((int)(xx) + (int)(yy) * side + (int)(z) * side * side)];
     // pixel[position * 3] = (lastAngleX - iniAngleX) * 10;
     // pixel[position * 3 + 1] = 0;//color[1];
     // pixel[position * 3 + 2] = (iniAngleX - lastAngleX) * 10;
 
-    pixel[position * 3] = color[2];
+    pixel[position * 3] = color[0];
     pixel[position * 3 + 1] = color[1];
     pixel[position * 3 + 2] = color[2];
 

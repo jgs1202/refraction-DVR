@@ -10,5 +10,7 @@ int momGauss(int x, int y, int dx, int dy, int side);
 int momMean(int x, int y, int dx, int dy, int side);
 void lightSmoothing(float *plainData);
 void gpuCalcLightSource (float *direction, float *color);
+void gpuCalcLightSourceRough (float *direction, float *color);
+void visLight(void);
 
 #endif //REFRACTION_OPENCL_LIGHTPROPERGATION_H

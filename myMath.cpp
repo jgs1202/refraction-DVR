@@ -32,12 +32,12 @@ bool checkInteger(float *vec){
     }
 }
 
-unsigned int getCoordinate(float *coordinate){
-    return (int)(coordinate[0] + coordinate[1] * WIDTH + coordinate[2] * WIDTH * WIDTH) * 3;
+unsigned long getCoordinate(float *coordinate){
+    return ((int)coordinate[0] + (int)coordinate[1] * WIDTH + (int)coordinate[2] * WIDTH * WIDTH) * 3;
 }
 
-unsigned int getScalarCoo(float *coordinate){
-    return (int)(coordinate[0] + coordinate[1] * WIDTH + coordinate[2] * WIDTH * WIDTH);
+unsigned long getScalarCoo(float *coordinate){
+    return ((int)coordinate[0] + (int)coordinate[1] * WIDTH + (int)coordinate[2] * WIDTH * WIDTH);
 }
 
 void checkMinus(float *vec){

@@ -31,12 +31,15 @@ int viewH = WIDTH;
 int PLATFORM_MAX = 4;
 int DEVICE_MAX  = 4;
 
-int plainY = HEIGHT * 2 / 3;
+int plainY = HEIGHT * 60 / 100;
 float* castPositionY = new float[WIDTH * HEIGHT * 10 * 2];
 int castIndexY;
 
 int plainX = WIDTH / 2;
 float* castPositionX = new float[WIDTH * HEIGHT * 10 * 2];
 int castIndexX;
+
+float* photonIrradiance = new float[FIELDSZ];
+float* photonColor = new float[FIELDSZ * 3];
 
 //std::vector <float> surfaces;
