@@ -36,6 +36,10 @@ unsigned long getCoordinate(float *coordinate){
     return ((int)coordinate[0] + (int)coordinate[1] * WIDTH + (int)coordinate[2] * WIDTH * WIDTH) * 3;
 }
 
+unsigned long getCoordinateInt(int *coordinate){
+    return (coordinate[0] + coordinate[1] * WIDTH + coordinate[2] * WIDTH * WIDTH);
+}
+
 unsigned long getScalarCoo(float *coordinate){
     return ((int)coordinate[0] + (int)coordinate[1] * WIDTH + (int)coordinate[2] * WIDTH * WIDTH);
 }
@@ -55,6 +59,18 @@ bool checkRangeInt(int x, int side){
         return true;
     } else {
         return false;
+    }
+}
+
+bool checkPosition(int x, int y, int z, int side) {
+    if ((x < 0) || (x > side - 1)){
+        return false;
+    } else if ((y < 0) || (y > side - 1)) {
+        return false;
+    } else if ((z < 0) || (z > side - 1)) {
+        return false;
+    } else {
+        return true;
     }
 }
 

@@ -14,6 +14,7 @@ const int STEP = 100 / WIDTH;
 const int MAX_SOURCE_SIZE = 0x100000;
 const int FIELDSZ = (WIDTH * HEIGHT * DEPTH);
 const int PLAINSZ = (WIDTH * HEIGHT);
+int animationCount = 0;
 
 float* grad = new float[FIELDSZ * 3];
 float* fColor = new float[FIELDSZ * 3];
@@ -35,11 +36,17 @@ int plainY = HEIGHT * 60 / 100;
 float* castPositionY = new float[WIDTH * HEIGHT * 10 * 2];
 int castIndexY;
 
+int plainZ = WIDTH * 6 / 10;
+
 int plainX = WIDTH / 2;
 float* castPositionX = new float[WIDTH * HEIGHT * 10 * 2];
 int castIndexX;
 
 float* photonIrradiance = new float[FIELDSZ];
-float* photonColor = new float[FIELDSZ * 3];
+int maxPhotons = WIDTH * WIDTH * WIDTH;
+float* photonPosition = new float[maxPhotons * 3];
+float* photonDirection= new float[maxPhotons * 3];
+float* photonGradDirection = new float[maxPhotons * 3];
+float* photonColor= new float[maxPhotons * 3];
 
 //std::vector <float> surfaces;

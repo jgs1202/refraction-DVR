@@ -46,6 +46,7 @@
 				<Compiler>
 					<Add directory="/System/Library/Frameworks"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenCL.framework"/>
+					<Add directory="/usr/local/Frameworks/Python.framework/Versions/3.7/include/python3.7m"/>
 					<Add directory="/Users/Aoyama/CLionProjects/refraction_openCL"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/usr/local/include/opencv"/>
@@ -70,6 +71,7 @@
 				<Compiler>
 					<Add directory="/System/Library/Frameworks"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenCL.framework"/>
+					<Add directory="/usr/local/Frameworks/Python.framework/Versions/3.7/include/python3.7m"/>
 					<Add directory="/Users/Aoyama/CLionProjects/refraction_openCL"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/usr/local/include/opencv"/>
@@ -141,6 +143,12 @@
 			<Option target="refraction_openCL"/>
 		</Unit>
 		<Unit filename="/Users/Aoyama/CLionProjects/refraction_openCL/vector.h">
+			<Option target="refraction_openCL"/>
+		</Unit>
+		<Unit filename="/Users/Aoyama/CLionProjects/refraction_openCL/visualize.cpp">
+			<Option target="refraction_openCL"/>
+		</Unit>
+		<Unit filename="/Users/Aoyama/CLionProjects/refraction_openCL/visualize.h">
 			<Option target="refraction_openCL"/>
 		</Unit>
 		<Unit filename="/Users/Aoyama/CLionProjects/refraction_openCL/CMakeLists.txt">

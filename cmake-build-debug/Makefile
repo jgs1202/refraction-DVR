@@ -393,6 +393,33 @@ vector.cpp.s:
 	$(MAKE) -f CMakeFiles/refraction_openCL.dir/build.make CMakeFiles/refraction_openCL.dir/vector.cpp.s
 .PHONY : vector.cpp.s
 
+visualize.o: visualize.cpp.o
+
+.PHONY : visualize.o
+
+# target to build an object file
+visualize.cpp.o:
+	$(MAKE) -f CMakeFiles/refraction_openCL.dir/build.make CMakeFiles/refraction_openCL.dir/visualize.cpp.o
+.PHONY : visualize.cpp.o
+
+visualize.i: visualize.cpp.i
+
+.PHONY : visualize.i
+
+# target to preprocess a source file
+visualize.cpp.i:
+	$(MAKE) -f CMakeFiles/refraction_openCL.dir/build.make CMakeFiles/refraction_openCL.dir/visualize.cpp.i
+.PHONY : visualize.cpp.i
+
+visualize.s: visualize.cpp.s
+
+.PHONY : visualize.s
+
+# target to generate assembly for a file
+visualize.cpp.s:
+	$(MAKE) -f CMakeFiles/refraction_openCL.dir/build.make CMakeFiles/refraction_openCL.dir/visualize.cpp.s
+.PHONY : visualize.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -432,6 +459,9 @@ help:
 	@echo "... vector.o"
 	@echo "... vector.i"
 	@echo "... vector.s"
+	@echo "... visualize.o"
+	@echo "... visualize.i"
+	@echo "... visualize.s"
 .PHONY : help
 
 

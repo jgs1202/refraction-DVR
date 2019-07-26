@@ -403,10 +403,10 @@ void gpuRender(float distance, float *pixel){
     EC(clEnqueueReadBuffer(q, memPixel, CL_TRUE, 0, sizeof(float) * w * h * 3, pixel, 0, nullptr, nullptr), "clEnqueueReadBuffer");
     EC(clEnqueueReadBuffer(q, memChecker, CL_TRUE, 0, sizeof(float) * w * h, checker, 0, nullptr, nullptr), "clEnqueueReadBuffer");
 
-    for (int position=0; position<w; ++position){
-        std::cout << checker[position + (int)(h * 70/ 100 * w)] << " ";
-    }
-    printf("\n");
+//    for (int position=0; position<w; ++position){
+//        std::cout << checker[position + (int)(h * 70/ 100 * w)] << " ";
+//    }
+//    printf("\n");
 
     end = clock();
     printf("%lf seconds\n",(double)(end-start)/CLOCKS_PER_SEC);

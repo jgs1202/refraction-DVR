@@ -17,6 +17,7 @@ extern const int FIELDSZ;
 extern const int PLAINSZ;
 extern const int AOIx;
 extern const int AOIy;
+extern int animationCount;
 
 extern float* grad;
 extern float* fColor;
@@ -42,9 +43,14 @@ extern int plainX;
 extern float* castPositionX;
 extern int castIndexX;
 
-extern float* photonIrradiance;
-extern float* photonColor;
+extern int plainZ;
 
+extern float* photonIrradiance;
+extern int maxPhotons;
+extern float* photonPosition;
+extern float* photonDirection;
+extern float* photonGradDirection;
+extern float* photonColor;
 //extern std::vector <float> surfaces;
 
 #endif //REFRACTION_OPENCL_VARIABLES_H

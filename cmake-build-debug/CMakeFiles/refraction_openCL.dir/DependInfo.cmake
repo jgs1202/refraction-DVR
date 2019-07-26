@@ -14,6 +14,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/Aoyama/CLionProjects/refraction_openCL/objectData.cpp" "/Users/Aoyama/CLionProjects/refraction_openCL/cmake-build-debug/CMakeFiles/refraction_openCL.dir/objectData.cpp.o"
   "/Users/Aoyama/CLionProjects/refraction_openCL/variables.cpp" "/Users/Aoyama/CLionProjects/refraction_openCL/cmake-build-debug/CMakeFiles/refraction_openCL.dir/variables.cpp.o"
   "/Users/Aoyama/CLionProjects/refraction_openCL/vector.cpp" "/Users/Aoyama/CLionProjects/refraction_openCL/cmake-build-debug/CMakeFiles/refraction_openCL.dir/vector.cpp.o"
+  "/Users/Aoyama/CLionProjects/refraction_openCL/visualize.cpp" "/Users/Aoyama/CLionProjects/refraction_openCL/cmake-build-debug/CMakeFiles/refraction_openCL.dir/visualize.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 
@@ -21,6 +22,7 @@ set(CMAKE_CXX_COMPILER_ID "AppleClang")
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/System/Library/Frameworks"
   "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenCL.framework"
+  "/usr/local/Frameworks/Python.framework/Versions/3.7/include/python3.7m"
   "../"
   "/usr/local/include"
   "/usr/local/include/opencv"

@@ -296,6 +296,15 @@ OpenCV_ROOT_DIR:PATH=OpenCV_ROOT_DIR-NOTFOUND
 //Path to a library.
 OpenCV_TRS_LIBRARY:FILEPATH=OpenCV_TRS_LIBRARY-NOTFOUND
 
+//Path to a file.
+PYTHON_INCLUDE_DIR:PATH=/usr/local/Frameworks/Python.framework/Versions/3.7/include/python3.7m
+
+//Path to a library.
+PYTHON_LIBRARY:FILEPATH=/usr/local/Frameworks/Python.framework/Versions/3.7/lib/libpython3.7m.dylib
+
+//Path to a library.
+PYTHON_LIBRARY_DEBUG:FILEPATH=PYTHON_LIBRARY_DEBUG-NOTFOUND
+
 //Path to a program.
 ProcessorCount_cmd_sysctl:FILEPATH=/usr/sbin/sysctl
 
@@ -465,6 +474,8 @@ FIND_PACKAGE_MESSAGE_DETAILS_OpenCL:INTERNAL=[/Applications/Xcode.app/Contents/D
 FIND_PACKAGE_MESSAGE_DETAILS_OpenCV:INTERNAL=[/usr/local][v3.4.6()]
 //Details about finding OpenGL
 FIND_PACKAGE_MESSAGE_DETAILS_OpenGL:INTERNAL=[/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenGL.framework][/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenGL.framework][c ][v()]
+//Details about finding PythonLibs
+FIND_PACKAGE_MESSAGE_DETAILS_PythonLibs:INTERNAL=[/usr/local/Frameworks/Python.framework/Versions/3.7/lib/libpython3.7m.dylib][/usr/local/Frameworks/Python.framework/Versions/3.7/include/python3.7m][v3.7.3()]
 //ADVANCED property for variable: GLUT_INCLUDE_DIR
 GLUT_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: GLUT_cocoa_LIBRARY
@@ -517,6 +528,12 @@ OpenCV_HIGHGUI_LIBRARY-ADVANCED:INTERNAL=1
 OpenCV_ROOT_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OpenCV_TRS_LIBRARY
 OpenCV_TRS_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PYTHON_INCLUDE_DIR
+PYTHON_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PYTHON_LIBRARY
+PYTHON_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PYTHON_LIBRARY_DEBUG
+PYTHON_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: ProcessorCount_cmd_sysctl
 ProcessorCount_cmd_sysctl-ADVANCED:INTERNAL=1
 //Components requested for this build tree.

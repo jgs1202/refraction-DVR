@@ -99,8 +99,8 @@ __kernel void trace(__global float *grad, __global float *fColor, __global float
             z = checkRange(z, side);
             p = ((int)(xx) + (int)(yy) * side + (int)(z) * side * side);
             newMedium[0] = fColor[3 * p];
-            newMedium[1] = fColor[3 * p];
-            newMedium[2] = fColor[3 * p];
+            newMedium[1] = fColor[3 * p + 1];
+            newMedium[2] = fColor[3 * p + 2];
             // newMedium[0] = pow(newMedium[0], 1/calcStep);
             // newMedium[1] = pow(newMedium[1], 1/calcStep);
             // newMedium[2] = pow(newMedium[2], 1/calcStep);
@@ -113,12 +113,21 @@ __kernel void trace(__global float *grad, __global float *fColor, __global float
                 newMedium[2] = 1;
             }
 
-            newColor[0] = 1 * newMedium[0];
-            newColor[1] = 1 * newMedium[1];
-            newColor[2] = 1 * newMedium[2];
-            // newColor[0] = lColor[3 * p] * newMedium[0];
-            // newColor[1] = lColor[3 * p + 1] * newMedium[1];
-            // newColor[2] = fColor[3 * p + 2] * newMedium[2];
+            // newColor[0] = 1 * newMedium[0];
+            // newColor[1] = 1 * newMedium[1];
+            // newColor[2] = 1 * newMedium[2];
+            newColor[0] = lColor[3 * p] * newMedium[0];
+            newColor[1] = lColor[3 * p + 1] * newMedium[1];
+            newColor[2] = lColor[3 * p + 2] * newMedium[2];
+            if (newColor[0] == 0.) {
+                newColor[0] = 0.1 * newMedium[0];
+            }
+            if (newColor[1] == 0.) {
+                newColor[1] = 0.1 * newMedium[0];
+            }
+            if (newColor[2] == 0.) {
+                newColor[2] = 0.1 * newMedium[0];
+            }
             newIntensity = lIntensity[p];
     	} else {
             state = 1;
@@ -218,7 +227,7 @@ __kernel void trace(__global float *grad, __global float *fColor, __global float
         lastAngleX = angle[0];
     }
     float a = 0.001;
-    checker[position] = newOpacity;//fColor[3 * ((int)(xx) + (int)(yy) * side + (int)(z) * side * side)];
+    checker[position] = lColor[3 * (p - side * side * 10)];//fColor[3 * ((int)(xx) + (int)(yy) * side + (int)(z) * side * side)];
     // pixel[position * 3] = (lastAngleX - iniAngleX) * 10;
     // pixel[position * 3 + 1] = 0;//color[1];
     // pixel[position * 3 + 2] = (iniAngleX - lastAngleX) * 10;
