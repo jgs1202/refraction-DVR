@@ -84,31 +84,75 @@ void visualize(void) {
     printf("img written\n");
 }
 
-void visRays(float* rayBegin, float* rayAngle, int distance) {
+void visRays(float* rayBeginX, float* rayAngleX, float* rayBeginY, float* rayAngleY, int distance) {
     std::uniform_real_distribution<double> rnd(0.0,1.0);
     std::random_device rd;
     std::mt19937 mt(rd());
     int magnify = 5, magArrow = 100;
     cv::Scalar white(255, 255, 255);
-    cv::Mat rayDir(cv::Size(distance * 3, distance * 3), CV_8UC3, white);
+    cv::Mat rayDirY(cv::Size(distance * 3, distance * 3), CV_8UC3, white);
+    cv::Mat rayDirX(cv::Size(distance * 3, distance * 3), CV_8UC3, white);
 
     int sx, sy, ex, ey;
     float dx, dy, thre = 0.3;
     for (int ray=0; ray<WIDTH; ++ray) {
         if (rnd(mt) < thre) {
-            sx = (int) (rayBegin[2 * ray] + distance * 1.5);
-            sy = (int) (rayBegin[2 * ray + 1] + distance * 1.5);
-            ex = (int) (sx + rayAngle[2 * ray] * magArrow);
-            ey = (int) (sy + rayAngle[2 * ray + 1] * magArrow);
+            sx = (int) (rayBeginY[2 * ray] + distance * 1.5);
+            sy = (int) (rayBeginY[2 * ray + 1] + distance * 1.5);
+            ex = (int) (sx + rayAngleY[2 * ray] * magArrow);
+            ey = (int) (sy + rayAngleY[2 * ray + 1] * magArrow);
 //        std::cout << sx << " " << ex << " " << sy << " " << ey << " " << rayAngle[2 * ray + 1] * magArrow << std::endl;
-            cv::arrowedLine(rayDir, cv::Point(sx, sy), cv::Point(ex, ey), cv::Scalar(255, 0, 0), 1, 4);
+            cv::arrowedLine(rayDirY, cv::Point(sx, sy), cv::Point(ex, ey), cv::Scalar(255, 0, 0), 1, 4);
         }
     }
-    cv::circle(rayDir, cv::Point((int)(distance * 1.5), (int)(distance * 1.5)), 1, cv::Scalar(0, 0, 255), 10, 8, 0);
-    cv::circle(rayDir, cv::Point((int)(distance * 1.5) + WIDTH, (int)(distance * 1.5)), 1, cv::Scalar(0, 0, 255), 10, 8, 0);
-    cv::circle(rayDir, cv::Point((int)(distance * 1.5) + WIDTH, (int)(distance * 1.5) + WIDTH), 1, cv::Scalar(0, 0, 255), 10, 8, 0);
-    cv::circle(rayDir, cv::Point((int)(distance * 1.5), (int)(distance * 1.5) + WIDTH), 1, cv::Scalar(0, 0, 255), 10, 8, 0);
-    imwrite("images/rayDirectionY.png", rayDir);
+    cv::circle(rayDirY, cv::Point((int)(distance * 1.5), (int)(distance * 1.5)), 1, cv::Scalar(0, 0, 255), 10, 8, 0);
+    cv::circle(rayDirY, cv::Point((int)(distance * 1.5) + WIDTH, (int)(distance * 1.5)), 1, cv::Scalar(0, 0, 255), 10, 8, 0);
+    cv::circle(rayDirY, cv::Point((int)(distance * 1.5) + WIDTH, (int)(distance * 1.5) + WIDTH), 1, cv::Scalar(0, 0, 255), 10, 8, 0);
+    cv::circle(rayDirY, cv::Point((int)(distance * 1.5), (int)(distance * 1.5) + WIDTH), 1, cv::Scalar(0, 0, 255), 10, 8, 0);
+    imwrite("images/rayDirectionY.png", rayDirY);
+
+    for (int ray=0; ray<WIDTH; ++ray) {
+        if (rnd(mt) < thre) {
+            sx = (int) (rayBeginY[2 * ray] + distance * 1.5);
+            sy = (int) (rayBeginY[2 * ray + 1] + distance * 1.5);
+            ex = (int) (sx + rayAngleY[2 * ray] * magArrow);
+            ey = (int) (sy + rayAngleY[2 * ray + 1] * magArrow);
+//        std::cout << sx << " " << ex << " " << sy << " " << ey << " " << rayAngle[2 * ray + 1] * magArrow << std::endl;
+            cv::arrowedLine(rayDirX, cv::Point(sx, sy), cv::Point(ex, ey), cv::Scalar(255, 0, 0), 1, 4);
+        }
+    }
+    cv::circle(rayDirX, cv::Point((int)(distance * 1.5), (int)(distance * 1.5)), 1, cv::Scalar(0, 0, 255), 10, 8, 0);
+    cv::circle(rayDirX, cv::Point((int)(distance * 1.5) + WIDTH, (int)(distance * 1.5)), 1, cv::Scalar(0, 0, 255), 10, 8, 0);
+    cv::circle(rayDirX, cv::Point((int)(distance * 1.5) + WIDTH, (int)(distance * 1.5) + WIDTH), 1, cv::Scalar(0, 0, 255), 10, 8, 0);
+    cv::circle(rayDirX, cv::Point((int)(distance * 1.5), (int)(distance * 1.5) + WIDTH), 1, cv::Scalar(0, 0, 255), 10, 8, 0);
+    imwrite("images/rayDirectionX.png", rayDirX);
+    printf("img written\n");
+}
+
+void visTrajectory(int distance) {
+    int magnify = 5, magArrow = 100;
+    cv::Scalar white(255, 255, 255);
+    cv::Mat traje(cv::Size(distance * 3, distance * 3), CV_8UC3, white);
+
+    float sy, sx;
+    int total = WIDTH * WIDTH;
+    sx = M_PI * 2 / total;
+    sy = 0;
+    double p[] = {(double)distance, 0., 0.}, q[3];
+
+    for (int step=0; step<total; ++step) {
+        // update position
+        q[0] = p[0];
+        q[1] = p[1] * cos(step * sy) - p[2] * sin(step * sy);
+        q[2] = p[1] * sin(step * sy) + p[2] * cos(step * sy);
+        q[0] = p[0] * cos(step * sx) + p[2] * sin(step * sx);
+        q[1] = p[1];
+        q[2] = - p[0] * sin(step * sx) + p[2] * cos(step * sx);
+
+        traje.at<cv::Vec3b>((int)(q[0] + distance * 1.5) + (int)(q[2] + distance * 1.5) * distance * 3)[1] = 0;
+        traje.at<cv::Vec3b>((int)(q[0] + distance * 1.5) + (int)(q[2] + distance * 1.5) * distance * 3)[2] = 0;
+    }
+    imwrite("images/trajectory.png", traje);
     printf("img written\n");
 }
 
@@ -128,7 +172,7 @@ void biInter(float* tf, float* bf, float* tb, float* bb, float ratioy, float rat
 
 void trilinearTrace(float xx, float yy, float z, float *color, float *medium, float &reflectivity, float &opacity, float *gradient, float &intensity, bool &flagEnd, int x, int y){
     unsigned int p;
-    if ((xx < 0) || (yy < 0) | (z < 0) || (xx >= WIDTH - 1) || (yy >= HEIGHT - 1) || (z >= DEPTH - 1)) {
+    if ((xx < 0) || (yy < 0) | (z < 0) || (xx > WIDTH - 1) || (yy > HEIGHT - 1) || (z > DEPTH - 1)) {
         xx = checkRange(xx, WIDTH);
         yy = checkRange(yy, WIDTH);
         z = checkRange(z, WIDTH);
@@ -223,7 +267,7 @@ void trace3d(float *angle, float x, float y, float z, float *pixel) {
         multiVec(medium, newMedium, medium);
         opacity += (1 - opacity) * newOpacity;
 
-        int AOIx = -1, AOIy = -1;
+        int AOIx = 30, AOIy = 60;
 
         if (flagEnd){
             if ((x == AOIx) && (y == AOIy)) {
@@ -350,6 +394,30 @@ bool checkRangeVector(vector v, int side) {
     }
 }
 
+bool checkVectorOne(vector v) {
+    if (v.x != 1.) {
+        return false;
+    } else if (v.y != 1.) {
+        return false;
+    } else if (v.z != 1.) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+bool checkSameVector(vector a, vector b) {
+    if ((a.x == b.x) && (a.y == b.y) && (a.z == b.z)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+float vectorDis(vector a, vector b) {
+    return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z));
+}
+
 vector compare(plain p0, plain p1, vector big, vector end) {
     bool crossA = false, crossB = false;
     float ratio1, ratio2;
@@ -384,7 +452,15 @@ vector compare(plain p0, plain p1, vector big, vector end) {
         out1.x = big.x + ab.x * ratio1;
         out1.y = big.y + ab.y * ratio1;
         out1.z = big.z + ab.z * ratio1;
+        if (getAbs(out1.x) < 0.01) {out1.x = 0.0;}
+        if (getAbs(out1.y) < 0.01) {out1.y = 0.0;}
+        if (getAbs(out1.z) < 0.01) {out1.z = 0.0;}
+        if (getAbs(out1.x - (float)(WIDTH - 1)) < 0.01) {out1.x = (float)(WIDTH - 1);}
+        if (getAbs(out1.y - (float)(WIDTH - 1)) < 0.01) {out1.y = (float)(WIDTH - 1);}
+        if (getAbs(out1.z - (float)(WIDTH - 1)) < 0.01) {out1.z = (float)(WIDTH - 1);}
+//        std::cout <<  out1.x << " " << out1.y << " " << out1.z;
         if (!checkRangeVector(out1, WIDTH)) {
+//            printf(" out of field\n");
             out1.x = 1;
             out1.y = 1;
             out1.z = 1;
@@ -405,7 +481,15 @@ vector compare(plain p0, plain p1, vector big, vector end) {
         out2.x = big.x + ab.x * ratio2;
         out2.y = big.y + ab.y * ratio2;
         out2.z = big.z + ab.z * ratio2;
+        if (getAbs(out2.x) < 0.01) {out2.x = 0.0;}
+        if (getAbs(out2.y) < 0.01) {out2.y = 0.0;}
+        if (getAbs(out2.z) < 0.01) {out2.z = 0.0;}
+        if (getAbs(out2.x - (float)(WIDTH - 1)) < 0.01) {out2.x = (float)(WIDTH - 1);}
+        if (getAbs(out2.y - (float)(WIDTH - 1)) < 0.01) {out2.y = (float)(WIDTH - 1);}
+        if (getAbs(out2.z - (float)(WIDTH - 1)) < 0.01) {out2.z = (float)(WIDTH - 1);}
+//        std::cout << " " << out2.x << " " << out2.y << " " << out2.z << std::endl;
         if (!checkRangeVector(out2, WIDTH)) {
+//            printf(" out of field\n");
             out2.x = 1;
             out2.y = 1;
             out2.z = 1;
@@ -417,10 +501,14 @@ vector compare(plain p0, plain p1, vector big, vector end) {
     vector out;
     if ((crossA) && (crossB)) {
 //        printf("case 0\n");
-        if (compareDistance(out1, out2, big)) {
+        if (checkVectorOne(out1)) {
+            out = out2;
+        } else if (checkVectorOne(out2)) {
+            out = out1;
+        } else if (compareDistance(out1, out2, big)) {
             out = out2;
         } else {
-            return out1;
+            out = out1;
         }
     } else if (crossA) {
 //        printf("case 1\n");
@@ -437,37 +525,13 @@ vector compare(plain p0, plain p1, vector big, vector end) {
     return out;
 }
 
-bool checkVectorOne(vector v) {
-    if (v.x != 1.) {
-        return false;
-    } else if (v.y != 1.) {
-        return false;
-    } else if (v.z != 1.) {
-        return false;
-    } else {
-        return true;
-    }
-}
-
-bool checkSameVector(vector a, vector b) {
-    if ((a.x == b.x) && (a.y == b.y) && (a.z == b.z)) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-float vectorDis(vector a, vector b) {
-    return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z));
-}
-
 vector crossPoint(float inix, float iniy, float iniz, float anglex, float angley, float anglez, float distance, float side) {
     // plains ax+by+cz+d=0;
-    plain p0 = {1., 0., 0., side};
+    plain p0 = {1., 0., 0., side-1};
     plain p1 = {1., 0., 0., 0};
-    plain p2 = {0., 1., 0., side};
+    plain p2 = {0., 1., 0., side-1};
     plain p3 = {0., 1., 0., 0};
-    plain p4 = {0., 0., 1., side};
+    plain p4 = {0., 0., 1., side-1};
     plain p5 = {0., 0., 1., 0};
 
     vector big = {inix, iniy, iniz};
@@ -477,102 +541,114 @@ vector crossPoint(float inix, float iniy, float iniz, float anglex, float angley
     vector out1 = compare(p2, p3, big, end);
     vector out2 = compare(p4, p5, big, end);
 
-    float dis0 = vectorDis(big, out0);
-    float dis1 = vectorDis(big, out1);
-    float dis2 = vectorDis(big, out2);
+    float dis0 = vectorDis(big, out0); //3
+    float dis1 = vectorDis(big, out1); //1
+    float dis2 = vectorDis(big, out2); //2
 
     vector can0, can1, can2;
     can0 = (dis0 <= dis1)? ((dis0 <= dis2)? out0 : out2) : ((dis1 <= dis2)? out1 : out2);
     can2 = (dis0 >= dis1)? ((dis0 >= dis2)? out0 : out2) : ((dis1 >= dis2)? out1 : out2);
-    can1 = (checkSameVector(can0, out0)) ? (checkSameVector(can2, out1) ? out2 : out1) : (checkSameVector(can2, out0)? (checkSameVector(can0, out1)? out1 : out2) : out0);
+    can1 = (checkSameVector(can0, out0)) ? (checkSameVector(can2, out1) ? out2 : out1) : (checkSameVector(can2, out0)? (checkSameVector(can0, out1)? out2 : out1) : out0);
 
     if (!checkVectorOne(can0)) {
+//        printf("comp 0\n");
         return can0;
     } else if (!checkVectorOne(can1)) {
+//        printf("comp 1\n");
         return can1;
     } else {
+//        printf("comp 2\n");
         return can2;
     }
 }
 
 void renderRotate(float distance, float *pixel) {
-    float angle[3], dot[3], iniViewP[3], iniEndP[3], rotViewP[3], rotEndP[3], sx, sy, xx, yy, z;
+    float angle[3], dot[3], sx, sy, xx, yy, z;
+    double  iniViewP[3], iniEndP[3], rotViewP[3], rotEndP[3], tmp[3];
     int side = WIDTH;
-    sx = M_PI * 2;
-    sy = 0;
+//    float* rayBeginX = new float[WIDTH * 2];
+//    float* rayAngleX = new float[WIDTH * 2];
+//    float* rayBeginY = new float[WIDTH * 2];
+//    float* rayAngleY = new float[WIDTH * 2];
 
-    float* rayBegin = new float[WIDTH * 2];
-    float* rayAngle = new float[WIDTH * 2];
-
-    iniViewP[0] = (float)side/2;
-    iniViewP[1] = (float)side/2;
-    iniViewP[2] = -distance;
-
-    rotViewP[0] = iniViewP[0];
-    rotViewP[1] = iniViewP[1] * cos(sy) - iniViewP[2] * sin(sy);
-    rotViewP[2] = iniViewP[1] * sin(sy) + iniViewP[2] * cos(sy);
-
-    rotViewP[0] = rotViewP[0] * cos(sx) + rotViewP[2] * sin(sx);
-    rotViewP[1] = rotViewP[1];
-    rotViewP[2] = - rotViewP[0] * sin(sx) + rotViewP[2] * cos(sx);
+    sx = 0.;
+    sy = - M_PI * 2 * 1.4;
 
     for (int y = 0; y < viewH; ++y) {
         for (int x = 0; x < viewW; ++x) {
             xx = (float)x;
             yy = (float)y;
 
-            iniEndP[0] = (float)side / 2 + (xx - (float)side/2) / (distance - 50);// - (float)side / 2);
-            iniEndP[1] = (float)side / 2 + (yy - (float)side/2) / (distance - 50);// - (float)side / 2);
+            iniViewP[0] = 0.;
+            iniViewP[1] = 0.;
+            iniViewP[2] = -distance;
+            tmp[0] = iniViewP[0];
+            tmp[1] = iniViewP[1] * cos(sy) - iniViewP[2] * sin(sy);
+            tmp[2] = iniViewP[1] * sin(sy) + iniViewP[2] * cos(sy);
+            rotViewP[0] = tmp[0] * cos(sx) + tmp[2] * sin(sx);
+            rotViewP[1] = tmp[1];
+            rotViewP[2] = - tmp[0] * sin(sx) + tmp[2] * cos(sx);
+
+            iniEndP[0] = (xx - (float)side/2) / (distance - 50);// - (float)side / 2);
+            iniEndP[1] = (yy - (float)side/2) / (distance - 50);// - (float)side / 2);
             iniEndP[2] = -distance + 1;
-
-            rotEndP[0] = iniEndP[0];
-            rotEndP[1] = iniEndP[1] * cos(sy) - iniEndP[2] * sin(sy);
-            rotEndP[2] = iniEndP[1] * sin(sy) + iniEndP[2] * cos(sy);
-
-            rotEndP[0] = rotEndP[0] * cos(sx) + rotEndP[2] * sin(sx);
-            rotEndP[1] = rotEndP[1];
-            rotEndP[2] = - rotEndP[0] * sin(sx) + rotEndP[2] * cos(sx);
+            tmp[0] = iniEndP[0];
+            tmp[1] = iniEndP[1] * cos(sy) - iniEndP[2] * sin(sy);
+            tmp[2] = iniEndP[1] * sin(sy) + iniEndP[2] * cos(sy);
+            rotEndP[0] = tmp[0] * cos(sx) + tmp[2] * sin(sx);
+            rotEndP[1] = tmp[1];
+            rotEndP[2] = - tmp[0] * sin(sx) + tmp[2] * cos(sx);
 
             angle[0] = - rotViewP[0] + rotEndP[0];
             angle[1] = - rotViewP[1] + rotEndP[1];
             angle[2] = - rotViewP[2] + rotEndP[2];
 
-            if (y == plainY) {
-                rayBegin[2 * x + 0] = rotViewP[0];
-                rayBegin[2 * x + 1] = rotViewP[2];
-                rayAngle[2 * x + 0] = angle[0];
-                rayAngle[2 * x + 1] = angle[2];
-            }
+            rotViewP[0] = rotViewP[0] + (float)(WIDTH / 2);
+            rotViewP[1] = rotViewP[1] + (float)(WIDTH / 2);
+            rotViewP[2] = rotViewP[2] + (float)(WIDTH / 2);
 
             vector cross = crossPoint(rotViewP[0], rotViewP[1], rotViewP[2], angle[0], angle[1], angle[2], distance, side);
             xx = cross.x;
             yy = cross.y;
             z = cross.z;
 
-//            printf("\n");
-//            std::cout << iniViewP[0] << " " << iniViewP[1] << " " << iniViewP[2] << " " << iniEndP[0] << " " << iniEndP[1] << " " << iniEndP[2] << std::endl;
-//            std::cout << rotViewP[0] << " " << rotViewP[1] << " " << rotViewP[2] << " " << rotEndP[0] << " " << rotEndP[1] << " " << rotEndP[2] << std::endl;
-//            std::cout << x << " " << y << " " << xx << " " << yy << " " << z << std::endl;
-
             if (!checkVectorOne(cross)){
                 trace3d(angle, xx, yy, z, dot);
-                dot[0] = 1.;
-                dot[1] = 1.;
-                dot[2] = 1.;
+//                dot[0] = 1.;
+//                dot[1] = 1.;
+//                dot[2] = 1.;
             } else {
                 dot[0] = 0.;
                 dot[1] = 0.;
                 dot[2] = 0.;
             }
+
+//            if (y == plainY) {
+//                rayBeginY[2 * x + 0] = rotViewP[0];
+//                rayBeginY[2 * x + 1] = rotViewP[2];
+//                rayAngleY[2 * x + 0] = angle[0];
+//                rayAngleY[2 * x + 1] = angle[2];
+//            }
+//            if (x == plainX) {
+//                rayBeginX[2 * y + 0] = rotViewP[0];
+//                rayBeginX[2 * y + 1] = rotViewP[1];
+//                rayAngleX[2 * y + 0] = angle[0];
+//                rayAngleX[2 * y + 1] = angle[1];
+//            }
+
+//            std::cout << iniViewP[0] << " " << iniViewP[1] << " " << iniViewP[2] << " " << iniEndP[0] << " " << iniEndP[1] << " " << iniEndP[2] << std::endl;
+//            std::cout << rotViewP[0] << " " << rotViewP[1] << " " << rotViewP[2] << " " << rotEndP[0] << " " << rotEndP[1] << " " << rotEndP[2] << std::endl;
+//            std::cout << x << " " << y << " " << xx << " " << yy << " " << z << std::endl;
             setVec3Float(&pixel[(x + y * viewW) * 3], dot);
         }
     }
 
-    std::cout << rayBegin[0] << " " << rayBegin[1] << " " << rayAngle[0] << " " << rayAngle[1] << std::endl;
-    visRays(rayBegin, rayAngle, distance);
-
-    delete[] rayBegin;
-    delete[] rayAngle;
+//    visTrajectory(distance);
+//    visRays(rayBeginX, rayAngleX, rayBeginY, rayAngleY, distance);
+//    delete[] rayBeginX;
+//    delete[] rayAngleX;
+//    delete[] rayBeginY;
+//    delete[] rayAngleY;
 }
 
 void gpuRender(float distance, float *pixel){
