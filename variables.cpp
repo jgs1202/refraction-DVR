@@ -15,6 +15,7 @@ const int MAX_SOURCE_SIZE = 0x100000;
 const int FIELDSZ = (WIDTH * HEIGHT * DEPTH);
 const int PLAINSZ = (WIDTH * HEIGHT);
 int animationCount = 0;
+bool updateState = true;
 
 float* grad = new float[FIELDSZ * 3];
 float* fColor = new float[FIELDSZ * 3];
@@ -25,6 +26,9 @@ float* fRefractivity = new float[FIELDSZ];
 float* lColor = new float[FIELDSZ * 3];
 float* lDirection = new float[FIELDSZ * 3];
 float* lIntensity = new float[FIELDSZ];
+
+float shiftX = 0;
+float shiftY = 0;
 
 int viewW = WIDTH;
 int viewH = WIDTH;
@@ -43,10 +47,12 @@ float* castPositionX = new float[WIDTH * HEIGHT * 10 * 2];
 int castIndexX;
 
 float* photonIrradiance = new float[FIELDSZ];
-int maxPhotons = WIDTH * WIDTH * WIDTH;
+int maxPhotons = WIDTH * WIDTH * WIDTH * 10;
 float* photonPosition = new float[maxPhotons * 3];
 float* photonDirection= new float[maxPhotons * 3];
 float* photonGradDirection = new float[maxPhotons * 3];
 float* photonColor= new float[maxPhotons * 3];
+int* photonStartTime= new int[maxPhotons];
+int photonEnd = 0;
 
 //std::vector <float> surfaces;

@@ -88,6 +88,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/Aoyama/CLionProjects/refraction_openCL/animeEvents.cpp">
+			<Option target="refraction_openCL"/>
+		</Unit>
+		<Unit filename="/Users/Aoyama/CLionProjects/refraction_openCL/animeEvents.h">
+			<Option target="refraction_openCL"/>
+		</Unit>
 		<Unit filename="/Users/Aoyama/CLionProjects/refraction_openCL/casting.cpp">
 			<Option target="refraction_openCL"/>
 		</Unit>

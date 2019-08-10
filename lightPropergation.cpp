@@ -53,8 +53,8 @@ void visLight(void) {
             }
         }
     }
-    imwrite("lcolorY.png", colorY);
-    imwrite("ldirectionrY.png", dirY);
+    imwrite("images/lcolorY.png", colorY);
+    imwrite("images/ldirectionrY.png", dirY);
     printf("light image written\n");
 }
 

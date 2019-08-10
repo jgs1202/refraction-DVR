@@ -18,6 +18,9 @@ extern const int PLAINSZ;
 extern const int AOIx;
 extern const int AOIy;
 extern int animationCount;
+extern bool updateState;
+extern float shiftX;
+extern float shiftY;
 
 extern float* grad;
 extern float* fColor;
@@ -51,6 +54,9 @@ extern float* photonPosition;
 extern float* photonDirection;
 extern float* photonGradDirection;
 extern float* photonColor;
+extern int *photonStartTime;
+extern int photonEnd;
+
 //extern std::vector <float> surfaces;
 
 #endif //REFRACTION_OPENCL_VARIABLES_H

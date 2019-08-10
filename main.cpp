@@ -31,6 +31,7 @@
 #include "lightPropergation.h"
 #include "casting.h"
 #include "lightSetting.h"
+#include "animeEvents.h"
 
 #if defined __linux__ || defined __APPLE__
 // "Compiled for Linux
@@ -58,14 +59,14 @@ void makeDataset(void){
 
     printf("setting objects...\n");
 //    field, center, radius, color, reflection, opacity, refraction, emissionColor
-    float radius = WIDTH / 4, sCenter[] = {(float)WIDTH/2, (float)HEIGHT*1/2, radius + (float)WIDTH/5}, sColor[] = {1, 0.995, 0.995};
-    inSphere(sCenter, radius, sColor, 0.3, 0.001, 1.5, 0);
+    float radius = WIDTH / 4, sCenter[] = {(float)WIDTH/2, (float)HEIGHT*1/2, radius + (float)WIDTH/5}, sColor[] = {1, 0.99, 0.99};
+    inSphere(sCenter, radius, sColor, 0.3, 0.01, 1.5, 0);
 
     //    leaned
-//    float q1[] = {(float)WIDTH * 4 / 5, (float)HEIGHT - 11, (float)DEPTH / 5}, q2[] = {(float)WIDTH / 5, (float)HEIGHT - 11, (float)DEPTH * 3 / 5}, q3[] = {(float)WIDTH * 4 / 5, (float)HEIGHT / 2, (float)DEPTH / 5}, q4[] = {(float)WIDTH * 4 / 5, (float)HEIGHT - 11, (float)DEPTH / 4}, q[] = {1, 0.99, 0.99};
+//    float xq1[] = {(float)WIDTH * 4 / 5, (float)HEIGHT - 11, (float)DEPTH / 5}, q2[] = {(float)WIDTH / 5, (float)HEIGHT - 11, (float)DEPTH * 3 / 5}, q3[] = {(float)WIDTH * 4 / 5, (float)HEIGHT / 2, (float)DEPTH / 5}, q4[] = {(float)WIDTH * 4 / 5, (float)HEIGHT - 11, (float)DEPTH / 4}, q[] = {1, 0.95, 0.95};
     // straight
-    float q1[] = {(float)WIDTH * 4 / 5, (float)HEIGHT - 11, (float)DEPTH / 5}, q2[] = {(float)WIDTH / 5, (float)HEIGHT - 11, (float)DEPTH / 5}, q3[] = {(float)WIDTH * 4 / 5, (float)HEIGHT / 2, (float)DEPTH / 5}, q4[] = {(float)WIDTH * 4 / 5, (float)HEIGHT - 11, (float)DEPTH / 4}, q[] = {1, 0.99, 0.99};
-//    inRectangle(q1, q2, q3, q4, q, 0.3, 0.01, 1.8, fColor, fMedium, fOpacity, fRefractivity);
+    float q1[] = {(float)WIDTH * 4 / 5, (float)HEIGHT - 11, (float)DEPTH / 5}, q2[] = {(float)WIDTH / 5, (float)HEIGHT - 11, (float)DEPTH / 5}, q3[] = {(float)WIDTH * 4 / 5, (float)HEIGHT / 2, (float)DEPTH / 5}, q4[] = {(float)WIDTH * 4 / 5, (float)HEIGHT - 11, (float)DEPTH / 4}, q[] = {1, 0.95, 0.95};
+    inRectangle(q1, q2, q3, q4, q, 0.3, 0.01, 1.8, fColor, fMedium, fOpacity, fRefractivity);
 
     float qq1[] = {0, (float)HEIGHT - 1, 0}, qq2[] = {0, (float)HEIGHT - 1, (float)DEPTH - 1}, qq3[] = {0, (float)HEIGHT - (float)WIDTH/10, 0}, qq4[] = {(float)WIDTH - 1, (float)HEIGHT - 1, 0}, qq[] = {1, 1, 1};
 //    inRectangle(qq1, qq2, qq3, qq4, qq, 0.3, 1, 1, fColor, fMedium, fOpacity, fRefractivity);
@@ -92,6 +93,7 @@ void makeLightSource(void){
     float position[] = {0, 0, 0}, color[] = {1., 1., 1.}, intensity = 100;
 //    insideLight(position, color, intensity);
     setLight1();
+//    setLight2();
 }
 
 
@@ -110,30 +112,33 @@ void myInit (char *progname)
 
 void display( void )
 {
-//  座標調整
-    glRasterPos2i(-1 , 1);
-    glClear(GL_COLOR_BUFFER_BIT);
+    if (updateState) {
+        //  座標調整
+        glRasterPos2i(-1, 1);
+        glClear(GL_COLOR_BUFFER_BIT);
 
-    int photonNumber = WIDTH * WIDTH * 10;
+//        photonParticipate(photonEnd, animationCount);
+//        gpuParticipate(photonNumber);
 
-    photonParticipate(photonNumber);
-//    gpuParticipate(photonNumber);
+        float *image = new float[viewH * viewW * 3], *pixel = image;
+//        render(2 * WIDTH, pixel);
+        renderRotate(2 * WIDTH, pixel);
+//        gpuRender(2 * WIDTH, pixel);
+//        renderlColor(2 * WIDTH, shiftX, shiftY, pixel);
 
-    float *image = new float[viewH * viewW * 3], *pixel = image;
-    gpuRender(2 * WIDTH, pixel);
-//    render(2 * WIDTH, pixel);
+        glDrawPixels(viewW, viewH, GL_RGB, GL_FLOAT, image);
+        glFlush();
+        delete[] image;
 
-    glDrawPixels(viewW, viewH, GL_RGB, GL_FLOAT, image);
-    glFlush();
-    delete[] image;
+        if (animationCount == 55) {
+            visDirections(photonEnd);
+            visIntensity();
+        }
 
-    if (animationCount == WIDTH / 2) {
-        visDirections(photonNumber);
-    }
-
-    animationCount += 1;
-    if (animationCount > 200) {
-        exit(0);
+        animationCount += 1;
+        if (animationCount > 200) {
+            exit(0);
+        }
     }
 }
 
@@ -171,25 +176,20 @@ int main(int argc, char **argv)
 //    gpuSmoothing();
 //    gpuSmoothing();
 //    gpuSmoothing();
-//    gpuSmoothing();
-//    gpuSmoothing();
-//    gpuSmoothing();
-//    gpuSmoothing();
 
 //  field, light, direction, color, intensity, direction.z must be bigger than the others.
 //    calcLightSource(field, fromLightSource, grad, Vec3f (1, 1, 1), Vec3f (1,1,1));
 
     float direction[] = {1, 1, 1}, color[] = {1, 1, 1};
     printf("calculating light directiton...\n");
-//    gpuCalcLightSource(direction, color);
+    gpuCalcLightSource(direction, color);
 
-
-    int photonNumber = WIDTH * WIDTH * 10;
-    makeLightSource();
+//    makeLightSource();
 
     glutDisplayFunc(display);
     glutReshapeFunc (myReshape);
-    glutIdleFunc(display);
+//    glutIdleFunc(display);
+    glutKeyboardFunc(&keyPressed);
     glutMainLoop();
 
     delete[] grad;

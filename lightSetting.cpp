@@ -70,12 +70,12 @@ void visDirections(int photonNumber) {
             }
         }
     }
-    imwrite("photonDirectionX.png", pdX);
-    imwrite("photonDirectionZ.png", pdZ);
+    imwrite("images/photonDirectionX.png", pdX);
+    imwrite("images/photonDirectionZ.png", pdZ);
     printf("img written\n");
 }
 
-void visIntensity(int photonNumber) {
+void visIntensity() {
     int magnify = 5, px, pz;
     cv::Scalar white(255, 255, 255, 255);
     cv::Mat heatmapX(cv::Size(WIDTH * magnify, HEIGHT * magnify), CV_8UC4, white);
@@ -93,19 +93,30 @@ void visIntensity(int photonNumber) {
             pz = x + y * WIDTH + plainZ * WIDTH * WIDTH;
             for (int s=0; s<magnify; ++s) {
                 for (int t=0; t<magnify; ++t) {
-                    heatmapX.at<cv::Vec4b>(x * magnify + y * magnify * WIDTH * magnify + s + t * magnify * WIDTH)[0] = lColor[px * 3 + 2];
-                    heatmapX.at<cv::Vec4b>(x * magnify + y * magnify * WIDTH * magnify + s + t * magnify * WIDTH)[1] = lColor[px * 3 + 1];
-                    heatmapX.at<cv::Vec4b>(x * magnify + y * magnify * WIDTH * magnify + s + t * magnify * WIDTH)[2] = lColor[px * 3 + 0];
-                    heatmapX.at<cv::Vec4b>(x * magnify + y * magnify * WIDTH * magnify + s + t * magnify * WIDTH)[3] = lIntensity[px] / max * 255;
+                    heatmapX.at<cv::Vec4b>(x * magnify + y * magnify * WIDTH * magnify + s + t * magnify * WIDTH)[0] = lColor[px * 3 + 2] * 255;
+                    heatmapX.at<cv::Vec4b>(x * magnify + y * magnify * WIDTH * magnify + s + t * magnify * WIDTH)[1] = lColor[px * 3 + 1] * 255;
+                    heatmapX.at<cv::Vec4b>(x * magnify + y * magnify * WIDTH * magnify + s + t * magnify * WIDTH)[2] = lColor[px * 3 + 0] * 255;
+                    if (lIntensity[px] == 0.) {
+                        heatmapX.at<cv::Vec4b>(x * magnify + y * magnify * WIDTH * magnify + s + t * magnify * WIDTH)[3] = 255;
+                    } else {
+                        heatmapX.at<cv::Vec4b>(x * magnify + y * magnify * WIDTH * magnify + s + t * magnify * WIDTH)[3] = lIntensity[px] / max * 255;
+                    }
 
-                    heatmapZ.at<cv::Vec4b>(x * magnify + y * magnify * WIDTH * magnify + s + t * magnify * WIDTH)[0] = lColor[pz * 3 + 2];
-                    heatmapZ.at<cv::Vec4b>(x * magnify + y * magnify * WIDTH * magnify + s + t * magnify * WIDTH)[1] = lColor[pz * 3 + 1];
-                    heatmapZ.at<cv::Vec4b>(x * magnify + y * magnify * WIDTH * magnify + s + t * magnify * WIDTH)[2] = lColor[pz * 3 + 0];
-                    heatmapZ.at<cv::Vec4b>(x * magnify + y * magnify * WIDTH * magnify + s + t * magnify * WIDTH)[3] = lIntensity[pz] / max * 255;
+                    heatmapZ.at<cv::Vec4b>(x * magnify + y * magnify * WIDTH * magnify + s + t * magnify * WIDTH)[0] = lColor[pz * 3 + 2] * 255;
+                    heatmapZ.at<cv::Vec4b>(x * magnify + y * magnify * WIDTH * magnify + s + t * magnify * WIDTH)[1] = lColor[pz * 3 + 1] * 255;
+                    heatmapZ.at<cv::Vec4b>(x * magnify + y * magnify * WIDTH * magnify + s + t * magnify * WIDTH)[2] = lColor[pz * 3 + 0] * 255;
+                    if (lIntensity[pz] == 0.) {
+                        heatmapZ.at<cv::Vec4b>(x * magnify + y * magnify * WIDTH * magnify + s + t * magnify * WIDTH)[3] = 255;
+                    } else {
+                        heatmapZ.at<cv::Vec4b>(x * magnify + y * magnify * WIDTH * magnify + s + t * magnify * WIDTH)[3] = lIntensity[pz] / max * 255;
+                    }
                 }
             }
         }
     }
+
+    imwrite("./images/light_intensity_X.png", heatmapX);
+    imwrite("./images/light_intensity_Z.png", heatmapZ);
 }
 
 void arrangePhotonEqually(float* photonPosition, float* photonDirection, float* position, float* color, int intensity, int photonNumber){
@@ -302,7 +313,7 @@ void triGrad(float x, float y, float z, float *newGrad, int side) {
     newGrad[2] = t[2] * (1 - ratioy) + b[2] * ratioy;
 }
 
-void gpuParticipate(int photonNumber){
+void gpuParticipate(int photonNumber, int time){
     std::cout << "participating..." << std::endl;
     clock_t start,end;
     start = clock();
@@ -422,58 +433,60 @@ void gpuParticipate(int photonNumber){
     free(checker);
 }
 
-void photonParticipate(int photonNumber) {
+void photonParticipate(int photonNumber, int time) {
     memset(lColor, 0., sizeof(float) * FIELDSZ * 3);
     memset(lIntensity, 0., sizeof(float) * FIELDSZ);
     int calcStep = 1, p;
     bool flagEnd = true;
     for (int photon = 0; photon < photonNumber; ++photon) {
-        float x, y, z, dx, dy, dz, newGrad[3];
-        newGrad[0] = 0;
-        newGrad[1] = 0;
-        newGrad[2] = 0;
-        x = photonPosition[3 * photon + 0];
-        y = photonPosition[3 * photon + 1];
-        z = photonPosition[3 * photon + 2];
-        dx = photonDirection[3 * photon + 0];
-        dy = photonDirection[3 * photon + 1];
-        dz = photonDirection[3 * photon + 2];
+        if (time >= photonStartTime[photon]) {
+            float x, y, z, dx, dy, dz, newGrad[3];
+            newGrad[0] = 0;
+            newGrad[1] = 0;
+            newGrad[2] = 0;
+            x = photonPosition[3 * photon + 0];
+            y = photonPosition[3 * photon + 1];
+            z = photonPosition[3 * photon + 2];
+            dx = photonDirection[3 * photon + 0];
+            dy = photonDirection[3 * photon + 1];
+            dz = photonDirection[3 * photon + 2];
 
-        p = (int) x + (int) y * WIDTH + (int) z * WIDTH * WIDTH;
-        if (checkPosition(x, y, z, WIDTH)) {
-            photonIrradiance[p] = 1;
-            triGrad(x, y, z, newGrad, WIDTH);
-            dx += newGrad[0] * 100 / (float)WIDTH / (float) calcStep;
-            dy += newGrad[1] * 100 / (float)WIDTH / (float) calcStep;
-            dz += newGrad[2] * 100 / (float)WIDTH / (float) calcStep;
-            photonDirection[3 * photon + 0] = dx;
-            photonDirection[3 * photon + 1] = dy;
-            photonDirection[3 * photon + 2] = dz;
-            if (lIntensity[p] == 0) {
-                lColor[p * 3 + 0] = photonColor[3 * photon + 0];
-                lColor[p * 3 + 1] = photonColor[3 * photon + 1];
-                lColor[p * 3 + 2] = photonColor[3 * photon + 2];
-                lIntensity[p] += 1;
-            } else {
-                lColor[p * 3 + 0] = (photonColor[3 * photon + 0] + lColor[p * 3 + 0] * lIntensity[p]) / (lIntensity[p] + 1);
-                lColor[p * 3 + 1] = (photonColor[3 * photon + 1] + lColor[p * 3 + 1] * lIntensity[p]) / (lIntensity[p] + 1);
-                lColor[p * 3 + 2] = (photonColor[3 * photon + 2] + lColor[p * 3 + 2] * lIntensity[p]) / (lIntensity[p] + 1);
-                lIntensity[p] += 1;
+            p = (int) x + (int) y * WIDTH + (int) z * WIDTH * WIDTH;
+            if (checkPosition(x, y, z, WIDTH)) {
+                photonIrradiance[p] = 1;
+                triGrad(x, y, z, newGrad, WIDTH);
+                dx += newGrad[0] * 100 / (float) WIDTH / (float) calcStep;
+                dy += newGrad[1] * 100 / (float) WIDTH / (float) calcStep;
+                dz += newGrad[2] * 100 / (float) WIDTH / (float) calcStep;
+                photonDirection[3 * photon + 0] = dx;
+                photonDirection[3 * photon + 1] = dy;
+                photonDirection[3 * photon + 2] = dz;
+                if (lIntensity[p] == 0) {
+                    lColor[p * 3 + 0] = photonColor[3 * photon + 0];
+                    lColor[p * 3 + 1] = photonColor[3 * photon + 1];
+                    lColor[p * 3 + 2] = photonColor[3 * photon + 2];
+                    lIntensity[p] += 1;
+                } else {
+                    lColor[p * 3 + 0] = (photonColor[3 * photon + 0] + lColor[p * 3 + 0] * lIntensity[p]) / (lIntensity[p] + 1);
+                    lColor[p * 3 + 1] = (photonColor[3 * photon + 1] + lColor[p * 3 + 1] * lIntensity[p]) / (lIntensity[p] + 1);
+                    lColor[p * 3 + 2] = (photonColor[3 * photon + 2] + lColor[p * 3 + 2] * lIntensity[p]) / (lIntensity[p] + 1);
+                    lIntensity[p] += 1;
+                }
+                photonColor[3 * photon + 0] *= (fMedium[3 * p + 0] * (1 - fOpacity[p]));
+                photonColor[3 * photon + 1] *= (fMedium[3 * p + 1] * (1 - fOpacity[p]));
+                photonColor[3 * photon + 2] *= (fMedium[3 * p + 2] * (1 - fOpacity[p]));
+                flagEnd = false;
             }
-            photonColor[3 * photon + 0] *= (fMedium[3 * p + 0] * (1 - fOpacity[p]));
-            photonColor[3 * photon + 1] *= (fMedium[3 * p + 1] * (1 - fOpacity[p]));
-            photonColor[3 * photon + 2] *= (fMedium[3 * p + 2] * (1 - fOpacity[p]));
-            flagEnd = false;
-        }
 
-        //update position
-        float square = dx * dx + dy * dy + dz * dz;
-        x += dx / sqrt(square) / (float)calcStep;
-        y += dy / sqrt(square) / (float)calcStep;
-        z += dz / sqrt(square) / (float)calcStep;
-        photonPosition[3 * photon + 0] = x;
-        photonPosition[3 * photon + 1] = y;
-        photonPosition[3 * photon + 2] = z;
+            //update position
+            float square = dx * dx + dy * dy + dz * dz;
+            x += dx / sqrt(square) / (float) calcStep;
+            y += dy / sqrt(square) / (float) calcStep;
+            z += dz / sqrt(square) / (float) calcStep;
+            photonPosition[3 * photon + 0] = x;
+            photonPosition[3 * photon + 1] = y;
+            photonPosition[3 * photon + 2] = z;
+        }
     }
 }
 
@@ -483,6 +496,7 @@ void setLight1(void){
     int margin, photonNumber;
     margin = 10;
     photonNumber = WIDTH * WIDTH * margin;
+    photonEnd += photonNumber;
     if (photonNumber > maxPhotons) {
         std::cout << "Error: too many photons\n";
         exit(1);
@@ -507,8 +521,54 @@ void setLight1(void){
                 photonColor[photonIndex * 3 + 0] = lightColor[0];
                 photonColor[photonIndex * 3 + 1] = lightColor[1];
                 photonColor[photonIndex * 3 + 2] = lightColor[2];
+                photonStartTime[photonIndex] = 0;
                 photonIndex += 1;
             }
+        }
+    }
+}
+
+void setLight2(void){
+    float lightPosition[3], lightColor[3], intensity, iniDirection[3];
+
+    int margin, photonNumber, duration;
+    margin = 10;
+    duration = 10;
+    photonNumber = WIDTH * WIDTH * margin * duration;
+    photonEnd += photonNumber;
+
+    if (photonNumber > maxPhotons) {
+        std::cout << "Error: too many photons\n";
+        exit(1);
+    }
+    memset(photonGradDirection, 0., sizeof(float) * photonNumber * 3);
+    lightColor[0] = 1.;
+    lightColor[1] = 1.;
+    lightColor[2] = 1.;
+
+    float iniPosition[3] = {(float)WIDTH / 8, (float)WIDTH / 2, (float)WIDTH / 2};
+    float theta, phi, hNum;
+    phi = 0;
+    for(int t=0; t<duration; ++t) {
+        for (int photon = 0; photon < photonNumber / duration; ++photon) {
+            photonPosition[(photonNumber * t / duration) * 3 + photon * 3] = iniPosition[0];
+            photonPosition[(photonNumber * t / duration) * 3 + photon * 3 + 1] = iniPosition[1];
+            photonPosition[(photonNumber * t / duration) * 3 + photon * 3 + 2] = iniPosition[2];
+
+            hNum = 2. * (photon) / (photonNumber / duration - 1.) - 1.;
+            theta = acos(hNum);
+            if (photon != 0) {
+                phi = phi + 3.6 / sqrt(photonNumber / duration) / sqrt(1 - hNum * hNum);
+            }
+            //        std::cout << photon << ": " << hNum << " " << theta << " " << phi << std::endl;
+            photonDirection[(photonNumber * t / duration) * 3 + 3 * photon + 0] = sin(theta) * cos(phi);
+            photonDirection[(photonNumber * t / duration) * 3 + 3 * photon + 1] = sin(theta) * sin(phi);
+            photonDirection[(photonNumber * t / duration) * 3 + 3 * photon + 2] = cos(theta);
+            photonColor[(photonNumber * t / duration) * 3 + 3 * photon + 0] = lightColor[0];
+            photonColor[(photonNumber * t / duration) * 3 + 3 * photon + 1] = lightColor[1];
+            photonColor[(photonNumber * t / duration) * 3 + 3 * photon + 2] = lightColor[2];
+
+            photonStartTime[photonNumber * t / duration + 3 * photon] = t;
         }
     }
 }

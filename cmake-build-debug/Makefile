@@ -123,6 +123,33 @@ refraction_openCL/fast:
 	$(MAKE) -f CMakeFiles/refraction_openCL.dir/build.make CMakeFiles/refraction_openCL.dir/build
 .PHONY : refraction_openCL/fast
 
+animeEvents.o: animeEvents.cpp.o
+
+.PHONY : animeEvents.o
+
+# target to build an object file
+animeEvents.cpp.o:
+	$(MAKE) -f CMakeFiles/refraction_openCL.dir/build.make CMakeFiles/refraction_openCL.dir/animeEvents.cpp.o
+.PHONY : animeEvents.cpp.o
+
+animeEvents.i: animeEvents.cpp.i
+
+.PHONY : animeEvents.i
+
+# target to preprocess a source file
+animeEvents.cpp.i:
+	$(MAKE) -f CMakeFiles/refraction_openCL.dir/build.make CMakeFiles/refraction_openCL.dir/animeEvents.cpp.i
+.PHONY : animeEvents.cpp.i
+
+animeEvents.s: animeEvents.cpp.s
+
+.PHONY : animeEvents.s
+
+# target to generate assembly for a file
+animeEvents.cpp.s:
+	$(MAKE) -f CMakeFiles/refraction_openCL.dir/build.make CMakeFiles/refraction_openCL.dir/animeEvents.cpp.s
+.PHONY : animeEvents.cpp.s
+
 casting.o: casting.cpp.o
 
 .PHONY : casting.o
@@ -429,6 +456,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... refraction_openCL"
+	@echo "... animeEvents.o"
+	@echo "... animeEvents.i"
+	@echo "... animeEvents.s"
 	@echo "... casting.o"
 	@echo "... casting.i"
 	@echo "... casting.s"
