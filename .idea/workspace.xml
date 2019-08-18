@@ -12,13 +12,52 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="88766ad4-eea3-4d20-8449-89c93309a6cf" name="Default Changelist" comment="update">
+      <change afterPath="$PROJECT_DIR$/render.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/render.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animeEvents.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/animeEvents.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animeEvents.h" beforeDir="false" afterPath="$PROJECT_DIR$/animeEvents.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/casting.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/casting.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/casting.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/casting.h" beforeDir="false" afterPath="$PROJECT_DIR$/casting.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/CXX.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/animeEvents.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/animeEvents.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/casting.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/casting.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/lightPropergation.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/lightPropergation.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/link.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/main.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/objectData.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/objectData.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/variables.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/refraction_openCL.dir/variables.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/gradX.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/gradY.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/images/gradX.png" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/images/gradX.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/images/gradY.png" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/images/gradY.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/images/lcolorY.png" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/images/lcolorY.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/images/ldirectionrY.png" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/images/ldirectionrY.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/images/rayDirectionY.png" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/images/rayDirectionY.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/images/light_intensity_X.png" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/images/light_intensity_X.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/images/light_intensity_Z.png" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/images/light_intensity_Z.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/images/photonDirectionZ.png" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/images/photonDirectionZ.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/images/refractive_indexX.png" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/images/refractive_indexX.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/images/refractive_indexY.png" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/images/refractive_indexY.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/refraction_openCL" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/refraction_openCL" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/refraction_openCL.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/refraction_openCL.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/trace3d.cl" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/trace3d.cl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/tracelColorRotate.cl" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/tracelColorRotate.cl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lightPropergation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lightPropergation.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/objectData.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/objectData.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/objectData.h" beforeDir="false" afterPath="$PROJECT_DIR$/objectData.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/variables.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/variables.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/variables.h" beforeDir="false" afterPath="$PROJECT_DIR$/variables.h" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -47,74 +86,74 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="131">
-              <caret line="68" column="18" lean-forward="true" selection-start-line="68" selection-start-column="18" selection-end-line="68" selection-end-column="18" />
+            <state relative-caret-position="513">
+              <caret line="165" column="21" lean-forward="true" selection-start-line="165" selection-start-column="21" selection-end-line="165" selection-end-column="21" />
               <folding>
+                <element signature="e#43#61#0" expanded="true" />
                 <element signature="e#417#436#0" expanded="true" />
+                <element signature="e#726#839#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lightSetting.cpp">
+        <entry file="file://$PROJECT_DIR$/vector.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="319" selection-start-line="319" selection-end-line="319" />
+            <state relative-caret-position="900">
+              <caret line="60" lean-forward="true" selection-start-line="60" selection-end-line="60" />
               <folding>
-                <element signature="e#43#68#0" expanded="true" />
+                <element signature="e#43#62#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/casting.h">
+        <entry file="file://$PROJECT_DIR$/objectData.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="2" lean-forward="true" selection-start-column="2" selection-end-column="2" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/casting.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
-              <caret line="641" column="18" selection-start-line="641" selection-start-column="18" selection-end-line="641" selection-end-column="18" />
+            <state relative-caret-position="359">
+              <caret line="161" column="59" selection-start-line="161" selection-start-column="59" selection-end-line="161" selection-end-column="59" />
               <folding>
-                <element signature="e#43#63#0" expanded="true" />
-                <element signature="e#23911#29791#0" />
-                <element signature="e#29794#34737#0" />
-                <marker date="1565477635653" expanded="true" signature="13501:13629" ph="..." />
+                <element signature="e#43#66#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmake-build-debug/images/rayDirectionX.png">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmake-build-debug/images/rayDirectionY.png">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmake-build-debug/images/trajectory.png">
-          <provider selected="true" editor-type-id="images" />
+        <entry file="file://$PROJECT_DIR$/lightPropergation.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="192">
+              <caret line="56" column="30" selection-start-line="56" selection-start-column="30" selection-end-line="56" selection-end-column="30" />
+              <folding>
+                <element signature="e#43#73#0" expanded="true" />
+                <marker date="1565695809467" expanded="true" signature="10072:10396" ph="..." />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/variables.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="825">
-              <caret line="55" column="18" selection-start-line="55" selection-start-column="18" selection-end-line="55" selection-end-column="18" />
+            <state relative-caret-position="90">
+              <caret line="6" column="19" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/animeEvents.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="199">
+              <caret line="21" column="1" lean-forward="true" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
+              <folding>
+                <element signature="e#43#67#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -122,46 +161,60 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/variables.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="855">
-              <caret line="57" column="21" selection-start-line="57" selection-start-column="21" selection-end-line="57" selection-end-column="21" />
+            <state relative-caret-position="266">
+              <caret line="20" column="34" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/casting.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="152">
+              <caret line="17" column="8" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmake-build-debug/images/refractive_indexX.png">
+          <provider selected="true" editor-type-id="images" />
         </entry>
       </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>seconds</find>
-      <find>photonColor</find>
-      <find>coor</find>
-      <find>Arg7</find>
-      <find>gradAndPaths</find>
-      <find>photonP</find>
-      <find>memset</find>
-      <find>check</find>
-      <find>che</find>
-      <find>gradDirection</find>
-      <find>px ==</find>
-      <find>visu</find>
-      <find>inten</find>
-      <find>img</find>
-      <find>arrangePhoton</find>
-      <find>renderl</find>
-      <find>photonpar</find>
-      <find>render</find>
-      <find>photonend</find>
-      <find>trili</find>
-      <find>renderRota</find>
-      <find>trace3</find>
-      <find>visDire</find>
-      <find>sqrt</find>
-      <find>cross</find>
-      <find>iniViewP</find>
-      <find>visrays</find>
-      <find>flagEnd</find>
-      <find>.x &lt;&lt;</find>
       <find>cout</find>
+      <find>trace</find>
+      <find>bilinearTrace</find>
+      <find>sx</find>
+      <find>gpu</find>
+      <find>checker</find>
+      <find>gpuRe</find>
+      <find>renderl</find>
+      <find>rende</find>
+      <find>std</find>
+      <find>renderlC</find>
+      <find>lC</find>
+      <find>lColor</find>
+      <find>renderlColor</find>
+      <find>gpurend</find>
+      <find>renderro</find>
+      <find>renderRotate</find>
+      <find>render</find>
+      <find>renderRota</find>
+      <find>gpuren</find>
+      <find>printf</find>
+      <find>gpurender</find>
+      <find>trace3</find>
+      <find>trace3d</find>
+      <find>visua</find>
+      <find>displa</find>
+      <find>directions</find>
+      <find>incons</find>
+      <find>directions...</find>
+      <find>vectorDi</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -194,37 +247,40 @@
         <option value="$PROJECT_DIR$/cmake-build-debug/vector.h" />
         <option value="$PROJECT_DIR$/cmake-build-debug/vector.cpp" />
         <option value="$PROJECT_DIR$/gpuSetting.h" />
-        <option value="$PROJECT_DIR$/vector.cpp" />
         <option value="$PROJECT_DIR$/vector.h" />
-        <option value="$PROJECT_DIR$/objectData.h" />
         <option value="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/FindOpenCV.cmake" />
         <option value="$PROJECT_DIR$/cmake-modules/FindOpenCV.cmake" />
         <option value="$PROJECT_DIR$/gradient.h" />
         <option value="$PROJECT_DIR$/gradient.cpp" />
-        <option value="$PROJECT_DIR$/objectData.cpp" />
         <option value="$PROJECT_DIR$/lightPropergation.h" />
         <option value="$PROJECT_DIR$/myMath.h" />
         <option value="$PROJECT_DIR$/myMath.cpp" />
         <option value="$PROJECT_DIR$/visualize.h" />
         <option value="$PROJECT_DIR$/visualize.cpp" />
-        <option value="$PROJECT_DIR$/lightPropergation.cpp" />
         <option value="$PROJECT_DIR$/lightSetting.h" />
         <option value="$PROJECT_DIR$/cmake-build-debug/animeEvents.h" />
         <option value="$PROJECT_DIR$/cmake-build-debug/animeEvents.cpp" />
-        <option value="$PROJECT_DIR$/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/animeEvents.cpp" />
         <option value="$PROJECT_DIR$/gpuSetting.cpp" />
         <option value="$PROJECT_DIR$/lightSetting.cpp" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/vector.cpp" />
+        <option value="$PROJECT_DIR$/animeEvents.h" />
         <option value="$PROJECT_DIR$/casting.h" />
-        <option value="$PROJECT_DIR$/main.cpp" />
+        <option value="$PROJECT_DIR$/render.h" />
         <option value="$PROJECT_DIR$/variables.h" />
-        <option value="$PROJECT_DIR$/variables.cpp" />
+        <option value="$PROJECT_DIR$/objectData.h" />
         <option value="$PROJECT_DIR$/casting.cpp" />
+        <option value="$PROJECT_DIR$/lightPropergation.cpp" />
+        <option value="$PROJECT_DIR$/objectData.cpp" />
+        <option value="$PROJECT_DIR$/variables.cpp" />
+        <option value="$PROJECT_DIR$/render.cpp" />
+        <option value="$PROJECT_DIR$/animeEvents.cpp" />
+        <option value="$PROJECT_DIR$/main.cpp" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="628" />
+    <option name="x" value="170" />
     <option name="y" value="23" />
     <option name="width" value="1052" />
     <option name="height" value="1027" />
@@ -355,7 +411,7 @@
       <workItem from="1564133149292" duration="9587000" />
       <workItem from="1564429039258" duration="23415000" />
       <workItem from="1565442147854" duration="9815000" />
-      <workItem from="1565456821009" duration="15548000" />
+      <workItem from="1565456821009" duration="37763000" />
     </task>
     <task id="LOCAL-00001" summary="seperaet files and add trilinear interpolation">
       <created>1557999038304</created>
@@ -368,10 +424,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="504682000" />
+    <option name="totallyTimeSpent" value="526897000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="628" y="23" width="1052" height="1027" extended-state="0" />
+    <frame x="170" y="23" width="1052" height="1027" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4811321" visible="true" weight="0.19296578" />
@@ -395,28 +451,6 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Database" order="3" weight="0.025773196" />
     </layout>
-    <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4811321" visible="true" weight="0.15971676" />
-      <window_info id="Structure" order="1" sideWeight="0.5173913" side_tool="true" weight="0.24859287" />
-      <window_info id="Favorites" order="2" sideWeight="0.5188679" side_tool="true" weight="0.16924399" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.31799164" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39910978" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Database Changes" order="7" />
-      <window_info anchor="bottom" id="Messages" order="8" weight="0.35669455" />
-      <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="11" />
-      <window_info anchor="bottom" id="CMake" order="12" weight="0.32941177" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Database" order="3" weight="0.025773196" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -427,20 +461,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/main.cpp</url>
-          <line>172</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/casting.cpp</url>
-          <line>781</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
         <watch expression="pfColor" />
@@ -462,58 +482,11 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/cmake-build-debug/trace.cl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-debug/CMakeFiles/FindOpenCV.cmake">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="1" lean-forward="true" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/objectData.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-modules/FindOpenCV.cmake">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1">
-          <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-debug/img.png" />
-    <entry file="file://$PROJECT_DIR$/gradient.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vector.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="50" selection-start-line="21" selection-start-column="50" selection-end-line="21" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-debug/grad.png" />
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/refractive_index.png" />
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/refractive_indexY.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/refractive_indexX.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-debug/gradX.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/Untitled.tiff">
@@ -523,16 +496,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="12" column="28" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/objectData.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="715">
-          <caret line="157" column="29" selection-start-line="157" selection-start-column="29" selection-end-line="157" selection-end-column="29" />
-          <folding>
-            <element signature="e#43#66#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -560,9 +523,6 @@
           <caret line="12" selection-start-line="12" selection-end-line="12" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-debug/gradY.png">
-      <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/lcolorY.png">
       <provider selected="true" editor-type-id="images" />
@@ -593,27 +553,6 @@
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/photonDirectionZ.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/lightPropergation.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
-          <caret line="56" column="20" selection-start-line="56" selection-start-column="20" selection-end-line="56" selection-end-column="20" />
-          <folding>
-            <element signature="e#43#73#0" expanded="true" />
-            <marker date="1564143733412" expanded="true" signature="7218:7542" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vector.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="901">
-          <caret line="70" selection-start-line="70" selection-end-line="70" />
-          <folding>
-            <element signature="e#43#62#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lightSetting.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
@@ -630,13 +569,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
           <caret line="28" selection-start-line="28" selection-end-line="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="29" lean-forward="true" selection-start-line="13" selection-start-column="29" selection-end-line="13" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -663,35 +595,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/animeEvents.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="33" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
-          <folding>
-            <element signature="e#43#67#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/images/light_intensity_X.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/images/light_intensity_Z.png">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/variables.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="825">
-          <caret line="55" column="18" selection-start-line="55" selection-start-column="18" selection-end-line="55" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/variables.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="855">
-          <caret line="57" column="21" selection-start-line="57" selection-start-column="21" selection-end-line="57" selection-end-column="21" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/calcLightSource.cl">
       <provider selected="true" editor-type-id="text-editor">
@@ -700,28 +608,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-debug/images/rayDirectionX.png">
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/images/trajectory.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/images/rayDirectionY.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-debug/images/trajectory.png">
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/images/rayDirectionX.png">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="68" column="18" lean-forward="true" selection-start-line="68" selection-start-column="18" selection-end-line="68" selection-end-column="18" />
-          <folding>
-            <element signature="e#417#436#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lightSetting.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
+        <state relative-caret-position="873">
           <caret line="319" selection-start-line="319" selection-end-line="319" />
           <folding>
             <element signature="e#43#68#0" expanded="true" />
@@ -729,22 +627,139 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="257" lean-forward="true" selection-start-line="6" selection-start-column="257" selection-end-line="6" selection-end-column="257" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/animeEvents.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="39" selection-start-line="5" selection-start-column="39" selection-end-line="5" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/render.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="14" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/casting.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="2" lean-forward="true" selection-start-column="2" selection-end-column="2" />
+        <state relative-caret-position="150">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/gradY.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/gradX.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/images/refractive_indexX.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/images/ldirectionrY.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/images/gradY.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/images/gradX.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/variables.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="20" column="34" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/objectData.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="44" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/casting.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="641" column="18" selection-start-line="641" selection-start-column="18" selection-end-line="641" selection-end-column="18" />
+        <state relative-caret-position="152">
+          <caret line="17" column="8" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/render.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="112" column="51" selection-start-line="112" selection-start-column="49" selection-end-line="112" selection-end-column="51" />
           <folding>
-            <element signature="e#43#63#0" expanded="true" />
-            <element signature="e#23911#29791#0" />
-            <element signature="e#29794#34737#0" />
-            <marker date="1565477635653" expanded="true" signature="13501:13629" ph="..." />
+            <element signature="e#43#62#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/objectData.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="359">
+          <caret line="161" column="59" selection-start-line="161" selection-start-column="59" selection-end-line="161" selection-end-column="59" />
+          <folding>
+            <element signature="e#43#66#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lightPropergation.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="56" column="30" selection-start-line="56" selection-start-column="30" selection-end-line="56" selection-end-column="30" />
+          <folding>
+            <element signature="e#43#73#0" expanded="true" />
+            <marker date="1565695809467" expanded="true" signature="10072:10396" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/variables.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="19" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vector.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="900">
+          <caret line="60" lean-forward="true" selection-start-line="60" selection-end-line="60" />
+          <folding>
+            <element signature="e#43#62#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/animeEvents.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="21" column="1" lean-forward="true" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
+          <folding>
+            <element signature="e#43#67#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="513">
+          <caret line="165" column="21" lean-forward="true" selection-start-line="165" selection-start-column="21" selection-end-line="165" selection-end-column="21" />
+          <folding>
+            <element signature="e#43#61#0" expanded="true" />
+            <element signature="e#417#436#0" expanded="true" />
+            <element signature="e#726#839#0" expanded="true" />
           </folding>
         </state>
       </provider>

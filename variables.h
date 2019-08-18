@@ -18,9 +18,10 @@ extern const int PLAINSZ;
 extern const int AOIx;
 extern const int AOIy;
 extern int animationCount;
-extern bool updateState;
+extern bool updateState, dragState;
 extern float shiftX;
 extern float shiftY;
+extern int xBegin, yBegin, mButton;
 
 extern float* grad;
 extern float* fColor;

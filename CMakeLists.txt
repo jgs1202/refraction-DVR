@@ -4,7 +4,7 @@ project(refraction_openCL)
 set(CMAKE_CXX_STANDARD 14)
 #set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
 
-add_executable(refraction_openCL main.cpp variables.cpp myMath.cpp gpuSetting.cpp vector.cpp gradient.cpp objectData.cpp lightPropergation.cpp lightPropergation.h casting.cpp casting.h lightSetting.cpp lightSetting.h visualize.cpp animeEvents.cpp)
+add_executable(refraction_openCL main.cpp variables.cpp myMath.cpp gpuSetting.cpp vector.cpp gradient.cpp objectData.cpp lightPropergation.cpp lightPropergation.h casting.cpp casting.h lightSetting.cpp lightSetting.h visualize.cpp animeEvents.cpp render.cpp)
 
 INCLUDE_DIRECTORIES (/System/Library/Frameworks)
 

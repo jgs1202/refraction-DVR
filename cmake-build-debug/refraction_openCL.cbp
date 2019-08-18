@@ -139,6 +139,12 @@
 		<Unit filename="/Users/Aoyama/CLionProjects/refraction_openCL/objectData.h">
 			<Option target="refraction_openCL"/>
 		</Unit>
+		<Unit filename="/Users/Aoyama/CLionProjects/refraction_openCL/render.cpp">
+			<Option target="refraction_openCL"/>
+		</Unit>
+		<Unit filename="/Users/Aoyama/CLionProjects/refraction_openCL/render.h">
+			<Option target="refraction_openCL"/>
+		</Unit>
 		<Unit filename="/Users/Aoyama/CLionProjects/refraction_openCL/variables.cpp">
 			<Option target="refraction_openCL"/>
 		</Unit>

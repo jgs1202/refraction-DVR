@@ -9,6 +9,7 @@ CMakeFiles/refraction_openCL.dir/casting.cpp.o: ../casting.cpp
 CMakeFiles/refraction_openCL.dir/casting.cpp.o: ../casting.h
 CMakeFiles/refraction_openCL.dir/casting.cpp.o: ../gpuSetting.h
 CMakeFiles/refraction_openCL.dir/casting.cpp.o: ../myMath.h
+CMakeFiles/refraction_openCL.dir/casting.cpp.o: ../render.h
 CMakeFiles/refraction_openCL.dir/casting.cpp.o: ../variables.h
 CMakeFiles/refraction_openCL.dir/casting.cpp.o: ../vector.h
 CMakeFiles/refraction_openCL.dir/casting.cpp.o: /usr/local/include/opencv/cxcore.h
@@ -433,6 +434,7 @@ CMakeFiles/refraction_openCL.dir/main.cpp.o: ../lightSetting.h
 CMakeFiles/refraction_openCL.dir/main.cpp.o: ../main.cpp
 CMakeFiles/refraction_openCL.dir/main.cpp.o: ../myMath.h
 CMakeFiles/refraction_openCL.dir/main.cpp.o: ../objectData.h
+CMakeFiles/refraction_openCL.dir/main.cpp.o: ../render.h
 CMakeFiles/refraction_openCL.dir/main.cpp.o: ../variables.h
 CMakeFiles/refraction_openCL.dir/main.cpp.o: ../vector.h
 
@@ -445,6 +447,13 @@ CMakeFiles/refraction_openCL.dir/objectData.cpp.o: ../objectData.cpp
 CMakeFiles/refraction_openCL.dir/objectData.cpp.o: ../objectData.h
 CMakeFiles/refraction_openCL.dir/objectData.cpp.o: ../variables.h
 CMakeFiles/refraction_openCL.dir/objectData.cpp.o: ../vector.h
+
+CMakeFiles/refraction_openCL.dir/render.cpp.o: ../gpuSetting.h
+CMakeFiles/refraction_openCL.dir/render.cpp.o: ../myMath.h
+CMakeFiles/refraction_openCL.dir/render.cpp.o: ../render.cpp
+CMakeFiles/refraction_openCL.dir/render.cpp.o: ../render.h
+CMakeFiles/refraction_openCL.dir/render.cpp.o: ../variables.h
+CMakeFiles/refraction_openCL.dir/render.cpp.o: ../vector.h
 
 CMakeFiles/refraction_openCL.dir/variables.cpp.o: ../variables.cpp
 CMakeFiles/refraction_openCL.dir/variables.cpp.o: ../variables.h

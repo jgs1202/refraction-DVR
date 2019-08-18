@@ -58,6 +58,51 @@ void visLight(void) {
     printf("light image written\n");
 }
 
+//void visRays(float* rayBeginX, float* rayAngleX, float* rayBeginY, float* rayAngleY, int distance) {
+//    std::uniform_real_distribution<double> rnd(0.0,1.0);
+//    std::random_device rd;
+//    std::mt19937 mt(rd());
+//    int magnify = 5, magArrow = 100;
+//    cv::Scalar white(255, 255, 255);
+//    cv::Mat rayDirY(cv::Size(distance * 3, distance * 3), CV_8UC3, white);
+//    cv::Mat rayDirX(cv::Size(distance * 3, distance * 3), CV_8UC3, white);
+//
+//    int sx, sy, ex, ey;
+//    float dx, dy, thre = 0.3;
+//    for (int ray=0; ray<WIDTH; ++ray) {
+//        if (rnd(mt) < thre) {
+//            sx = (int) (rayBeginY[2 * ray] + distance * 1.5);
+//            sy = (int) (rayBeginY[2 * ray + 1] + distance * 1.5);
+//            ex = (int) (sx + rayAngleY[2 * ray] * magArrow);
+//            ey = (int) (sy + rayAngleY[2 * ray + 1] * magArrow);
+////        std::cout << sx << " " << ex << " " << sy << " " << ey << " " << rayAngle[2 * ray + 1] * magArrow << std::endl;
+//            cv::arrowedLine(rayDirY, cv::Point(sx, sy), cv::Point(ex, ey), cv::Scalar(255, 0, 0), 1, 4);
+//        }
+//    }
+//    cv::circle(rayDirY, cv::Point((int)(distance * 1.5), (int)(distance * 1.5)), 1, cv::Scalar(0, 0, 255), 10, 8, 0);
+//    cv::circle(rayDirY, cv::Point((int)(distance * 1.5) + WIDTH, (int)(distance * 1.5)), 1, cv::Scalar(0, 0, 255), 10, 8, 0);
+//    cv::circle(rayDirY, cv::Point((int)(distance * 1.5) + WIDTH, (int)(distance * 1.5) + WIDTH), 1, cv::Scalar(0, 0, 255), 10, 8, 0);
+//    cv::circle(rayDirY, cv::Point((int)(distance * 1.5), (int)(distance * 1.5) + WIDTH), 1, cv::Scalar(0, 0, 255), 10, 8, 0);
+//    imwrite("images/rayDirectionY.png", rayDirY);
+//
+//    for (int ray=0; ray<WIDTH; ++ray) {
+//        if (rnd(mt) < thre) {
+//            sx = (int) (rayBeginY[2 * ray] + distance * 1.5);
+//            sy = (int) (rayBeginY[2 * ray + 1] + distance * 1.5);
+//            ex = (int) (sx + rayAngleY[2 * ray] * magArrow);
+//            ey = (int) (sy + rayAngleY[2 * ray + 1] * magArrow);
+////        std::cout << sx << " " << ex << " " << sy << " " << ey << " " << rayAngle[2 * ray + 1] * magArrow << std::endl;
+//            cv::arrowedLine(rayDirX, cv::Point(sx, sy), cv::Point(ex, ey), cv::Scalar(255, 0, 0), 1, 4);
+//        }
+//    }
+//    cv::circle(rayDirX, cv::Point((int)(distance * 1.5), (int)(distance * 1.5)), 1, cv::Scalar(0, 0, 255), 10, 8, 0);
+//    cv::circle(rayDirX, cv::Point((int)(distance * 1.5) + WIDTH, (int)(distance * 1.5)), 1, cv::Scalar(0, 0, 255), 10, 8, 0);
+//    cv::circle(rayDirX, cv::Point((int)(distance * 1.5) + WIDTH, (int)(distance * 1.5) + WIDTH), 1, cv::Scalar(0, 0, 255), 10, 8, 0);
+//    cv::circle(rayDirX, cv::Point((int)(distance * 1.5), (int)(distance * 1.5) + WIDTH), 1, cv::Scalar(0, 0, 255), 10, 8, 0);
+//    imwrite("images/rayDirectionX.png", rayDirX);
+//    printf("img written\n");
+//}
+
 int momGauss(int x, int y, int dx, int dy, int side){
     float gauss[9] = {1, 2, 1, 2, 4, 2, 1, 2, 1};
     if (checkRangeInt(x - 1, WIDTH) && checkRangeInt(x + 1, WIDTH) && checkRangeInt(y - 1, WIDTH) && checkRangeInt(y + 1, WIDTH)){
@@ -295,12 +340,12 @@ void gpuCalcLightSource (float *direction, float *color) {
             lightSmoothing(nlDirection);
             lightSmoothing(nlDirection);
 
-            if (plain == WIDTH * 4 / 10) {
-                for (int p=0; p<WIDTH; ++p) {
-                    std::cout << (int)(checker[p + plainY * WIDTH] * 100) << " ";
-                }
-                printf("\n");
-            }
+//            if (plain == WIDTH * 4 / 10) {
+//                for (int p=0; p<WIDTH; ++p) {
+//                    std::cout << (int)(checker[p + plainY * WIDTH] * 100) << " ";
+//                }
+//                printf("\n");
+//            }
 
             for (unsigned int j=0; j<HEIGHT; ++j) {
                 for (unsigned int k = 0; k < WIDTH; ++k) {

@@ -16,6 +16,11 @@ const int FIELDSZ = (WIDTH * HEIGHT * DEPTH);
 const int PLAINSZ = (WIDTH * HEIGHT);
 int animationCount = 0;
 bool updateState = true;
+bool dragState = false;
+int xBegin, yBegin;
+int mButton;
+float shiftX = 0;
+float shiftY = 0;
 
 float* grad = new float[FIELDSZ * 3];
 float* fColor = new float[FIELDSZ * 3];
@@ -26,9 +31,6 @@ float* fRefractivity = new float[FIELDSZ];
 float* lColor = new float[FIELDSZ * 3];
 float* lDirection = new float[FIELDSZ * 3];
 float* lIntensity = new float[FIELDSZ];
-
-float shiftX = 0;
-float shiftY = 0;
 
 int viewW = WIDTH;
 int viewH = WIDTH;
@@ -54,5 +56,4 @@ float* photonGradDirection = new float[maxPhotons * 3];
 float* photonColor= new float[maxPhotons * 3];
 int* photonStartTime= new int[maxPhotons];
 int photonEnd = 0;
-
 //std::vector <float> surfaces;
